@@ -94,6 +94,28 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
+  environment.gnome.excludePackages = with pkgs; [
+    epiphany
+    geary
+    gnome-connections
+    gnome-contacts
+    gnome-maps
+    gnome-music
+    gnome-tour
+    gnome-user-docs
+    gnome-weather
+    showtime
+  ];
+
+  xdg.mime.defaultApplications = {
+    "video/mp4" = "io.github.celluloid_player.Celluloid.desktop";
+    "video/x-matroska" = "io.github.celluloid_player.Celluloid.desktop";
+    "video/webm" = "io.github.celluloid_player.Celluloid.desktop";
+    "video/x-msvideo" = "io.github.celluloid_player.Celluloid.desktop";
+    "video/quicktime" = "io.github.celluloid_player.Celluloid.desktop";
+    "video/mpeg" = "io.github.celluloid_player.Celluloid.desktop";
+  };
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
@@ -111,6 +133,9 @@
     vscode # or vscodium
     dbeaver-bin # Universal database tool
     postman # or insomnia
+
+    # Media
+    celluloid
 
     # Install the closest supported Tela Circle dark variant in current Nixpkgs
     (tela-circle-icon-theme.override { colorVariants = [ "green" ]; })
