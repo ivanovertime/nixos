@@ -14,6 +14,9 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # Enable ZRAM for better memory management
+  zramSwap.enable = true;
+
   networking.hostName = "spica"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -46,8 +49,8 @@
   services.xserver.enable = true;
 
   # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  services.displayManager.gdm.enable = true;
+  services.desktopManager.gnome.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -87,8 +90,6 @@
     ];
   };
 
-  # Install firefox.
-  programs.firefox.enable = true;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -110,7 +111,23 @@
     vscode # or vscodium
     dbeaver-bin # Universal database tool
     postman # or insomnia
+
+    # Install the closest supported Tela Circle dark variant in current Nixpkgs
+    (tela-circle-icon-theme.override { colorVariants = [ "green" ]; })
+
+    # GNOME Tweaks is required to change the desktop icon theme
+    gnome-tweaks
   ];
+
+  # Microcode updates for AMD Ryzen
+
+  hardware.cpu.amd.updateMicrocode = true;
+
+  # Enable graphics/hardware acceleration
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
