@@ -150,6 +150,9 @@
     # Media
     celluloid
 
+    # GNOME app to browse, search, and manage shell extensions
+    gnome-extension-manager
+
     # Install the closest supported Tela Circle dark variant in current Nixpkgs
     (tela-circle-icon-theme.override { colorVariants = [ "green" ]; })
 
