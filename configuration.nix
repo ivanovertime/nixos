@@ -94,6 +94,12 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
+  programs.direnv = {
+    enable = true;
+    silent = true;
+    nix-direnv.enable = true;
+  };
+
   environment.gnome.excludePackages = with pkgs; [
     decibels
     epiphany
