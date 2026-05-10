@@ -95,6 +95,7 @@
   nixpkgs.config.allowUnfree = true;
 
   environment.gnome.excludePackages = with pkgs; [
+    decibels
     epiphany
     geary
     gnome-connections
@@ -108,6 +109,18 @@
   ];
 
   xdg.mime.defaultApplications = {
+    "audio/aac" = "io.github.celluloid_player.Celluloid.desktop";
+    "audio/flac" = "io.github.celluloid_player.Celluloid.desktop";
+    "audio/mp4" = "io.github.celluloid_player.Celluloid.desktop";
+    "audio/mpeg" = "io.github.celluloid_player.Celluloid.desktop";
+    "audio/ogg" = "io.github.celluloid_player.Celluloid.desktop";
+    "audio/wav" = "io.github.celluloid_player.Celluloid.desktop";
+    "audio/webm" = "io.github.celluloid_player.Celluloid.desktop";
+    "audio/x-flac" = "io.github.celluloid_player.Celluloid.desktop";
+    "audio/x-m4a" = "io.github.celluloid_player.Celluloid.desktop";
+    "audio/x-ms-wma" = "io.github.celluloid_player.Celluloid.desktop";
+    "audio/x-vorbis+ogg" = "io.github.celluloid_player.Celluloid.desktop";
+    "audio/x-wav" = "io.github.celluloid_player.Celluloid.desktop";
     "video/mp4" = "io.github.celluloid_player.Celluloid.desktop";
     "video/x-matroska" = "io.github.celluloid_player.Celluloid.desktop";
     "video/webm" = "io.github.celluloid_player.Celluloid.desktop";
