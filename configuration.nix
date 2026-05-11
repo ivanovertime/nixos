@@ -147,6 +147,8 @@
     # Core CLI Tools
     git
     gh # GitHub CLI
+    github-copilot-cli
+    
     wget
     curl
     unzip
@@ -155,6 +157,7 @@
     vscode # or vscodium
     dbeaver-bin # Universal database tool
     postman # or insomnia
+    slack
 
     # Media
     celluloid
