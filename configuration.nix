@@ -138,6 +138,12 @@
     "video/mpeg" = "io.github.celluloid_player.Celluloid.desktop";
   };
 
+  # Force Chromium/Electron apps to use native Wayland
+  # Needed for Figma on Chrome.
+  environment.sessionVariables = {
+    NIXOS_OZONE_WL = "1";
+  };
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
