@@ -154,6 +154,7 @@
     git
     gh # GitHub CLI
     github-copilot-cli
+    nil # Nix LSP server for vscode-nix-ide
     
     wget
     curl
