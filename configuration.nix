@@ -52,6 +52,11 @@
   services.displayManager.gdm.enable = true;
   services.desktopManager.gnome.enable = true;
 
+  # Required for Google Drive mounting via GNOME Online Accounts / Files.
+  services.gnome.gnome-online-accounts.enable = true;
+  services.gvfs.enable = true;
+  services.gnome.gnome-keyring.enable = true;
+
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
@@ -88,7 +93,7 @@
     isNormalUser = true;
     description = "Ivan Alvarez";
     extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [
+    packages = [
     #  thunderbird
     ];
   };
