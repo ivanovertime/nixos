@@ -158,7 +158,7 @@ in
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     # Web Browsers
-    google-chrome
+     pkgs-unstable.google-chrome
 
     # Core CLI Tools
     git
