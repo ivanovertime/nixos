@@ -4,6 +4,9 @@
 
 { config, pkgs, ... }:
 
+let
+  pkgs-unstable = import <nixos-unstable> { config = config.nixpkgs.config; };
+in
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -168,7 +171,7 @@
     unzip
 
     # Development Environments & Editors
-    vscode # or vscodium
+    pkgs-unstable.vscode # from nixos-unstable channel
     dbeaver-bin # Universal database tool
     postman # or insomnia
     slack
