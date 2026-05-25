@@ -113,6 +113,36 @@ in
     nix-direnv.enable = true;
   };
 
+  programs.neovim = {
+    enable = true;
+    defaultEditor = false;
+    vimAlias = true;
+    viAlias = true;
+    configure = {
+      customRC = ''
+        " Minimal Neovim defaults without plugins.
+        set number
+        set relativenumber
+        set mouse=a
+        set clipboard=unnamedplus
+
+        set tabstop=2
+        set shiftwidth=2
+        set expandtab
+        set smartindent
+
+        set ignorecase
+        set smartcase
+        set incsearch
+        set hlsearch
+
+        set termguicolors
+        set signcolumn=yes
+        set updatetime=300
+      '';
+    };
+  };
+
   environment.gnome.excludePackages = with pkgs; [
     decibels
     epiphany
