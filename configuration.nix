@@ -23,6 +23,8 @@ in
   zramSwap.enable = true;
 
   networking.hostName = "spica"; # Define your hostname.
+  # Keep generation titles short in the boot menu.
+  system.nixos.label = "Spica";
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
