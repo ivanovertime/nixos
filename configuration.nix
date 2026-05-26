@@ -208,6 +208,7 @@ in
 
     # Media
     celluloid
+    fragments
 
     # GNOME app to browse, search, and manage shell extensions
     gnome-extension-manager
