@@ -54,5 +54,31 @@ sudo nixos-generate-config --dir /etc/nixos
 sudo nixos-rebuild switch
 ```
 
+## 🔄 Automatic Updates And Cleanup
+
+This setup now includes automated maintenance through NixOS:
+- Weekly automatic system upgrades from the `nixos-unstable` channel
+- Weekly garbage collection of old store paths older than 30 days
+- Automatic store optimization (deduplication)
+- Boot menu retention limited to the latest 10 system configurations
+
+Automatic reboot after upgrades is disabled. New system versions are applied and become active on next reboot unless you rebuild manually.
+
+### Verify Timers
+
+```bash
+systemctl list-timers --all | grep -E 'nixos-upgrade|nix-gc|nix-optimise'
+systemctl status nixos-upgrade.timer nix-gc.timer nix-optimise.timer
+```
+
+### Rollback If Needed
+
+- At boot: select an older generation from the systemd-boot menu.
+- From a running system:
+
+```bash
+sudo nixos-rebuild switch --rollback
+```
+
 ---
 *Maintained with ❤️ and purely functional constraints.*

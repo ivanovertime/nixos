@@ -16,6 +16,8 @@ in
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  # Keep boot menu from growing indefinitely.
+  boot.loader.systemd-boot.configurationLimit = 10;
 
   # Enable ZRAM for better memory management
   zramSwap.enable = true;
@@ -106,6 +108,23 @@ in
   nixpkgs.config.allowUnfree = true;
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
+  # Automated Nix store maintenance.
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 30d";
+  };
+
+  nix.optimise.automatic = true;
+
+  # Unattended weekly system upgrades on the unstable channel.
+  system.autoUpgrade = {
+    enable = true;
+    dates = "weekly";
+    channel = "https://nixos.org/channels/nixos-unstable";
+    allowReboot = false;
+  };
 
   programs.direnv = {
     enable = true;
