@@ -134,6 +134,10 @@ in
     nix-direnv.enable = true;
   };
 
+  programs.starship = {
+    enable = true;
+  };
+
   programs.neovim = {
     enable = true;
     defaultEditor = false;
@@ -240,6 +244,16 @@ in
     # GNOME Tweaks is required to change the desktop icon theme
     gnome-tweaks
   ];
+
+  fonts = {
+    packages = with pkgs; [
+      nerd-fonts.jetbrains-mono
+    ];
+
+    fontconfig.defaultFonts = {
+      monospace = [ "JetBrainsMono Nerd Font Mono" "JetBrainsMono Nerd Font" ];
+    };
+  };
 
   # Microcode updates for AMD Ryzen
 
