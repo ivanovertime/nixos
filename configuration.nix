@@ -8,10 +8,10 @@ let
   pkgs-unstable = import <nixos-unstable> { config = config.nixpkgs.config; };
 in
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -99,17 +99,22 @@ in
   users.users.ivan = {
     isNormalUser = true;
     description = "Ivan Alvarez";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
     packages = [
-    #  thunderbird
+      #  thunderbird
     ];
   };
-
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
   # Automated Nix store maintenance.
   nix.gc = {
@@ -213,14 +218,15 @@ in
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     # Web Browsers
-     pkgs-unstable.google-chrome
+    pkgs-unstable.google-chrome
 
     # Core CLI Tools
     git
     gh # GitHub CLI
     github-copilot-cli
+    pkgs-unstable.antigravity
     nil # Nix LSP server for vscode-nix-ide
-    
+
     wget
     curl
     unzip
@@ -237,7 +243,6 @@ in
 
     # GNOME app to browse, search, and manage shell extensions
     gnome-extension-manager
-
     # Install the closest supported Tela Circle dark variant in current Nixpkgs
     (tela-circle-icon-theme.override { colorVariants = [ "green" ]; })
 
@@ -251,7 +256,10 @@ in
     ];
 
     fontconfig.defaultFonts = {
-      monospace = [ "JetBrainsMono Nerd Font Mono" "JetBrainsMono Nerd Font" ];
+      monospace = [
+        "JetBrainsMono Nerd Font Mono"
+        "JetBrainsMono Nerd Font"
+      ];
     };
   };
 
