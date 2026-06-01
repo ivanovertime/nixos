@@ -233,7 +233,7 @@ in
     # Core CLI Tools
     git
     gh # GitHub CLI
-    github-copilot-cli
+    pkgs-unstable.github-copilot-cli
     pkgs-unstable.antigravity
     nil # Nix LSP server for vscode-nix-ide
 
@@ -245,7 +245,7 @@ in
     # Development Environments & Editors
     pkgs-unstable.vscode # from nixos-unstable channel
     dbeaver-bin # Universal database tool
-    postman # or insomnia
+    postman
     slack
 
     # Media
