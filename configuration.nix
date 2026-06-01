@@ -62,7 +62,13 @@ in
   # Required for Google Drive mounting via GNOME Online Accounts / Files.
   services.gnome.gnome-online-accounts.enable = true;
   services.gvfs.enable = true;
+  services.gvfs.package = pkgs.gnome.gvfs.override {
+    gnomeSupport = true;
+    googleSupport = true;
+  };
   services.gnome.gnome-keyring.enable = true;
+  services.accounts-daemon.enable = true;
+  programs.dconf.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -110,6 +116,10 @@ in
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
+  # Required for GVFS Google Drive backend (services.gvfs.package override).
+  nixpkgs.config.permittedInsecurePackages = [
+    "libsoup-2.74.3"
+  ];
 
   nix.settings.experimental-features = [
     "nix-command"
@@ -228,6 +238,7 @@ in
     nil # Nix LSP server for vscode-nix-ide
 
     wget
+    ripgrep
     curl
     unzip
 
