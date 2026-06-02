@@ -244,7 +244,7 @@ in
 
     # Development Environments & Editors
     pkgs-unstable.vscode # from nixos-unstable channel
-    dbeaver-bin # Universal database tool
+    pkgs-unstable.dbeaver-bin # Universal database tool
     postman
     slack
 
