@@ -54,6 +54,37 @@ sudo nixos-generate-config --dir /etc/nixos
 sudo nixos-rebuild switch
 ```
 
+## ⬆️ Manual NixOS Update
+
+Use one of the following workflows depending on whether your system is channel-based or flake-based.
+
+### Channel-Based (non-flake)
+
+```bash
+sudo nix-channel --update
+sudo nixos-rebuild switch --upgrade
+```
+
+### Flake-Based
+
+```bash
+nix flake update
+sudo nixos-rebuild switch --flake .#your-hostname
+```
+
+### Verify and Roll Back
+
+```bash
+nixos-version
+sudo nixos-rebuild switch --rollback
+```
+
+Reboot is recommended after updates that include a new kernel or low-level system components:
+
+```bash
+sudo reboot
+```
+
 ## 🔄 Automatic Updates And Cleanup
 
 This setup now includes automated maintenance through NixOS:
