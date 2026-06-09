@@ -218,6 +218,13 @@ in
     "video/mpeg" = "io.github.celluloid_player.Celluloid.desktop";
   };
 
+  # Make Qt applications follow GNOME/GTK theming.
+  qt = {
+    enable = true;
+    platformTheme = "gnome";
+    style = "adwaita-dark";
+  };
+
   # Force Chromium/Electron apps to use native Wayland
   # Needed for Figma on Chrome.
   environment.sessionVariables = {
