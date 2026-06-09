@@ -241,16 +241,20 @@ in
     ripgrep
     curl
     unzip
+    ranger
+    htop
+    tmux
 
     # Development Environments & Editors
     pkgs-unstable.vscode # from nixos-unstable channel
     pkgs-unstable.dbeaver-bin # Universal database tool
+    # pkgs-unstable.openrefine # Data cleaning and transformation tool
     postman
     slack
 
     # Media
     celluloid
-    fragments
+    pkgs-unstable.qbittorrent
 
     # GNOME app to browse, search, and manage shell extensions
     gnome-extension-manager
