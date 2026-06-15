@@ -262,6 +262,9 @@ in
     # Media
     celluloid
     pkgs-unstable.qbittorrent
+    pkgs-unstable.gthumb
+    pkgs-unstable.gimp
+    pkgs-unstable.inkscape
 
     # GNOME app to browse, search, and manage shell extensions
     gnome-extension-manager
