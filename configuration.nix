@@ -6,11 +6,16 @@
 
 let
   pkgs-unstable = import <nixos-unstable> { config = config.nixpkgs.config; };
+  home-manager = builtins.fetchTarball {
+    url = "https://github.com/nix-community/home-manager/archive/3ee51fbdac8c8bdfe1e7e1fcaba6520a563f394f.tar.gz";
+    sha256 = "13fmry1jd0na71fxhzms9qf3ybj6shgvnphq4p1akxxmv44gzq20";
+  };
 in
 {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
+    "${home-manager}/nixos"
   ];
 
   # Bootloader.
@@ -153,36 +158,14 @@ in
     enable = true;
   };
 
-  programs.neovim = {
-    enable = true;
-    defaultEditor = false;
-    vimAlias = true;
-    viAlias = true;
-    configure = {
-      customRC = ''
-        " Minimal Neovim defaults using terminal-native colors.
-        set number
-        set relativenumber
-        set mouse=a
-        set clipboard=unnamedplus
-
-        set tabstop=2
-        set shiftwidth=2
-        set expandtab
-        set smartindent
-
-        set ignorecase
-        set smartcase
-        set incsearch
-        set hlsearch
-
-        set notermguicolors
-        set background=dark
-        colorscheme default
-        set signcolumn=yes
-        set updatetime=300
-      '';
+  home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
+    backupFileExtension = "hm-backup";
+    extraSpecialArgs = {
+      inherit pkgs-unstable;
     };
+    users.ivan = import ./home.nix;
   };
 
   environment.gnome.excludePackages = with pkgs; [
@@ -250,9 +233,7 @@ in
     ripgrep
     curl
     unzip
-    ranger
     htop
-    tmux
 
     # Development Environments & Editors
     pkgs-unstable.vscode # from nixos-unstable channel
@@ -260,7 +241,6 @@ in
     # pkgs-unstable.openrefine # Data cleaning and transformation tool
     postman
     slack
-    pkgs-unstable.kitty # Terminal emulator (+kitten icat for ranger previews)
 
     # Media
     celluloid
