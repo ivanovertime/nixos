@@ -13,11 +13,11 @@
   gtk = {
     enable = true;
     theme = {
-      name = "Everforest-Dark";
+      name = "Everforest-Dark-BL";
       package = pkgs.everforest-gtk-theme;
     };
     iconTheme = {
-      name = "Tela-circle-green-dark";
+      name = "Tela-circle-dark";
       package = pkgs.tela-circle-icon-theme.override { colorVariants = [ "green" ]; };
     };
     font = {
@@ -35,7 +35,7 @@
     [Appearance]
     color_scheme_path=/home/ivan/.config/qt5ct/colors/everforest.conf
     custom_palette=true
-    icon_theme=Tela-circle-green-dark
+    icon_theme=Tela-circle-dark
     standard_dialogs=default
     style=Fusion
 
@@ -48,7 +48,7 @@
     [Appearance]
     color_scheme_path=/home/ivan/.config/qt6ct/colors/everforest.conf
     custom_palette=true
-    icon_theme=Tela-circle-green-dark
+    icon_theme=Tela-circle-dark
     standard_dialogs=default
     style=Fusion
 

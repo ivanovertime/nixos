@@ -55,6 +55,7 @@
       },
 
       "tray": {
+        "icon-theme": ["Tela-circle-dark", "Tela-circle", "hicolor"],
         "icon-size": 16,
         "spacing": 8
       },
