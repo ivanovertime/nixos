@@ -7,6 +7,11 @@
     ./home/kitty.nix
     ./home/ranger.nix
     ./home/tmux.nix
+    ./home/hyprland.nix
+    ./home/waybar.nix
+    ./home/wofi.nix
+    ./home/mako.nix
+    ./home/gtk.nix
   ];
 
   home.username = "ivan";

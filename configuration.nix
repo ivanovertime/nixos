@@ -57,29 +57,44 @@ in
     LC_TIME = "es_VE.UTF-8";
   };
 
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-
-  # Enable the GNOME Desktop Environment.
-  services.displayManager.gdm.enable = true;
-  services.desktopManager.gnome.enable = true;
-
-  # Required for Google Drive mounting via GNOME Online Accounts / Files.
-  services.gnome.gnome-online-accounts.enable = true;
-  services.gvfs.enable = true;
-  services.gvfs.package = pkgs.gnome.gvfs.override {
-    gnomeSupport = true;
-    googleSupport = true;
+  # Enable Hyprland (Wayland compositor). This also provides XWayland and the
+  # hyprland xdg-desktop-portal needed for screensharing.
+  programs.hyprland = {
+    enable = true;
+    xwayland.enable = true;
   };
+
+  # greetd + tuigreet: a minimal TUI login that launches Hyprland directly.
+  services.greetd = {
+    enable = true;
+    settings.default_session = {
+      command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --remember --remember-session --asterisks --cmd Hyprland";
+      user = "greeter";
+    };
+  };
+
+  # XDG portals: hyprland portal is added by programs.hyprland; add the GTK
+  # portal for file pickers, settings (theming), and broad app compatibility.
+  xdg.portal = {
+    enable = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    config.common.default = "*";
+  };
+
+  # PolicyKit for privilege prompts (a graphical agent is started in Hyprland).
+  security.polkit.enable = true;
+
+  # Keyring for secrets/SSH; works standalone without GNOME. Unlock it on login.
   services.gnome.gnome-keyring.enable = true;
-  services.accounts-daemon.enable = true;
-  programs.dconf.enable = true;
+  security.pam.services.greetd.enableGnomeKeyring = true;
 
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "";
-  };
+  # GVFS still provides trash, MTP and network mounts for Nautilus. The Google
+  # Drive (GOA) backend is intentionally dropped here — see README for the
+  # rclone-based replacement.
+  services.gvfs.enable = true;
+
+  # dconf is needed for GTK app settings and dark-mode preference.
+  programs.dconf.enable = true;
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -113,6 +128,8 @@ in
     extraGroups = [
       "networkmanager"
       "wheel"
+      "video"
+      "input"
     ];
     packages = [
       #  thunderbird
@@ -121,10 +138,6 @@ in
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
-  # Required for GVFS Google Drive backend (services.gvfs.package override).
-  nixpkgs.config.permittedInsecurePackages = [
-    "libsoup-2.74.3"
-  ];
 
   nix.settings.experimental-features = [
     "nix-command"
@@ -167,20 +180,6 @@ in
     };
     users.ivan = import ./home.nix;
   };
-
-  environment.gnome.excludePackages = with pkgs; [
-    decibels
-    epiphany
-    geary
-    gnome-connections
-    gnome-contacts
-    gnome-maps
-    gnome-music
-    gnome-tour
-    gnome-user-docs
-    gnome-weather
-    showtime
-  ];
 
   xdg.mime.defaultApplications = {
     "audio/aac" = "io.github.celluloid_player.Celluloid.desktop";
@@ -248,14 +247,6 @@ in
     pkgs-unstable.gthumb
     pkgs-unstable.gimp
     pkgs-unstable.inkscape
-
-    # GNOME app to browse, search, and manage shell extensions
-    gnome-extension-manager
-    # Install the closest supported Tela Circle dark variant in current Nixpkgs
-    (tela-circle-icon-theme.override { colorVariants = [ "green" ]; })
-
-    # GNOME Tweaks is required to change the desktop icon theme
-    gnome-tweaks
   ];
 
   fonts = {
