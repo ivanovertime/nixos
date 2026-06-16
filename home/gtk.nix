@@ -13,7 +13,7 @@
   gtk = {
     enable = true;
     theme = {
-      name = "Everforest-Dark";
+      name = "Everforest-Dark-BL";
       package = pkgs.everforest-gtk-theme;
     };
     iconTheme = {
@@ -86,6 +86,15 @@
     --force-dark-mode
   '';
 
-  # Prefer dark mode for libadwaita / GTK4 apps.
-  dconf.settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
+  # Prefer dark mode and pin GTK/icon themes for GTK/libadwaita apps.
+  dconf.settings."org/gnome/desktop/interface" = {
+    color-scheme = "prefer-dark";
+    gtk-theme = "Everforest-Dark-BL";
+    icon-theme = "Tela-circle-green-dark";
+    gtk-decoration-layout = ":";
+  };
+
+  dconf.settings."org/gnome/desktop/wm/preferences" = {
+    button-layout = ":";
+  };
 }

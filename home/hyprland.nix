@@ -24,7 +24,7 @@
     ### AUTOSTART   ###
     ###################
     exec-once = sh -lc 'if [ -f "$HOME/Pictures/wallpapers/current" ]; then swaybg -m fill -i "$HOME/Pictures/wallpapers/current"; elif [ -f "$HOME/Pictures/wallpapers/current.jpg" ]; then swaybg -m fill -i "$HOME/Pictures/wallpapers/current.jpg"; elif [ -f "$HOME/Pictures/wallpapers/current.png" ]; then swaybg -m fill -i "$HOME/Pictures/wallpapers/current.png"; else swaybg -c 272e33; fi'
-    exec-once = env GTK_THEME=Everforest-Dark-BL GTK_ICON_THEME=Tela-circle-dark waybar
+    exec-once = waybar
     exec-once = mako
     exec-once = hypridle
     exec-once = nm-applet --indicator
