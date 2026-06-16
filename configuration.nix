@@ -248,7 +248,6 @@ in
     pkgs-unstable.gthumb
     pkgs-unstable.gimp
     pkgs-unstable.inkscape
-    pkgs-unstable.calibre # e-book management software
 
     # GNOME app to browse, search, and manage shell extensions
     gnome-extension-manager
