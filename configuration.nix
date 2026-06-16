@@ -160,7 +160,7 @@ in
     viAlias = true;
     configure = {
       customRC = ''
-        " Minimal Neovim defaults without plugins.
+        " Minimal Neovim defaults using terminal-native colors.
         set number
         set relativenumber
         set mouse=a
@@ -176,7 +176,9 @@ in
         set incsearch
         set hlsearch
 
-        set termguicolors
+        set notermguicolors
+        set background=dark
+        colorscheme default
         set signcolumn=yes
         set updatetime=300
       '';
@@ -258,6 +260,7 @@ in
     # pkgs-unstable.openrefine # Data cleaning and transformation tool
     postman
     slack
+    pkgs-unstable.kitty # Terminal emulator (+kitten icat for ranger previews)
 
     # Media
     celluloid
@@ -265,6 +268,7 @@ in
     pkgs-unstable.gthumb
     pkgs-unstable.gimp
     pkgs-unstable.inkscape
+    pkgs-unstable.calibre # e-book management software
 
     # GNOME app to browse, search, and manage shell extensions
     gnome-extension-manager
