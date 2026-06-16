@@ -4,6 +4,8 @@
   home.packages = with pkgs; [
     ranger
     tmux
+    zathura
+    mpv
 
     # Hyprland desktop environment
     waybar

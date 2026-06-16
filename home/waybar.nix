@@ -13,7 +13,7 @@
 
       "modules-left": ["hyprland/workspaces", "hyprland/window"],
       "modules-center": ["clock"],
-      "modules-right": ["tray", "pulseaudio", "cpu", "memory", "battery", "custom/logout", "custom/suspend", "custom/reboot", "custom/power"],
+      "modules-right": ["tray", "pulseaudio", "cpu", "memory", "battery", "custom/suspend", "custom/reboot", "custom/power"],
 
       "hyprland/workspaces": {
         "format": "{name}",
@@ -55,7 +55,6 @@
       },
 
       "tray": {
-        "icon-theme": ["Tela-circle-dark", "Tela-circle", "hicolor"],
         "icon-size": 16,
         "spacing": 8
       },
