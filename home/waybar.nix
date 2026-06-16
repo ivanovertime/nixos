@@ -13,7 +13,7 @@
 
       "modules-left": ["hyprland/workspaces", "hyprland/window"],
       "modules-center": ["clock"],
-      "modules-right": ["tray", "pulseaudio", "network", "cpu", "memory", "battery"],
+      "modules-right": ["tray", "pulseaudio", "cpu", "memory", "battery", "custom/logout", "custom/suspend", "custom/reboot", "custom/power"],
 
       "hyprland/workspaces": {
         "format": "{name}",
@@ -27,44 +27,60 @@
       },
 
       "clock": {
-        "format": "{:%a %d %b  %H:%M}",
+        "format": "  {:%a %d %b  %H:%M}",
         "tooltip-format": "<tt><small>{calendar}</small></tt>"
       },
 
       "cpu": {
-        "format": "  {usage}%",
+        "format": "  {usage}%",
         "interval": 2
       },
 
       "memory": {
-        "format": "  {percentage}%"
-      },
-
-      "network": {
-        "format-wifi": "  {signalStrength}%",
-        "format-ethernet": "  wired",
-        "format-disconnected": "  off",
-        "tooltip-format": "{ifname}: {ipaddr}",
-        "on-click": "nm-connection-editor"
+        "format": "  {percentage}%"
       },
 
       "pulseaudio": {
         "format": "{icon}  {volume}%",
-        "format-muted": "  muted",
-        "format-icons": { "default": ["", "", ""] },
+        "format-muted": "󰖁  muted",
+        "format-icons": { "default": ["", "", ""] },
         "on-click": "pavucontrol"
       },
 
       "battery": {
         "states": { "warning": 30, "critical": 15 },
         "format": "{icon}  {capacity}%",
-        "format-charging": "  {capacity}%",
-        "format-icons": ["", "", "", "", ""]
+        "format-charging": "  {capacity}%",
+        "format-icons": ["", "", "", "", ""]
       },
 
       "tray": {
         "icon-size": 16,
         "spacing": 8
+      },
+
+      "custom/logout": {
+        "format": "󰍃",
+        "tooltip": "Logout",
+        "on-click": "hyprctl dispatch exit"
+      },
+
+      "custom/suspend": {
+        "format": "󰒲",
+        "tooltip": "Suspend",
+        "on-click": "systemctl suspend"
+      },
+
+      "custom/reboot": {
+        "format": "",
+        "tooltip": "Reboot",
+        "on-click": "systemctl reboot"
+      },
+
+      "custom/power": {
+        "format": "",
+        "tooltip": "Power off",
+        "on-click": "systemctl poweroff"
       }
     }
   '';
@@ -79,53 +95,67 @@
     }
 
     window#waybar {
-      background: rgba(29, 32, 33, 0.85);
-      color: #ebdbb2;
+      background: rgba(39, 46, 51, 0.85);
+      color: #d3c6aa;
       border-radius: 10px;
     }
 
     #workspaces button {
       padding: 0 8px;
-      color: #a89984;
+      color: #859289;
       background: transparent;
     }
 
     #workspaces button.active {
-      color: #1d2021;
-      background: #fe8019;
+      color: #272e33;
+      background: #a7c080;
       border-radius: 8px;
     }
 
     #workspaces button:hover {
-      color: #ebdbb2;
-      background: #3c3836;
+      color: #d3c6aa;
+      background: #2e383c;
       border-radius: 8px;
     }
 
     #window {
-      color: #a89984;
+      color: #859289;
       padding: 0 8px;
     }
 
     #clock,
     #cpu,
     #memory,
-    #network,
     #pulseaudio,
     #battery,
-    #tray {
+    #tray,
+    #custom-logout,
+    #custom-suspend,
+    #custom-reboot,
+    #custom-power {
       padding: 0 10px;
-      color: #ebdbb2;
+      color: #d3c6aa;
     }
 
-    #cpu { color: #b8bb26; }
-    #memory { color: #8ec07c; }
-    #network { color: #83a598; }
-    #pulseaudio { color: #fabd2f; }
-    #battery { color: #d3869b; }
+    #cpu { color: #a7c080; }
+    #memory { color: #7fbbb3; }
+    #pulseaudio { color: #dbbc7f; }
+    #battery { color: #d699b6; }
+    #custom-logout { color: #e69875; }
+    #custom-suspend { color: #7fbbb3; }
+    #custom-reboot { color: #dbbc7f; }
+    #custom-power { color: #e67e80; }
 
-    #battery.warning { color: #fabd2f; }
-    #battery.critical { color: #fb4934; }
-    #pulseaudio.muted { color: #928374; }
+    #battery.warning { color: #e69875; }
+    #battery.critical { color: #e67e80; }
+    #pulseaudio.muted { color: #859289; }
+
+    #custom-logout:hover,
+    #custom-suspend:hover,
+    #custom-reboot:hover,
+    #custom-power:hover {
+      background: #2e383c;
+      border-radius: 8px;
+    }
   '';
 }

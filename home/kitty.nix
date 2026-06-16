@@ -10,33 +10,33 @@
     font_size 12.0
     disable_ligatures cursor
 
-    # Theme (Gruvbox Dark Hard)
-    foreground            #ebdbb2
-    background            #1d2021
-    selection_foreground  #1d2021
-    selection_background  #ebdbb2
-    cursor                #fe8019
-    cursor_text_color     #1d2021
+    # Theme (Everforest Dark Hard)
+    foreground            #d3c6aa
+    background            #272e33
+    selection_foreground  #272e33
+    selection_background  #d3c6aa
+    cursor                #a7c080
+    cursor_text_color     #272e33
 
     # Normal colors
-    color0  #1d2021
-    color1  #fb4934
-    color2  #b8bb26
-    color3  #fabd2f
-    color4  #83a598
-    color5  #d3869b
-    color6  #8ec07c
-    color7  #ebdbb2
+    color0  #272e33
+    color1  #e67e80
+    color2  #a7c080
+    color3  #dbbc7f
+    color4  #7fbbb3
+    color5  #d699b6
+    color6  #83c092
+    color7  #d3c6aa
 
     # Bright colors
-    color8  #665c54
-    color9  #fb4934
-    color10 #b8bb26
-    color11 #fabd2f
-    color12 #83a598
-    color13 #d3869b
-    color14 #8ec07c
-    color15 #fbf1c7
+    color8  #475258
+    color9  #e67e80
+    color10 #a7c080
+    color11 #dbbc7f
+    color12 #7fbbb3
+    color13 #d699b6
+    color14 #83c092
+    color15 #e5dfc5
 
     # Window appearance
     background_opacity 0.85

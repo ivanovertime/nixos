@@ -27,16 +27,16 @@
 
     window {
       margin: 0;
-      background-color: rgba(29, 32, 33, 0.95);
-      border: 2px solid #fe8019;
+      background-color: rgba(39, 46, 51, 0.95);
+      border: 2px solid #a7c080;
       border-radius: 12px;
     }
 
     #input {
       margin: 10px;
       padding: 8px;
-      color: #ebdbb2;
-      background-color: #282828;
+      color: #d3c6aa;
+      background-color: #323d43;
       border: none;
       border-radius: 8px;
     }
@@ -57,7 +57,7 @@
 
     #text {
       padding: 4px;
-      color: #ebdbb2;
+      color: #d3c6aa;
     }
 
     #entry {
@@ -66,11 +66,11 @@
     }
 
     #entry:selected {
-      background-color: #fe8019;
+      background-color: #a7c080;
     }
 
     #entry:selected #text {
-      color: #1d2021;
+      color: #272e33;
     }
   '';
 }

@@ -39,6 +39,13 @@ in
   # Enable networking
   networking.networkmanager.enable = true;
 
+  # Bluetooth stack (BlueZ) + Blueman integration for easy pairing UI.
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true;
+  };
+  services.blueman.enable = true;
+
   # Set your time zone.
   time.timeZone = "America/Caracas";
 
@@ -68,7 +75,7 @@ in
   services.greetd = {
     enable = true;
     settings.default_session = {
-      command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --remember --remember-session --asterisks --cmd Hyprland";
+      command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --remember-session --asterisks --cmd Hyprland";
       user = "greeter";
     };
   };
@@ -202,10 +209,10 @@ in
     "video/mpeg" = "io.github.celluloid_player.Celluloid.desktop";
   };
 
-  # Make Qt applications follow GNOME/GTK theming.
+  # Route Qt apps through qt5ct/qt6ct so user-level Everforest colors apply.
   qt = {
     enable = true;
-    platformTheme = "gnome";
+    platformTheme = "qt5ct";
     style = "adwaita-dark";
   };
 

@@ -8,7 +8,9 @@
     ###################
     ### MONITORS    ###
     ###################
-    monitor = , preferred, auto, 1
+    # External display (left), laptop panel (right)
+    monitor = HDMI-A-1, 1920x1080@74.973, 0x0, 1
+    monitor = eDP-1, 1920x1080@60, 1920x0, 1
 
     ###################
     ### PROGRAMS    ###
@@ -21,11 +23,12 @@
     ###################
     ### AUTOSTART   ###
     ###################
-    exec-once = swaybg -c 1d2021
+    exec-once = sh -lc 'if [ -f "$HOME/Pictures/wallpapers/current" ]; then swaybg -m fill -i "$HOME/Pictures/wallpapers/current"; elif [ -f "$HOME/Pictures/wallpapers/current.jpg" ]; then swaybg -m fill -i "$HOME/Pictures/wallpapers/current.jpg"; elif [ -f "$HOME/Pictures/wallpapers/current.png" ]; then swaybg -m fill -i "$HOME/Pictures/wallpapers/current.png"; else swaybg -c 272e33; fi'
     exec-once = waybar
     exec-once = mako
     exec-once = hypridle
     exec-once = nm-applet --indicator
+    exec-once = blueman-applet
     exec-once = wl-paste --type text --watch cliphist store
     exec-once = wl-paste --type image --watch cliphist store
     exec-once = systemctl --user start hyprpolkitagent
@@ -43,8 +46,8 @@
         gaps_in = 5
         gaps_out = 10
         border_size = 2
-        col.active_border = rgba(fe8019ee) rgba(fabd2fee) 45deg
-        col.inactive_border = rgba(3c3836aa)
+        col.active_border = rgba(e69875ee) rgba(dbbc7fee) 45deg
+        col.inactive_border = rgba(475258aa)
         resize_on_border = true
         layout = dwindle
     }
@@ -62,7 +65,7 @@
             enabled = true
             range = 12
             render_power = 3
-            color = rgba(1a1a1aee)
+            color = rgba(1f2428ee)
         }
     }
 
@@ -104,7 +107,7 @@
     }
 
     gestures {
-        workspace_swipe = true
+        workspace_swipe_touch = 3
     }
 
     ###################
@@ -122,6 +125,7 @@
     bind = $mod, F, fullscreen
     bind = $mod, J, togglesplit
     bind = $mod, P, pseudo
+    bind = $mod SHIFT, W, exec, sh -lc 'pkill -x swaybg || true; if [ -f "$HOME/Pictures/wallpapers/current" ]; then swaybg -m fill -i "$HOME/Pictures/wallpapers/current"; elif [ -f "$HOME/Pictures/wallpapers/current.jpg" ]; then swaybg -m fill -i "$HOME/Pictures/wallpapers/current.jpg"; elif [ -f "$HOME/Pictures/wallpapers/current.png" ]; then swaybg -m fill -i "$HOME/Pictures/wallpapers/current.png"; else swaybg -c 272e33; fi'
 
     # Clipboard history (via wofi)
     bind = $mod SHIFT, V, exec, cliphist list | wofi --dmenu | cliphist decode | wl-copy
@@ -208,11 +212,11 @@
     windowrulev2 = float, title:^(Save File)$
   '';
 
-  # Lock screen (hyprlock), Gruvbox themed.
+    # Lock screen (hyprlock), Everforest themed.
   xdg.configFile."hypr/hyprlock.conf".text = ''
     background {
         monitor =
-        color = rgba(29, 32, 33, 1.0)
+                color = rgba(39, 46, 51, 1.0)
     }
 
     input-field {
@@ -221,9 +225,9 @@
         outline_thickness = 2
         dots_size = 0.3
         dots_spacing = 0.3
-        outer_color = rgba(fe8019ff)
-        inner_color = rgba(282828ff)
-        font_color = rgba(ebdbb2ff)
+        outer_color = rgba(a7c080ff)
+        inner_color = rgba(323d43ff)
+        font_color = rgba(d3c6aaff)
         placeholder_text = <i>Password...</i>
         fade_on_empty = true
         position = 0, -20
@@ -234,7 +238,7 @@
     label {
         monitor =
         text = $TIME
-        color = rgba(ebdbb2ff)
+        color = rgba(d3c6aaff)
         font_size = 64
         font_family = JetBrainsMono Nerd Font
         position = 0, 140
@@ -245,7 +249,7 @@
     label {
         monitor =
         text = cmd[update:1000] echo "$(date '+%A, %d %B')"
-        color = rgba(a89984ff)
+        color = rgba(859289ff)
         font_size = 20
         font_family = JetBrainsMono Nerd Font
         position = 0, 80

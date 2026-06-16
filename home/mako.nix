@@ -1,13 +1,13 @@
 { ... }:
 
 {
-  # Mako notification daemon (Gruvbox dark). Started via Hyprland exec-once.
+  # Mako notification daemon (Everforest dark hard). Started via Hyprland exec-once.
   xdg.configFile."mako/config".text = ''
     font=JetBrainsMono Nerd Font 11
-    background-color=#1d2021f0
-    text-color=#ebdbb2
-    border-color=#fe8019
-    progress-color=over #3c3836
+    background-color=#272e33f0
+    text-color=#d3c6aa
+    border-color=#a7c080
+    progress-color=over #2e383c
     border-size=2
     border-radius=10
     padding=12
@@ -18,10 +18,10 @@
     icons=1
 
     [urgency=low]
-    border-color=#928374
+    border-color=#859289
 
     [urgency=high]
-    border-color=#fb4934
+    border-color=#e67e80
     default-timeout=0
   '';
 }

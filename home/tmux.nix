@@ -18,20 +18,20 @@
 
     # Keep pane backgrounds owned by Kitty; only style tmux chrome.
     set -g status-position bottom
-    set -g status-style bg=default,fg='#ebdbb2'
+    set -g status-style bg=default,fg='#d3c6aa'
     set -g status-left-length 30
     set -g status-right-length 80
-    set -g status-left '#[fg=#b8bb26,bold]#S '
-    set -g status-right '#[fg=#83a598]%Y-%m-%d #[fg=#d3869b]%H:%M '
+    set -g status-left '#[fg=#a7c080,bold]#S '
+    set -g status-right '#[fg=#7fbbb3]%Y-%m-%d #[fg=#d699b6]%H:%M '
 
-    setw -g window-status-format '#[fg=#a89984] #I:#W '
-    setw -g window-status-current-format '#[fg=#1d2021,bg=#fabd2f,bold] #I:#W '
+    setw -g window-status-format '#[fg=#859289] #I:#W '
+    setw -g window-status-current-format '#[fg=#272e33,bg=#dbbc7f,bold] #I:#W '
     setw -g window-status-separator ""
 
-    set -g pane-border-style fg='#665c54'
-    set -g pane-active-border-style fg='#b8bb26'
-    set -g message-style bg='#3c3836',fg='#ebdbb2'
-    set -g mode-style bg='#83a598',fg='#1d2021'
+    set -g pane-border-style fg='#475258'
+    set -g pane-active-border-style fg='#a7c080'
+    set -g message-style bg='#2e383c',fg='#d3c6aa'
+    set -g mode-style bg='#7fbbb3',fg='#272e33'
 
     # Navigation and splits
     bind - split-window -v
