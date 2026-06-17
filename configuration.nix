@@ -10,6 +10,15 @@ let
     url = "https://github.com/nix-community/home-manager/archive/3ee51fbdac8c8bdfe1e7e1fcaba6520a563f394f.tar.gz";
     sha256 = "13fmry1jd0na71fxhzms9qf3ybj6shgvnphq4p1akxxmv44gzq20";
   };
+  sddmWallpaper = /home/ivan/Pictures/wallpapers/current.jpg;
+  sddmTheme = pkgs.runCommand "sddm-astronaut-current-wallpaper" { } ''
+    mkdir -p "$out"
+    cp -R ${pkgs.sddm-astronaut}/share/sddm/themes/sddm-astronaut-theme/. "$out/"
+    chmod -R u+w "$out"
+    cp ${sddmWallpaper} "$out/Backgrounds/current.jpg"
+    substituteInPlace "$out/Themes/astronaut.conf" \
+      --replace-fail 'Background="Backgrounds/astronaut.png"' 'Background="Backgrounds/current.jpg"'
+  '';
 in
 {
   imports = [
@@ -71,12 +80,23 @@ in
     xwayland.enable = true;
   };
 
-  # greetd + tuigreet: a minimal TUI login that launches Hyprland directly.
-  services.greetd = {
-    enable = true;
-    settings.default_session = {
-      command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --remember-session --asterisks --cmd Hyprland";
-      user = "greeter";
+  # SDDM is the display manager recommended by the Hyprland wiki. Enable its
+  # Wayland backend and pre-select the Hyprland session (lowercase session id,
+  # as provided by programs.hyprland).
+  services.displayManager.sddm.enable = true;
+  services.displayManager.sddm.wayland.enable = true;
+  services.displayManager.defaultSession = "hyprland";
+  services.displayManager.sddm.theme = "${sddmTheme}";
+  services.displayManager.sddm.extraPackages = with pkgs.qt6; [
+    qtmultimedia
+    qtvirtualkeyboard
+  ];
+
+  # Keep the login screen visually aligned with the rest of the desktop.
+  services.displayManager.sddm.settings = {
+    Theme = {
+      CursorTheme = "Bibata-Modern-Classic";
+      Font = "JetBrainsMono Nerd Font,14,-1,5,50,0,0,0,0,0";
     };
   };
 
@@ -93,7 +113,7 @@ in
 
   # Keyring for secrets/SSH; works standalone without GNOME. Unlock it on login.
   services.gnome.gnome-keyring.enable = true;
-  security.pam.services.greetd.enableGnomeKeyring = true;
+  security.pam.services.sddm.enableGnomeKeyring = true;
 
   # GVFS still provides trash, MTP and network mounts for Nautilus. The Google
   # Drive (GOA) backend is intentionally dropped here — see README for the
