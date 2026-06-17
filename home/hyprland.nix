@@ -110,8 +110,18 @@
     }
 
     gestures {
-        workspace_swipe_touch = 3
+        workspace_swipe_distance = 120
+        workspace_swipe_invert = true
+        workspace_swipe_min_speed_to_force = 5
+        workspace_swipe_cancel_ratio = 0.2
+        workspace_swipe_direction_lock = true
+        workspace_swipe_direction_lock_threshold = 10
+        workspace_swipe_create_new = false
+        workspace_swipe_forever = false
     }
+
+    # 3-finger horizontal swipe to switch workspaces.
+    gesture = 3, horizontal, workspace
 
     ###################
     ### KEYBINDINGS ###
