@@ -1,4 +1,8 @@
-{ ... }:
+{ pkgs, ... }:
+
+let
+  powerprofilesctl = "${pkgs.power-profiles-daemon}/bin/powerprofilesctl";
+in
 
 {
   xdg.configFile."waybar/config.jsonc".text = ''
@@ -13,7 +17,7 @@
 
       "modules-left": ["hyprland/workspaces", "hyprland/window"],
       "modules-center": ["clock"],
-      "modules-right": ["tray", "pulseaudio", "cpu", "memory", "battery", "custom/suspend", "custom/reboot", "custom/power"],
+      "modules-right": ["tray", "pulseaudio", "cpu", "memory", "battery", "power-profiles-daemon", "custom/suspend", "custom/reboot", "custom/power"],
 
       "hyprland/workspaces": {
         "format": "{name}",
@@ -54,6 +58,19 @@
         "format": "{icon}  {capacity}%",
         "format-charging": "  {capacity}%",
         "format-icons": ["", "", "", "", ""]
+      },
+
+      "power-profiles-daemon": {
+        "format": "{icon}  {profile}",
+        "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
+        "format-icons": {
+          "performance": "",
+          "balanced": "",
+          "power-saver": ""
+        },
+        "on-click": "${powerprofilesctl} set power-saver",
+        "on-click-right": "${powerprofilesctl} set balanced",
+        "on-click-middle": "${powerprofilesctl} set performance"
       },
 
       "tray": {
@@ -130,6 +147,7 @@
     #memory,
     #pulseaudio,
     #battery,
+    #power-profiles-daemon,
     #tray,
     #custom-logout,
     #custom-suspend,
@@ -143,6 +161,10 @@
     #memory { color: #7fbbb3; }
     #pulseaudio { color: #dbbc7f; }
     #battery { color: #d699b6; }
+    #power-profiles-daemon { color: #a7c080; }
+    #power-profiles-daemon.performance { color: #e67e80; }
+    #power-profiles-daemon.balanced { color: #dbbc7f; }
+    #power-profiles-daemon.power-saver { color: #a7c080; }
     #custom-logout { color: #e69875; }
     #custom-suspend { color: #7fbbb3; }
     #custom-reboot { color: #dbbc7f; }

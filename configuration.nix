@@ -36,6 +36,11 @@ in
   # Enable ZRAM for better memory management
   zramSwap.enable = true;
 
+  # Expose Lenovo firmware power profiles (performance/balanced/power-saver)
+  # over D-Bus for Waybar and powerprofilesctl.
+  services.power-profiles-daemon.enable = true;
+  services.upower.enable = true;
+
   networking.hostName = "spica"; # Define your hostname.
   # Keep generation titles short in the boot menu.
   system.nixos.label = "Spica";
@@ -254,6 +259,7 @@ in
     pkgs-unstable.github-copilot-cli
     pkgs-unstable.antigravity
     nil # Nix LSP server for vscode-nix-ide
+    power-profiles-daemon # powerprofilesctl
 
     wget
     ripgrep
