@@ -9,9 +9,9 @@ in
     {
       "layer": "top",
       "position": "top",
-      "height": 34,
-      "spacing": 6,
-      "margin-top": 6,
+      "height": 28,
+      "spacing": 4,
+      "margin-top": 10,
       "margin-left": 10,
       "margin-right": 10,
 
@@ -28,40 +28,41 @@ in
       },
 
       "hyprland/window": {
-        "max-length": 60,
+        "max-length": 44,
+        "swap-icon-label": false,
         "separate-outputs": true
       },
 
       "clock": {
-        "format": "  {:%a %d %b  %H:%M}",
+        "format": "{:%a %d %b   %H:%M}",
         "tooltip-format": "<tt><small>{calendar}</small></tt>"
       },
 
       "cpu": {
-        "format": "  {usage}%",
+        "format": " {usage}%",
         "interval": 2
       },
 
       "memory": {
-        "format": "  {percentage}%"
+        "format": " {percentage}%"
       },
 
       "pulseaudio": {
-        "format": "{icon}  {volume}%",
-        "format-muted": "󰖁  muted",
+        "format": "{icon} {volume}%",
+        "format-muted": "󰖁 muted",
         "format-icons": { "default": ["", "", ""] },
         "on-click": "pavucontrol"
       },
 
       "battery": {
         "states": { "warning": 30, "critical": 15 },
-        "format": "{icon}  {capacity}%",
-        "format-charging": "  {capacity}%",
+        "format": "{icon} {capacity}%",
+        "format-charging": " {capacity}%",
         "format-icons": ["", "", "", "", ""]
       },
 
       "power-profiles-daemon": {
-        "format": "{icon}  {profile}",
+        "format": "{icon}",
         "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
         "format-icons": {
           "performance": "",
@@ -74,8 +75,8 @@ in
       },
 
       "tray": {
-        "icon-size": 16,
-        "spacing": 8
+        "icon-size": 14,
+        "spacing": 6
       },
 
       "custom/logout": {
@@ -107,7 +108,7 @@ in
   xdg.configFile."waybar/style.css".text = ''
     * {
       font-family: "JetBrainsMono Nerd Font";
-      font-size: 13px;
+      font-size: 12px;
       border: none;
       border-radius: 0;
       min-height: 0;
@@ -116,11 +117,11 @@ in
     window#waybar {
       background: rgba(39, 46, 51, 0.85);
       color: #d3c6aa;
-      border-radius: 10px;
+      border-radius: 8px;
     }
 
     #workspaces button {
-      padding: 0 8px;
+      padding: 0 6px;
       color: #859289;
       background: transparent;
     }
@@ -128,18 +129,18 @@ in
     #workspaces button.active {
       color: #272e33;
       background: #a7c080;
-      border-radius: 8px;
+      border-radius: 6px;
     }
 
     #workspaces button:hover {
       color: #d3c6aa;
       background: #2e383c;
-      border-radius: 8px;
+      border-radius: 6px;
     }
 
     #window {
       color: #859289;
-      padding: 0 8px;
+      padding: 0 6px;
     }
 
     #clock,
@@ -153,7 +154,7 @@ in
     #custom-suspend,
     #custom-reboot,
     #custom-power {
-      padding: 0 10px;
+      padding: 0 7px;
       color: #d3c6aa;
     }
 
@@ -168,7 +169,10 @@ in
     #custom-logout { color: #e69875; }
     #custom-suspend { color: #7fbbb3; }
     #custom-reboot { color: #dbbc7f; }
-    #custom-power { color: #e67e80; }
+    #custom-power {
+      color: #e67e80;
+      padding-right: 12px;
+    }
 
     #battery.warning { color: #e69875; }
     #battery.critical { color: #e67e80; }

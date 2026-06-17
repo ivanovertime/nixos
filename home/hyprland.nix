@@ -66,9 +66,9 @@
         }
         shadow {
             enabled = true
-            range = 12
-            render_power = 3
-            color = rgba(1f2428ee)
+            range = 18
+            render_power = 2
+            color = rgba(1f242899)
         }
     }
 
