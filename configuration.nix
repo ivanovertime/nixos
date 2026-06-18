@@ -196,6 +196,7 @@ in
     htop
 
     vscode
+    antigravity
     dbeaver-bin
     cartero
 
