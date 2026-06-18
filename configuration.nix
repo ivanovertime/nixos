@@ -9,39 +9,28 @@ let
     url = "https://github.com/nix-community/home-manager/archive/refs/heads/release-26.05.tar.gz";
     sha256 = "10y7xwm4ykcs3pqyj80ri8vwgwwvzzax32f2vgpqb8qc25xv2sv4";
   };
+
+  celluloidDesktop = "io.github.celluloid_player.Celluloid.desktop";
 in
 {
   imports = [
-    # Include the results of the hardware scan.
     ./hardware-configuration.nix
     "${home-manager}/nixos"
   ];
 
-  # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  # Keep boot menu from growing indefinitely.
   boot.loader.systemd-boot.configurationLimit = 10;
 
-  # Enable ZRAM for better memory management
   zramSwap.enable = true;
 
-  networking.hostName = "spica"; # Define your hostname.
-  # Keep generation titles short in the boot menu.
+  networking.hostName = "spica";
   system.nixos.label = "Spica";
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
-  # Enable networking
   networking.networkmanager.enable = true;
 
-  # Set your time zone.
   time.timeZone = "America/Caracas";
 
-  # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
 
   i18n.extraLocaleSettings = {
@@ -56,14 +45,11 @@ in
     LC_TIME = "es_VE.UTF-8";
   };
 
-  # Enable the X11 windowing system.
   services.xserver.enable = true;
 
-  # Enable the GNOME Desktop Environment.
   services.displayManager.gdm.enable = true;
   services.desktopManager.gnome.enable = true;
 
-  # Required for Google Drive mounting via GNOME Online Accounts / Files.
   services.gnome.gnome-online-accounts.enable = true;
   services.gvfs.enable = true;
   services.gvfs.package = pkgs.gnome.gvfs.override {
@@ -73,19 +59,15 @@ in
   services.accounts-daemon.enable = true;
   programs.dconf.enable = true;
 
-  # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
     variant = "";
   };
 
-  # Enable CUPS to print documents.
   services.printing.enable = true;
 
-  # Enable firmware updates for supported devices.
   services.fwupd.enable = true;
 
-  # Enable sound with pipewire.
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -101,10 +83,8 @@ in
     #media-session.enable = true;
   };
 
-  # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.ivan = {
     isNormalUser = true;
     description = "Ivan Alvarez";
@@ -117,14 +97,12 @@ in
     ];
   };
 
-  # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
   nix.settings.experimental-features = [
     "nix-command"
     "flakes"
   ];
 
-  # Automated Nix store maintenance.
   nix.gc = {
     automatic = true;
     dates = "weekly";
@@ -133,7 +111,6 @@ in
 
   nix.optimise.automatic = true;
 
-  # Unattended weekly system upgrades on the stable channel.
   system.autoUpgrade = {
     enable = true;
     dates = "weekly";
@@ -151,6 +128,7 @@ in
     enable = true;
   };
 
+  # Home Manager is imported through the NixOS module.
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
@@ -173,76 +151,63 @@ in
   ];
 
   xdg.mime.defaultApplications = {
-    "audio/aac" = "io.github.celluloid_player.Celluloid.desktop";
-    "audio/flac" = "io.github.celluloid_player.Celluloid.desktop";
-    "audio/mp4" = "io.github.celluloid_player.Celluloid.desktop";
-    "audio/mpeg" = "io.github.celluloid_player.Celluloid.desktop";
-    "audio/ogg" = "io.github.celluloid_player.Celluloid.desktop";
-    "audio/wav" = "io.github.celluloid_player.Celluloid.desktop";
-    "audio/webm" = "io.github.celluloid_player.Celluloid.desktop";
-    "audio/x-flac" = "io.github.celluloid_player.Celluloid.desktop";
-    "audio/x-m4a" = "io.github.celluloid_player.Celluloid.desktop";
-    "audio/x-ms-wma" = "io.github.celluloid_player.Celluloid.desktop";
-    "audio/x-vorbis+ogg" = "io.github.celluloid_player.Celluloid.desktop";
-    "audio/x-wav" = "io.github.celluloid_player.Celluloid.desktop";
-    "video/mp4" = "io.github.celluloid_player.Celluloid.desktop";
-    "video/x-matroska" = "io.github.celluloid_player.Celluloid.desktop";
-    "video/webm" = "io.github.celluloid_player.Celluloid.desktop";
-    "video/x-msvideo" = "io.github.celluloid_player.Celluloid.desktop";
-    "video/quicktime" = "io.github.celluloid_player.Celluloid.desktop";
-    "video/mpeg" = "io.github.celluloid_player.Celluloid.desktop";
+    "audio/aac" = celluloidDesktop;
+    "audio/flac" = celluloidDesktop;
+    "audio/mp4" = celluloidDesktop;
+    "audio/mpeg" = celluloidDesktop;
+    "audio/ogg" = celluloidDesktop;
+    "audio/wav" = celluloidDesktop;
+    "audio/webm" = celluloidDesktop;
+    "audio/x-flac" = celluloidDesktop;
+    "audio/x-m4a" = celluloidDesktop;
+    "audio/x-ms-wma" = celluloidDesktop;
+    "audio/x-vorbis+ogg" = celluloidDesktop;
+    "audio/x-wav" = celluloidDesktop;
+    "video/mp4" = celluloidDesktop;
+    "video/mpeg" = celluloidDesktop;
+    "video/quicktime" = celluloidDesktop;
+    "video/webm" = celluloidDesktop;
+    "video/x-matroska" = celluloidDesktop;
+    "video/x-msvideo" = celluloidDesktop;
   };
 
-  # Make Qt applications follow GNOME/GTK theming.
   qt = {
     enable = true;
     platformTheme = "gnome";
     style = "adwaita-dark";
   };
 
-  # Force Chromium/Electron apps to use native Wayland
-  # Needed for Figma on Chrome.
   environment.sessionVariables = {
     NIXOS_OZONE_WL = "1";
   };
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
   environment.systemPackages = with pkgs; [
-    # Web Browsers
     google-chrome
 
-    # Core CLI Tools
     git
-    gh # GitHub CLI
+    gh
     github-copilot-cli
     antigravity
-    nil # Nix LSP server for vscode-nix-ide
-
+    nil
     wget
     ripgrep
     curl
     unzip
     htop
 
-    # Development Environments & Editors
     vscode
-    dbeaver-bin # Universal database tool
-    cartero # GNOME Circle API client (Postman alternative)
+    dbeaver-bin
+    cartero
 
-    # Media
     celluloid
-    fragments # GNOME Circle torrent client (qBittorrent alternative)
+    fragments
     gimp
     inkscape
 
-    # GNOME app to browse, search, and manage shell extensions
     gnome-extension-manager
-    menulibre # GUI menu editor for desktop entries/icons
-    # Install the closest supported Tela Circle dark variant in current Nixpkgs
+    menulibre
     (tela-circle-icon-theme.override { colorVariants = [ "green" ]; })
 
-    # GNOME Tweaks is required to change the desktop icon theme
     gnome-tweaks
   ];
 
@@ -259,41 +224,13 @@ in
     };
   };
 
-  # Microcode updates for AMD Ryzen
-
   hardware.cpu.amd.updateMicrocode = true;
 
-  # Enable graphics/hardware acceleration
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
   };
 
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
-
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
-
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "25.11"; # Did you read the comment?
 
 }
