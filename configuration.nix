@@ -187,7 +187,7 @@ in
     git
     gh
     github-copilot-cli
-    antigravity
+
     nil
     wget
     ripgrep
@@ -206,9 +206,8 @@ in
 
     gnome-extension-manager
     menulibre
-    (tela-circle-icon-theme.override { colorVariants = [ "green" ]; })
-
     gnome-tweaks
+    (tela-circle-icon-theme.override { colorVariants = [ "green" ]; })
   ];
 
   fonts = {
