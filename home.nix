@@ -22,6 +22,18 @@
     size = 24;
   };
 
+  gtk = {
+    enable = true;
+    theme = {
+      name = "Adwaita-dark";
+      package = pkgs.gnome-themes-extra;
+    };
+    iconTheme = {
+      name = "Tela-circle-green-dark";
+      package = pkgs.tela-circle-icon-theme.override { colorVariants = [ "green" ]; };
+    };
+  };
+
   dconf.settings = {
     "org/gnome/desktop/interface" = {
       cursor-theme = "Bibata-Modern-Classic";
