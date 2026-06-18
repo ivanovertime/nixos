@@ -228,14 +228,11 @@ in
     # Development Environments & Editors
     vscode
     dbeaver-bin # Universal database tool
-    # openrefine # Data cleaning and transformation tool
     cartero # GNOME Circle API client (Postman alternative)
-    fractal # GNOME Circle Matrix chat client (Slack alternative)
 
     # Media
     celluloid
     fragments # GNOME Circle torrent client (qBittorrent alternative)
-    gthumb
     gimp
     inkscape
 
