@@ -6,8 +6,8 @@
 
 let
   home-manager = builtins.fetchTarball {
-    url = "https://github.com/nix-community/home-manager/archive/refs/heads/release-25.11.tar.gz";
-    sha256 = "13fmry1jd0na71fxhzms9qf3ybj6shgvnphq4p1akxxmv44gzq20";
+    url = "https://github.com/nix-community/home-manager/archive/refs/heads/release-26.05.tar.gz";
+    sha256 = "10y7xwm4ykcs3pqyj80ri8vwgwwvzzax32f2vgpqb8qc25xv2sv4";
   };
 in
 {
@@ -68,7 +68,6 @@ in
   services.gvfs.enable = true;
   services.gvfs.package = pkgs.gnome.gvfs.override {
     gnomeSupport = true;
-    googleSupport = true;
   };
   services.gnome.gnome-keyring.enable = true;
   services.accounts-daemon.enable = true;
@@ -120,11 +119,6 @@ in
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
-  # Required for GVFS Google Drive backend (services.gvfs.package override).
-  nixpkgs.config.permittedInsecurePackages = [
-    "libsoup-2.74.3"
-  ];
-
   nix.settings.experimental-features = [
     "nix-command"
     "flakes"
@@ -143,7 +137,7 @@ in
   system.autoUpgrade = {
     enable = true;
     dates = "weekly";
-    channel = "https://nixos.org/channels/nixos-25.11";
+    channel = "https://nixos.org/channels/nixos-26.05";
     allowReboot = false;
   };
 
