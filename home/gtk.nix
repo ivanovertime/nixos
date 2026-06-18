@@ -26,11 +26,8 @@
     };
   };
 
-  # Configure Qt apps via qt5ct/qt6ct so they match Everforest tones.
-  home.sessionVariables = {
-    QT_QPA_PLATFORMTHEME = "qt6ct";
-  };
-
+  # Configure Qt5/Qt6 apps via qt5ct/qt6ct with consistent Everforest theming.
+  # qt5ct is the system platform theme; qt6ct is configured identically for consistency.
   xdg.configFile."qt5ct/qt5ct.conf".text = ''
     [Appearance]
     color_scheme_path=/home/ivan/.config/qt5ct/colors/everforest.conf

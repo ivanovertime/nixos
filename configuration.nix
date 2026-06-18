@@ -234,11 +234,11 @@ in
     "video/mpeg" = "io.github.celluloid_player.Celluloid.desktop";
   };
 
-  # Route Qt apps through qt5ct/qt6ct so user-level Everforest colors apply.
+  # Route Qt apps through qt5ct so user-level Everforest colors apply.
+  # qt5ct works for both Qt5 and Qt6 apps. Style is managed via qt5ct/qt6ct config files in home manager.
   qt = {
     enable = true;
     platformTheme = "qt5ct";
-    style = "adwaita-dark";
   };
 
   # Force Chromium/Electron apps to use native Wayland

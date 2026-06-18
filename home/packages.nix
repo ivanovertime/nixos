@@ -31,7 +31,6 @@
     file-roller
     libsForQt5.qt5ct
     kdePackages.qt6ct
-    kdePackages.qtstyleplugin-kvantum
   ] ++ [
     pkgs-unstable.kitty
   ];
