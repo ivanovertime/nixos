@@ -2,12 +2,11 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 let
-  pkgs-unstable = import <nixos-unstable> { config = config.nixpkgs.config; };
   home-manager = builtins.fetchTarball {
-    url = "https://github.com/nix-community/home-manager/archive/3ee51fbdac8c8bdfe1e7e1fcaba6520a563f394f.tar.gz";
+    url = "https://github.com/nix-community/home-manager/archive/refs/heads/release-25.11.tar.gz";
     sha256 = "13fmry1jd0na71fxhzms9qf3ybj6shgvnphq4p1akxxmv44gzq20";
   };
 in
@@ -140,11 +139,11 @@ in
 
   nix.optimise.automatic = true;
 
-  # Unattended weekly system upgrades on the unstable channel.
+  # Unattended weekly system upgrades on the stable channel.
   system.autoUpgrade = {
     enable = true;
     dates = "weekly";
-    channel = "https://nixos.org/channels/nixos-unstable";
+    channel = "https://nixos.org/channels/nixos-25.11";
     allowReboot = false;
   };
 
@@ -162,9 +161,6 @@ in
     useGlobalPkgs = true;
     useUserPackages = true;
     backupFileExtension = "hm-backup";
-    extraSpecialArgs = {
-      inherit pkgs-unstable;
-    };
     users.ivan = import ./home.nix;
   };
 
@@ -220,13 +216,13 @@ in
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     # Web Browsers
-    pkgs-unstable.google-chrome
+    google-chrome
 
     # Core CLI Tools
     git
     gh # GitHub CLI
-    pkgs-unstable.github-copilot-cli
-    pkgs-unstable.antigravity
+    github-copilot-cli
+    antigravity
     nil # Nix LSP server for vscode-nix-ide
 
     wget
@@ -236,21 +232,22 @@ in
     htop
 
     # Development Environments & Editors
-    pkgs-unstable.vscode # from nixos-unstable channel
-    pkgs-unstable.dbeaver-bin # Universal database tool
-    # pkgs-unstable.openrefine # Data cleaning and transformation tool
-    postman
-    slack
+    vscode
+    dbeaver-bin # Universal database tool
+    # openrefine # Data cleaning and transformation tool
+    cartero # GNOME Circle API client (Postman alternative)
+    fractal # GNOME Circle Matrix chat client (Slack alternative)
 
     # Media
     celluloid
-    pkgs-unstable.qbittorrent
-    pkgs-unstable.gthumb
-    pkgs-unstable.gimp
-    pkgs-unstable.inkscape
+    fragments # GNOME Circle torrent client (qBittorrent alternative)
+    gthumb
+    gimp
+    inkscape
 
     # GNOME app to browse, search, and manage shell extensions
     gnome-extension-manager
+    menulibre # GUI menu editor for desktop entries/icons
     # Install the closest supported Tela Circle dark variant in current Nixpkgs
     (tela-circle-icon-theme.override { colorVariants = [ "green" ]; })
 
