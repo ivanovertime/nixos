@@ -85,12 +85,15 @@ in
 
   # services.xserver.libinput.enable = true;
 
+  virtualisation.docker.enable = true;
+
   users.users.ivan = {
     isNormalUser = true;
     description = "Ivan Alvarez";
     extraGroups = [
       "networkmanager"
       "wheel"
+      "docker"
     ];
     packages = [
       #  thunderbird
