@@ -5,10 +5,7 @@
 { pkgs, ... }:
 
 let
-  home-manager = builtins.fetchTarball {
-    url = "https://github.com/nix-community/home-manager/archive/refs/heads/release-26.05.tar.gz";
-    sha256 = "10y7xwm4ykcs3pqyj80ri8vwgwwvzzax32f2vgpqb8qc25xv2sv4";
-  };
+  home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/refs/heads/release-26.05.tar.gz";
 
   celluloidDesktop = "io.github.celluloid_player.Celluloid.desktop";
 in
@@ -199,6 +196,7 @@ in
     htop
 
     vscode
+    android-studio
     antigravity
     dbeaver-bin
     cartero
