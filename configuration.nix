@@ -7,7 +7,11 @@
 let
   home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/refs/heads/release-26.05.tar.gz";
 
-  celluloidDesktop = "io.github.celluloid_player.Celluloid.desktop";
+  harunaDesktop = "org.kde.haruna.desktop";
+  gwenviewDesktop = "org.kde.gwenview.desktop";
+  okularDesktop = "org.kde.okular.desktop";
+  arkDesktop = "org.kde.ark.desktop";
+  kateDesktop = "org.kde.kate.desktop";
 in
 {
   imports = [
@@ -25,6 +29,11 @@ in
   system.nixos.label = "Spica";
 
   networking.networkmanager.enable = true;
+
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true;
+  };
 
   time.timeZone = "America/Caracas";
 
@@ -133,24 +142,43 @@ in
   };
 
   xdg.mime.defaultApplications = {
-    "audio/aac" = celluloidDesktop;
-    "audio/flac" = celluloidDesktop;
-    "audio/mp4" = celluloidDesktop;
-    "audio/mpeg" = celluloidDesktop;
-    "audio/ogg" = celluloidDesktop;
-    "audio/wav" = celluloidDesktop;
-    "audio/webm" = celluloidDesktop;
-    "audio/x-flac" = celluloidDesktop;
-    "audio/x-m4a" = celluloidDesktop;
-    "audio/x-ms-wma" = celluloidDesktop;
-    "audio/x-vorbis+ogg" = celluloidDesktop;
-    "audio/x-wav" = celluloidDesktop;
-    "video/mp4" = celluloidDesktop;
-    "video/mpeg" = celluloidDesktop;
-    "video/quicktime" = celluloidDesktop;
-    "video/webm" = celluloidDesktop;
-    "video/x-matroska" = celluloidDesktop;
-    "video/x-msvideo" = celluloidDesktop;
+    "audio/aac" = harunaDesktop;
+    "audio/flac" = harunaDesktop;
+    "audio/mp4" = harunaDesktop;
+    "audio/mpeg" = harunaDesktop;
+    "audio/ogg" = harunaDesktop;
+    "audio/wav" = harunaDesktop;
+    "audio/webm" = harunaDesktop;
+    "audio/x-flac" = harunaDesktop;
+    "audio/x-m4a" = harunaDesktop;
+    "audio/x-ms-wma" = harunaDesktop;
+    "audio/x-vorbis+ogg" = harunaDesktop;
+    "audio/x-wav" = harunaDesktop;
+    "video/mp4" = harunaDesktop;
+    "video/mpeg" = harunaDesktop;
+    "video/quicktime" = harunaDesktop;
+    "video/webm" = harunaDesktop;
+    "video/x-matroska" = harunaDesktop;
+    "video/x-msvideo" = harunaDesktop;
+
+    "application/pdf" = okularDesktop;
+
+    "image/bmp" = gwenviewDesktop;
+    "image/gif" = gwenviewDesktop;
+    "image/jpeg" = gwenviewDesktop;
+    "image/png" = gwenviewDesktop;
+    "image/svg+xml" = gwenviewDesktop;
+    "image/tiff" = gwenviewDesktop;
+    "image/webp" = gwenviewDesktop;
+
+    "application/zip" = arkDesktop;
+    "application/x-7z-compressed" = arkDesktop;
+    "application/x-rar" = arkDesktop;
+    "application/x-tar" = arkDesktop;
+    "application/x-xz" = arkDesktop;
+    "application/gzip" = arkDesktop;
+
+    "text/plain" = kateDesktop;
   };
 
   qt = {
@@ -180,12 +208,11 @@ in
     antigravity
     gemini-cli
     dbeaver-bin
-    cartero
 
-    celluloid
     gimp
     inkscape
-    gthumb
+    obs-studio
+    haruna
 
     qbittorrent
 
