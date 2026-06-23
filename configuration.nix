@@ -44,15 +44,11 @@ in
 
   services.xserver.enable = true;
 
-  services.displayManager.gdm.enable = true;
-  services.desktopManager.gnome.enable = true;
+  services.displayManager.sddm.enable = true;
+  services.displayManager.sddm.wayland.enable = true;
+  services.desktopManager.plasma6.enable = true;
 
-  services.gnome.gnome-online-accounts.enable = true;
   services.gvfs.enable = true;
-  services.gvfs.package = pkgs.gnome.gvfs.override {
-    gnomeSupport = true;
-  };
-  services.gnome.gnome-keyring.enable = true;
   services.accounts-daemon.enable = true;
   programs.dconf.enable = true;
 
@@ -136,20 +132,6 @@ in
     users.ivan = import ./home.nix;
   };
 
-  environment.gnome.excludePackages = with pkgs; [
-    decibels
-    epiphany
-    geary
-    gnome-connections
-    gnome-contacts
-    gnome-maps
-    gnome-music
-    gnome-tour
-    gnome-user-docs
-    gnome-weather
-    showtime
-  ];
-
   xdg.mime.defaultApplications = {
     "audio/aac" = celluloidDesktop;
     "audio/flac" = celluloidDesktop;
@@ -173,8 +155,7 @@ in
 
   qt = {
     enable = true;
-    platformTheme = "gnome";
-    style = "adwaita-dark";
+    platformTheme = "kde";
   };
 
   environment.sessionVariables = {
@@ -202,16 +183,12 @@ in
     cartero
 
     celluloid
-    fragments
     gimp
     inkscape
     gthumb
 
     qbittorrent
 
-    gnome-extension-manager
-    menulibre
-    gnome-tweaks
     (tela-circle-icon-theme.override { colorVariants = [ "green" ]; })
   ];
 
