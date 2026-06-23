@@ -196,8 +196,8 @@ in
     htop
 
     vscode
-    android-studio
     antigravity
+    gemini-cli
     dbeaver-bin
     cartero
 
@@ -205,6 +205,9 @@ in
     fragments
     gimp
     inkscape
+    gthumb
+
+    qbittorrent
 
     gnome-extension-manager
     menulibre
