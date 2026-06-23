@@ -61,6 +61,14 @@ in
   services.accounts-daemon.enable = true;
   programs.dconf.enable = true;
 
+  xdg.portal = {
+    enable = true;
+    xdgOpenUsePortal = true;
+    extraPortals = with pkgs; [
+      kdePackages.xdg-desktop-portal-kde
+    ];
+  };
+
   services.xserver.xkb = {
     layout = "us";
     variant = "";

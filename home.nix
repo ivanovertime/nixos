@@ -17,12 +17,12 @@
   gtk = {
     enable = true;
     gtk4.theme = {
-      name = "Adwaita-dark";
-      package = pkgs.gnome-themes-extra;
+      name = "Breeze";
+      package = pkgs.kdePackages.breeze-gtk;
     };
     theme = {
-      name = "Adwaita-dark";
-      package = pkgs.gnome-themes-extra;
+      name = "Breeze";
+      package = pkgs.kdePackages.breeze-gtk;
     };
     iconTheme = {
       name = "Tela-circle-green-dark";
@@ -34,13 +34,13 @@
     "org/gnome/desktop/interface" = {
       cursor-theme = "Bibata-Modern-Classic";
       cursor-size = 24;
-      gtk-theme = "Adwaita-dark";
+      gtk-theme = "Breeze";
       icon-theme = "Tela-circle-green-dark";
-      color-scheme = "prefer-dark";
+      color-scheme = "default";
     };
 
     "org/gnome/desktop/wm/preferences" = {
-      theme = "Adwaita-dark";
+      theme = "Breeze";
     };
   };
 
