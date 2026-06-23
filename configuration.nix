@@ -203,7 +203,7 @@ in
 
     git
     gh
-    github-copilot-cli
+    opencode
 
     nil
     wget
@@ -214,13 +214,13 @@ in
 
     vscode
     antigravity
-    gemini-cli
     dbeaver-bin
 
     gimp
     inkscape
     obs-studio
     haruna
+    vlc
 
     qbittorrent
 
