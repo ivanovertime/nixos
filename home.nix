@@ -22,11 +22,11 @@
   gtk = {
     enable = true;
     gtk4.theme = {
-      name = "Breeze";
+      name = "Breeze-Dark";
       package = pkgs.kdePackages.breeze-gtk;
     };
     theme = {
-      name = "Breeze";
+      name = "Breeze-Dark";
       package = pkgs.kdePackages.breeze-gtk;
     };
     iconTheme = {
@@ -39,9 +39,9 @@
     "org/gnome/desktop/interface" = {
       cursor-theme = "Bibata-Modern-Classic";
       cursor-size = 24;
-      gtk-theme = "Breeze";
+      gtk-theme = "Breeze-Dark";
       icon-theme = "Tela-circle-green-dark";
-      color-scheme = "default";
+      color-scheme = "prefer-dark";
     };
 
     "org/gnome/desktop/wm/preferences" = {
@@ -56,9 +56,9 @@
   programs.helix = {
     enable = true;
     defaultEditor = true;
-    theme = "base16_default_dark";
 
     settings = {
+      theme = "base16_terminal";
       editor = {
         line-number = "relative";
         cursorline = true;

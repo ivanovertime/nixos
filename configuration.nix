@@ -189,11 +189,6 @@ in
     "text/plain" = kateDesktop;
   };
 
-  qt = {
-    enable = true;
-    platformTheme = "kde";
-  };
-
   environment.sessionVariables = {
     NIXOS_OZONE_WL = "1";
   };
@@ -210,7 +205,7 @@ in
     ripgrep
     curl
     unzip
-    htop
+    btop
 
     vscode
     antigravity
