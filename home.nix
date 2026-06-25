@@ -19,33 +19,11 @@
     size = 24;
   };
 
-  gtk = {
-    enable = true;
-    gtk4.theme = {
-      name = "Breeze-Dark";
-      package = pkgs.kdePackages.breeze-gtk;
-    };
-    theme = {
-      name = "Breeze-Dark";
-      package = pkgs.kdePackages.breeze-gtk;
-    };
-    iconTheme = {
-      name = "Tela-circle-green-dark";
-      package = pkgs.tela-circle-icon-theme.override { colorVariants = [ "green" ]; };
-    };
-  };
-
   dconf.settings = {
     "org/gnome/desktop/interface" = {
       cursor-theme = "Bibata-Modern-Classic";
       cursor-size = 24;
-      gtk-theme = "Breeze-Dark";
-      icon-theme = "Tela-circle-green-dark";
       color-scheme = "prefer-dark";
-    };
-
-    "org/gnome/desktop/wm/preferences" = {
-      theme = "Breeze";
     };
   };
 

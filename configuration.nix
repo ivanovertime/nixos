@@ -6,12 +6,6 @@
 
 let
   home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/refs/heads/release-26.05.tar.gz";
-
-  harunaDesktop = "org.kde.haruna.desktop";
-  gwenviewDesktop = "org.kde.gwenview.desktop";
-  okularDesktop = "org.kde.okular.desktop";
-  arkDesktop = "org.kde.ark.desktop";
-  kateDesktop = "org.kde.kate.desktop";
 in
 {
   imports = [
@@ -53,19 +47,22 @@ in
 
   services.xserver.enable = true;
 
-  services.displayManager.sddm.enable = true;
-  services.displayManager.sddm.wayland.enable = true;
-  services.desktopManager.plasma6.enable = true;
+  services.displayManager.cosmic-greeter.enable = true;
+  services.desktopManager.cosmic.enable = true;
+
+  environment.cosmic.excludePackages = with pkgs; [ cosmic-store ];
 
   services.gvfs.enable = true;
   services.accounts-daemon.enable = true;
   programs.dconf.enable = true;
 
+  services.system76-scheduler.enable = true;
+
   xdg.portal = {
     enable = true;
     xdgOpenUsePortal = true;
     extraPortals = with pkgs; [
-      kdePackages.xdg-desktop-portal-kde
+      xdg-desktop-portal-cosmic
     ];
   };
 
@@ -149,48 +146,9 @@ in
     users.ivan = import ./home.nix;
   };
 
-  xdg.mime.defaultApplications = {
-    "audio/aac" = harunaDesktop;
-    "audio/flac" = harunaDesktop;
-    "audio/mp4" = harunaDesktop;
-    "audio/mpeg" = harunaDesktop;
-    "audio/ogg" = harunaDesktop;
-    "audio/wav" = harunaDesktop;
-    "audio/webm" = harunaDesktop;
-    "audio/x-flac" = harunaDesktop;
-    "audio/x-m4a" = harunaDesktop;
-    "audio/x-ms-wma" = harunaDesktop;
-    "audio/x-vorbis+ogg" = harunaDesktop;
-    "audio/x-wav" = harunaDesktop;
-    "video/mp4" = harunaDesktop;
-    "video/mpeg" = harunaDesktop;
-    "video/quicktime" = harunaDesktop;
-    "video/webm" = harunaDesktop;
-    "video/x-matroska" = harunaDesktop;
-    "video/x-msvideo" = harunaDesktop;
-
-    "application/pdf" = okularDesktop;
-
-    "image/bmp" = gwenviewDesktop;
-    "image/gif" = gwenviewDesktop;
-    "image/jpeg" = gwenviewDesktop;
-    "image/png" = gwenviewDesktop;
-    "image/svg+xml" = gwenviewDesktop;
-    "image/tiff" = gwenviewDesktop;
-    "image/webp" = gwenviewDesktop;
-
-    "application/zip" = arkDesktop;
-    "application/x-7z-compressed" = arkDesktop;
-    "application/x-rar" = arkDesktop;
-    "application/x-tar" = arkDesktop;
-    "application/x-xz" = arkDesktop;
-    "application/gzip" = arkDesktop;
-
-    "text/plain" = kateDesktop;
-  };
-
   environment.sessionVariables = {
     NIXOS_OZONE_WL = "1";
+    COSMIC_DATA_CONTROL_ENABLED = "1";
   };
 
   environment.systemPackages = with pkgs; [
@@ -214,7 +172,6 @@ in
     gimp
     inkscape
     obs-studio
-    haruna
     vlc
 
     qbittorrent
