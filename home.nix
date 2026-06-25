@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   home.username = "ivan";
@@ -46,6 +46,20 @@
       icon-theme = "Tela-circle-green-dark";
     };
   };
+
+  # Add COSMIC icon aliases in the active Tela theme to avoid duplicate launchers.
+  xdg.dataFile."icons/Tela-circle-green-dark/scalable/apps/com.system76.CosmicFiles.svg".source =
+    "${pkgs.tela-circle-icon-theme.override { colorVariants = [ "green" ]; }}/share/icons/Tela-circle-green-dark/scalable/apps/file-manager.svg";
+  xdg.dataFile."icons/Tela-circle-green-dark/scalable/apps/com.system76.CosmicTerm.svg".source =
+    "${pkgs.tela-circle-icon-theme.override { colorVariants = [ "green" ]; }}/share/icons/Tela-circle-green-dark/scalable/apps/terminal.svg";
+  xdg.dataFile."icons/Tela-circle-green-dark/scalable/apps/com.system76.CosmicSettings.svg".source =
+    "${pkgs.tela-circle-icon-theme.override { colorVariants = [ "green" ]; }}/share/icons/Tela-circle-green-dark/scalable/apps/preferences-system.svg";
+  xdg.dataFile."icons/Tela-circle-green-dark/scalable/apps/com.system76.CosmicEdit.svg".source =
+    "${pkgs.tela-circle-icon-theme.override { colorVariants = [ "green" ]; }}/share/icons/Tela-circle-green-dark/scalable/apps/text-editor.svg";
+  xdg.dataFile."icons/Tela-circle-green-dark/scalable/apps/com.system76.CosmicPlayer.svg".source =
+    "${pkgs.tela-circle-icon-theme.override { colorVariants = [ "green" ]; }}/share/icons/Tela-circle-green-dark/scalable/apps/totem.svg";
+  xdg.dataFile."icons/Tela-circle-green-dark/scalable/apps/com.system76.CosmicReader.svg".source =
+    "${pkgs.tela-circle-icon-theme.override { colorVariants = [ "green" ]; }}/share/icons/Tela-circle-green-dark/scalable/apps/accessories-document-viewer.svg";
 
   programs.tmux.enable = true;
 
