@@ -172,9 +172,6 @@ in
     gimp
     inkscape
     obs-studio
-    vlc
-
-    qbittorrent
 
     (tela-circle-icon-theme.override { colorVariants = [ "green" ]; })
   ];
