@@ -50,7 +50,10 @@ in
   services.displayManager.cosmic-greeter.enable = true;
   services.desktopManager.cosmic.enable = true;
 
-  environment.cosmic.excludePackages = with pkgs; [ cosmic-store ];
+  environment.cosmic.excludePackages = with pkgs; [
+    cosmic-store
+    cosmic-player
+  ];
 
   services.gvfs.enable = true;
   services.accounts-daemon.enable = true;
@@ -166,12 +169,13 @@ in
     btop
 
     vscode
-    antigravity
     dbeaver-bin
 
     gimp
     inkscape
     obs-studio
+    celluloid
+    transmission_4-gtk
 
     (tela-circle-icon-theme.override { colorVariants = [ "green" ]; })
   ];

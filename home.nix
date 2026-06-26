@@ -28,6 +28,14 @@
 
   xdg.configFile."gtk-4.0/gtk.css".force = true;
 
+  xdg.mimeApps = {
+    enable = true;
+    defaultApplications = {
+      "video/mp4" = [ "io.github.celluloid_player.Celluloid.desktop" ];
+      "application/mp4" = [ "io.github.celluloid_player.Celluloid.desktop" ];
+    };
+  };
+
   # Keep cursor/theme defaults declarative so old state is overwritten on rebuild.
   home.pointerCursor = {
     gtk.enable = true;
