@@ -16,6 +16,11 @@ in
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.systemd-boot.configurationLimit = 10;
+  # AMD Barcelo (Vega) APU + dual display (eDP + HDMI).
+  # sg_display=0 avoids scatter-gather display buffers that glitch on APUs
+  # using system RAM as VRAM. dcdebugmask=0x10 was REMOVED: it disables pipe
+  # split and made the dcn21 secondary-pipe path (the one that warns/resets) worse.
+  boot.kernelParams = [ "amdgpu.sg_display=0" ];
 
   zramSwap.enable = true;
 
@@ -152,6 +157,13 @@ in
   environment.sessionVariables = {
     NIXOS_OZONE_WL = "1";
     COSMIC_DATA_CONTROL_ENABLED = "1";
+    # Disabling direct/overlay scanout stops cosmic-comp from promoting windows
+    # to hardware planes. On this Barcelo (DCN21) APU the secondary-pipe/bandwidth
+    # validation fails (see dmesg: dcn21_validate_bandwidth / MODE2 reset), which
+    # shows up as flicker when a window like Chrome is composited. These are the
+    # real cosmic-comp variables (verified in the binary), unlike COSMIC_FORCE_VRR.
+    COSMIC_DISABLE_DIRECT_SCANOUT = "1";
+    COSMIC_DISABLE_OVERLAY_SCANOUT = "1";
   };
 
   environment.systemPackages = with pkgs; [
@@ -193,6 +205,7 @@ in
     };
   };
 
+  hardware.enableRedistributableFirmware = true;
   hardware.cpu.amd.updateMicrocode = true;
 
   hardware.graphics = {
