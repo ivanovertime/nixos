@@ -184,6 +184,7 @@ in
     dbeaver-bin
 
     gimp
+    gthumb
     inkscape
     obs-studio
     celluloid
