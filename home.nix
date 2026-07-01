@@ -1,5 +1,20 @@
 { pkgs, ... }:
 
+let
+  autosubLua =
+    builtins.replaceStrings
+      [
+        "            { 'English', 'en', 'eng' },"
+        "            { 'Dutch', 'nl', 'dut' },"
+        "--          { 'Spanish', 'es', 'spa' },"
+      ]
+      [
+        "            { 'Spanish', 'es', 'spa' },"
+        "            { 'English', 'en', 'eng' },"
+        "--          { 'Dutch', 'nl', 'dut' },"
+      ]
+      (builtins.readFile "${pkgs.mpvScripts.autosub}/share/mpv/scripts/autosub.lua");
+in
 {
   home.username = "ivan";
   home.homeDirectory = "/home/ivan";
@@ -146,6 +161,20 @@ EOF
   };
 
   xdg.configFile."gtk-4.0/gtk.css".force = true;
+
+  # Keep autosub available for both plain mpv config and Celluloid's plugin dir.
+  xdg.configFile."mpv/scripts/autosub.lua".text = autosubLua;
+  xdg.configFile."celluloid/scripts/autosub.lua".text = autosubLua;
+
+  # Resolve key conflicts by mapping keys explicitly to autosub script commands.
+  xdg.configFile."mpv/input.conf".text = ''
+    b script-binding autosub/download_subs
+    n script-binding autosub/download_subs2
+  '';
+  xdg.configFile."celluloid/input.conf".text = ''
+    b script-binding autosub/download_subs
+    n script-binding autosub/download_subs2
+  '';
 
   xdg.mimeApps = {
     enable = true;
