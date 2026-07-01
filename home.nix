@@ -1,19 +1,8 @@
 { pkgs, ... }:
 
 let
-  autosubLua =
-    builtins.replaceStrings
-      [
-        "            { 'English', 'en', 'eng' },"
-        "            { 'Dutch', 'nl', 'dut' },"
-        "--          { 'Spanish', 'es', 'spa' },"
-      ]
-      [
-        "            { 'Spanish', 'es', 'spa' },"
-        "            { 'English', 'en', 'eng' },"
-        "--          { 'Dutch', 'nl', 'dut' },"
-      ]
-      (builtins.readFile "${pkgs.mpvScripts.autosub}/share/mpv/scripts/autosub.lua");
+  celluloidAutosub = ./config/celluloid/autosub.lua;
+  celluloidInput = ./config/celluloid/input.conf;
 in
 {
   home.username = "ivan";
@@ -38,6 +27,7 @@ in
     shellcheck
     git
     nodejs
+    python3Packages.subliminal
     (aspellWithDicts (dicts: with dicts; [ en es ]))
     nil
     nixfmt-rfc-style
@@ -163,18 +153,12 @@ EOF
   xdg.configFile."gtk-4.0/gtk.css".force = true;
 
   # Keep autosub available for both plain mpv config and Celluloid's plugin dir.
-  xdg.configFile."mpv/scripts/autosub.lua".text = autosubLua;
-  xdg.configFile."celluloid/scripts/autosub.lua".text = autosubLua;
+  xdg.configFile."mpv/scripts/autosub.lua".source = celluloidAutosub;
+  xdg.configFile."celluloid/scripts/autosub.lua".source = celluloidAutosub;
 
   # Resolve key conflicts by mapping keys explicitly to autosub script commands.
-  xdg.configFile."mpv/input.conf".text = ''
-    b script-binding autosub/download_subs
-    n script-binding autosub/download_subs2
-  '';
-  xdg.configFile."celluloid/input.conf".text = ''
-    b script-binding autosub/download_subs
-    n script-binding autosub/download_subs2
-  '';
+  xdg.configFile."mpv/input.conf".source = celluloidInput;
+  xdg.configFile."celluloid/input.conf".source = celluloidInput;
 
   xdg.mimeApps = {
     enable = true;
