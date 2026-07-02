@@ -163,6 +163,18 @@ EOF
   xdg.mimeApps = {
     enable = true;
     defaultApplications = {
+      "image/apng" = [ "org.gnome.Loupe.desktop" ];
+      "image/avif" = [ "org.gnome.Loupe.desktop" ];
+      "image/bmp" = [ "org.gnome.Loupe.desktop" ];
+      "image/gif" = [ "org.gnome.Loupe.desktop" ];
+      "image/heic" = [ "org.gnome.Loupe.desktop" ];
+      "image/jpeg" = [ "org.gnome.Loupe.desktop" ];
+      "image/jpg" = [ "org.gnome.Loupe.desktop" ];
+      "image/jxl" = [ "org.gnome.Loupe.desktop" ];
+      "image/png" = [ "org.gnome.Loupe.desktop" ];
+      "image/svg+xml" = [ "org.gnome.Loupe.desktop" ];
+      "image/tiff" = [ "org.gnome.Loupe.desktop" ];
+      "image/webp" = [ "org.gnome.Loupe.desktop" ];
       "video/mp4" = [ "io.github.celluloid_player.Celluloid.desktop" ];
       "application/mp4" = [ "io.github.celluloid_player.Celluloid.desktop" ];
     };
@@ -200,6 +212,8 @@ EOF
     "${pkgs.tela-circle-icon-theme.override { colorVariants = [ "green" ]; }}/share/icons/Tela-circle-green-dark/scalable/apps/totem.svg";
   xdg.dataFile."icons/Tela-circle-green-dark/scalable/apps/com.system76.CosmicReader.svg".source =
     "${pkgs.tela-circle-icon-theme.override { colorVariants = [ "green" ]; }}/share/icons/Tela-circle-green-dark/scalable/apps/accessories-document-viewer.svg";
+  xdg.dataFile."icons/Tela-circle-green-dark/scalable/apps/org.gnome.Loupe.svg".source =
+    "${pkgs.tela-circle-icon-theme.override { colorVariants = [ "green" ]; }}/share/icons/Tela-circle-green-dark/scalable/apps/accessories-image-viewer.svg";
 
   programs.tmux.enable = true;
 
