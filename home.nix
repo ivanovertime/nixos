@@ -12,126 +12,17 @@ in
   home.sessionVariables = {
     EDITOR = "hx";
     VISUAL = "hx";
-    DOOMDIR = "$HOME/.config/doom";
   };
 
-  home.sessionPath = [
-    "$HOME/.config/emacs/bin"
-  ];
-
   home.packages = with pkgs; [
-    # Doom Emacs runtime dependencies and common helpers.
-    emacs
     fd
     ripgrep
     shellcheck
     git
-    nodejs
     python3Packages.subliminal
     (aspellWithDicts (dicts: with dicts; [ en es ]))
     nil
     nixfmt-rfc-style
-
-    (writeShellScriptBin "doom-bootstrap" ''
-      set -euo pipefail
-
-      if [ ! -d "$HOME/.config/emacs/.git" ]; then
-        echo "Cloning Doom Emacs..."
-        git clone --depth 1 https://github.com/doomemacs/doomemacs "$HOME/.config/emacs"
-      fi
-
-      # Plain `emacs` should point to Doom's core directory.
-      if [ -e "$HOME/.emacs.d" ] && [ ! -L "$HOME/.emacs.d" ]; then
-        rm -rf "$HOME/.emacs.d"
-      fi
-      ln -sfn "$HOME/.config/emacs" "$HOME/.emacs.d"
-
-      mkdir -p "$HOME/.config/doom"
-
-      if [ ! -f "$HOME/.config/doom/init.el" ]; then
-        cat > "$HOME/.config/doom/init.el" <<'EOF'
-(doom! :completion
-       company
-       (vertico +icons)
-
-       :ui
-       doom
-       doom-dashboard
-       hl-todo
-       modeline
-       nav-flash
-       ophints
-       (popup +defaults)
-       vc-gutter
-       vi-tilde-fringe
-       workspaces
-
-       :editor
-       (evil +everywhere)
-       file-templates
-       fold
-       snippets
-
-       :emacs
-       dired
-       electric
-       undo
-       vc
-
-       :checkers
-       syntax
-       spell
-
-       :tools
-       direnv
-       editorconfig
-       eval
-       lookup
-       lsp
-       magit
-       tree-sitter
-
-       :os
-       (:if IS-LINUX tty)
-
-       :lang
-       emacs-lisp
-       markdown
-       (nix +lsp)
-       (org +pretty)
-       (python +lsp)
-       (web +lsp)
-       yaml
-
-       :config
-       (default +bindings +smartparens))
-EOF
-      fi
-
-      if [ ! -f "$HOME/.config/doom/config.el" ]; then
-        cat > "$HOME/.config/doom/config.el" <<'EOF'
-(setq user-full-name "Ivan Alvarez"
-      user-mail-address "alvarezlopezivanenrique@gmail.com")
-
-(setq doom-theme 'doom-zenburn
-      doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 14))
-EOF
-      fi
-
-      if [ ! -f "$HOME/.config/doom/packages.el" ]; then
-        cat > "$HOME/.config/doom/packages.el" <<'EOF'
-;; Place your private package declarations here.
-EOF
-      fi
-
-      if [ ! -f "$HOME/.local/share/doom/profiles.el" ]; then
-        echo "Running first-time Doom install..."
-        "$HOME/.config/emacs/bin/doom" install
-      else
-        echo "Doom already installed; syncing modules..."
-        "$HOME/.config/emacs/bin/doom" sync -u
-      fi
-    '')
   ];
 
   gtk = {
