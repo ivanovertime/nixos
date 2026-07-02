@@ -108,6 +108,13 @@ in
 
   programs.tmux.enable = true;
 
+  programs.zellij = {
+    enable = true;
+    settings = {
+      theme = "everforest-dark";
+    };
+  };
+
   programs.ranger.enable = true;
 
   programs.helix = {
