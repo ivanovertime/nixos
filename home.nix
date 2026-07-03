@@ -22,7 +22,7 @@ in
     python3Packages.subliminal
     (aspellWithDicts (dicts: with dicts; [ en es ]))
     nil
-    nixfmt-rfc-style
+    nixfmt
   ];
 
   gtk = {
@@ -106,8 +106,6 @@ in
   xdg.dataFile."icons/Tela-circle-green-dark/scalable/apps/org.gnome.Loupe.svg".source =
     "${pkgs.tela-circle-icon-theme.override { colorVariants = [ "green" ]; }}/share/icons/Tela-circle-green-dark/scalable/apps/accessories-image-viewer.svg";
 
-  programs.tmux.enable = true;
-
   programs.zellij = {
     enable = true;
     settings = {
@@ -115,14 +113,39 @@ in
     };
   };
 
-  programs.yazi.enable = true;
+  programs.yazi = {
+    enable = true;
+    shellWrapperName = "yy";
+  };
+  
+  programs.eza = {
+    enable = true;
+    icons = "always";
+    colors = "auto";
+    git = true;
+    extraOptions = [
+      "--group-directories-first"
+      "--header"
+    ];
+  };
+
+  programs.bash = {
+    enable = true;
+    shellAliases = {
+      ls = "eza --icons=always --group-directories-first";
+      ll = "eza --long --git --icons=always --group-directories-first --header";
+      la = "eza --all --icons=always --group-directories-first";
+      lla = "eza --long --all --git --icons=always --group-directories-first --header";
+      lt = "eza --tree --icons=always";
+    };
+  };
 
   programs.helix = {
     enable = true;
     defaultEditor = true;
 
     settings = {
-      theme = "base16_terminal";
+      theme = "zenburn";
       editor = {
         line-number = "relative";
         cursorline = true;
