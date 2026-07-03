@@ -115,7 +115,7 @@ in
     };
   };
 
-  programs.ranger.enable = true;
+  programs.yazi.enable = true;
 
   programs.helix = {
     enable = true;
