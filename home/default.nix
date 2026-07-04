@@ -39,10 +39,17 @@
 
     # Language tools
     python3Packages.subliminal
-    (aspellWithDicts (dicts: with dicts; [ en es ]))
+    (aspellWithDicts (
+      dicts: with dicts; [
+        en
+        es
+      ]
+    ))
   ];
 
   programs.starship.enable = true;
+
+  programs.antigravity.enable = true;
 
   programs.home-manager.enable = true;
 }

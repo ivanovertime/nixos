@@ -17,6 +17,9 @@
     celluloid
     transmission_4-gtk
 
+    # Clipboard
+    diodon
+
     # Theming
     (tela-circle-icon-theme.override { colorVariants = [ "green" ]; })
   ];
