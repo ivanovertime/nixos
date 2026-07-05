@@ -18,7 +18,7 @@
     transmission_4-gtk
 
     # Clipboard
-    diodon
+    copyq
 
     # Theming
     (tela-circle-icon-theme.override { colorVariants = [ "green" ]; })
