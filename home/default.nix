@@ -28,14 +28,15 @@
     shellcheck
     git
     gh
-    pkgs-unstable.opencode
-    pkgs-unstable.vscode
-    pkgs-unstable.antigravity
     curl
     wget
     unzip
     btop
-    starship
+    pkgs-unstable.opencode
+    
+    # GUI tools
+    pkgs-unstable.vscode
+    pkgs-unstable.antigravity
 
     # Nix tooling
     nil
@@ -53,6 +54,8 @@
       ]
     ))
   ];
+
+  programs.starship.enable = true;
 
   programs.home-manager.enable = true;
 }
