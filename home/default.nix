@@ -9,7 +9,8 @@
     ./desktop/icons.nix
     ./desktop/clipboard.nix
     ./desktop/mime.nix
-    ./programs/celluloid.nix
+    ./programs/celluloid
+    ./programs/opencode
   ];
 
   home.username = "ivan";
@@ -31,7 +32,6 @@
     wget
     unzip
     btop
-    pkgs-unstable.opencode
 
     # GUI tools
     pkgs-unstable.vscode

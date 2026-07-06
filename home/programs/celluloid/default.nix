@@ -1,8 +1,8 @@
 { ... }:
 
 let
-  celluloidAutosub = ../../config/celluloid/autosub.lua;
-  celluloidInput = ../../config/celluloid/input.conf;
+  celluloidAutosub = ./autosub.lua;
+  celluloidInput = ./input.conf;
 in
 {
   # Keep autosub available for both plain mpv config and Celluloid's plugin dir.
