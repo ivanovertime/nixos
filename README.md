@@ -1,139 +1,116 @@
-# ❄️ NixOS Configuration
+# NixOS Configuration
 
 [![NixOS](https://img.shields.io/badge/NixOS-system-blue.svg?style=for-the-badge&logo=NixOS&logoColor=white)](https://nixos.org/)
 [![Reproducible Code](https://img.shields.io/badge/Reproducible-Yes-success.svg?style=for-the-badge)](#)
 [![Declarative](https://img.shields.io/badge/Infrastructure_as_Code-Yes-orange.svg?style=for-the-badge)](#)
 
-Welcome to my personal [NixOS](https://nixos.org/) system configuration repository! 
+Yet another NixOS flake. This one belongs to me.
 
-This repository serves as a single source of truth for my computing environment. By leveraging the power of NixOS, my entire operating system—including packages, configurations, user permissions, and services—is defined purely through code.
-
----
-
-## 🚀 Why NixOS? (Developer Perspective)
-
-For engineers and developers aiming for a robust workflow, Nix OS provides world-class guarantees:
-- **Declarative Configuration:** The complete system architecture is mapped out in readable `.nix` files, eliminating unpredictable "system rot" and hidden state.
-- **Reproducibility:** A given configuration reliably produces the exact same environment across different machines. No more *"it works on my machine"* anomalies.
-- **Atomic Upgrades & Rollbacks:** Changes to the system are atomic. If an update breaks the environment, I can trivially rollback to the previous generation via the bootloader.
-- **Development Shells:** Strict isolation of project dependencies via `nix-shell` or `nix develop`, keeping the host system completely clean.
-
-## 👨‍💻 Highlights for Recruiters
-
-If you're evaluating my technical background, this repository is a practical demonstration of my skills in:
-- **Infrastructure as Code (IaC):** Treating system administration as software engineering.
-- **Linux Systems Architecture:** Low-level configuration of bootloaders, kernel modules, filesystems, and `systemd` daemon services.
-- **Automation First:** Demonstrating a relentless commitment to automation, reliability, and eliminating manual configuration toil.
-- **Functional Package Management:** Using advanced dependency graphs and immutable system directories to eliminate variable side effects.
+Everything my computer does is specified in `.nix` files. This is either the future of system administration or a very elaborate way to avoid learning how to configure things properly.
 
 ---
 
-## 📂 Repository Structure
+## Why NixOS?
+
+- **Declarative Configuration:** My entire OS is one big config file. When it breaks, I know exactly where to look — the config file.
+- **Reproducibility:** The same config produces the same setup on any machine. This is useful approximately once, when setting up a new machine.
+- **Atomic Upgrades & Rollbacks:** If an update breaks everything, the bootloader lets me go back to when things worked. This happens more often than I'd like to admit.
+- **Development Shells:** Isolated environments so my projects don't fight each other. I use this to avoid conflict resolution at the OS level.
+
+## What This Demonstrates
+
+If you're here to evaluate my technical abilities, this repo shows I can:
+
+- Write Nix expressions that compile (eventually)
+- Stare at a terminal for extended periods
+- Turn minor configuration problems into multi-day rabbit holes
+- Describe my workflow in grandiose terms
+
+---
+
+## Repository Structure
 
 ```
 .
-├── flake.nix                       # Entry point — inputs (nixpkgs, home-manager) & outputs
-├── flake.lock                      # Auto-generated pinned dependency lockfile
+├── flake.nix                       # Entry point — inputs & outputs
+├── flake.lock                      # Auto-generated; I don't touch this
 ├── hosts/
 │   └── spica/
-│       ├── default.nix             # Host entry — identity, locale, module imports
-│       └── hardware.nix            # Machine-specific hardware (auto-generated)
+│       ├── default.nix             # My machine's personality
+│       └── hardware.nix            # Auto-generated; I definitely don't touch this
 ├── modules/
 │   ├── boot.nix                    # Boot loader, kernel params, zram swap
 │   ├── desktop/
 │   │   ├── cosmic.nix              # COSMIC DE, greeter, portals, env vars
-│   │   └── fonts.nix              # Font packages & fontconfig
+│   │   └── fonts.nix              # Fonts, so things look nice
 │   ├── hardware/
-│   │   └── amd.nix                # AMD GPU, firmware, microcode
-│   ├── networking.nix             # NetworkManager, Bluetooth
-│   ├── nix.nix                    # Flakes, GC, optimise, auto-upgrade
-│   ├── packages.nix               # System-wide GUI packages
-│   ├── services.nix               # PipeWire, printing, fwupd, Docker
-│   └── users.nix                  # User accounts, groups, home-manager bridge
+│   │   └── amd.nix                # AMD GPU stuff
+│   ├── networking.nix             # NetworkManager, so Wi-Fi works
+│   ├── nix.nix                    # Flakes, GC, auto-upgrade
+│   ├── packages.nix               # GUI applications
+│   ├── services.nix               # PipeWire, printing, Docker
+│   └── users.nix                  # User accounts & groups
 ├── home/
-│   ├── default.nix                # HM entry — user identity, CLI packages, starship
+│   ├── default.nix                # Home-manager entry
 │   ├── shell/
-│   │   ├── bash.nix               # Bash config & aliases
-│   │   └── tools.nix              # eza, yazi, tmux, zellij
+│   │   ├── bash.nix               # How my terminal looks
+│   │   └── tools.nix              # CLI tools I installed once
 │   ├── editors/
-│   │   └── helix.nix              # Helix editor & language servers
+│   │   └── helix.nix              # Helix config
 │   ├── desktop/
-│   │   ├── gtk.nix                # GTK theme, cursor, dconf
-│   │   ├── icons.nix              # COSMIC icon aliases for Tela theme
-│   │   └── mime.nix               # MIME default applications
+│   │   ├── gtk.nix                # GTK theme
+│   │   ├── icons.nix              # Icons
+│   │   └── mime.nix               # Default apps
 │   └── programs/
-│       └── celluloid.nix          # Celluloid/mpv scripts & keybinds
+│       └── celluloid.nix          # Video player config
 ├── config/                        # Static dotfiles
 │   └── celluloid/
 │       ├── autosub.lua
 │       └── input.conf
-└── README.md
+└── README.md                      # This file
 ```
 
-## 🛠️ Usage
+## Usage
 
-> **Note:** This configuration is highly tailored to my own hardware and workflow. It is recommended to use it as inspiration rather than applying it wholesale to your machine.
+This configuration is for my machine. It will probably not work on yours without significant modification. You have been warned.
 
-**1. Clone the repository:**
+**1. Clone:**
 ```bash
 git clone <your-repo-url> ~/Source/nixos
 cd ~/Source/nixos
 ```
 
-**2. Generate your hardware configuration:**
-*(Make sure to generate your own `hardware.nix` so the OS knows how to boot on your machine).*
+**2. Generate hardware config (because your hardware is different):**
 ```bash
 sudo nixos-generate-config --show-hardware-config > hosts/<hostname>/hardware.nix
 ```
 
-**3. Build and apply the configuration:**
+**3. Build:**
 ```bash
 sudo nixos-rebuild switch --flake .#spica
 ```
 
-## ⬆️ Manual NixOS Update
+## Updating
 
 ```bash
-# Update all flake inputs (nixpkgs, home-manager, etc.)
 nix flake update
-
-# Rebuild with the updated inputs
 sudo nixos-rebuild switch --flake .#spica
 ```
 
-### Verify and Roll Back
+## Automatic Maintenance
 
-```bash
-nixos-version
-sudo nixos-rebuild switch --rollback
-```
+The system updates itself weekly. Garbage collection runs weekly too. Old boot entries get cleaned up. This is all automated so I don't have to think about it.
 
-Reboot is recommended after updates that include a new kernel or low-level system components:
-
-```bash
-sudo reboot
-```
-
-## 🔄 Automatic Updates And Cleanup
-
-This setup now includes automated maintenance through NixOS:
-- Weekly automatic system upgrades via the flake
-- Weekly garbage collection of old store paths older than 30 days
-- Automatic store optimization (deduplication)
-- Boot menu retention limited to the latest 10 system configurations
-
-Automatic reboot after upgrades is disabled. New system versions are applied and become active on next reboot unless you rebuild manually.
-
-### Verify Timers
+### Check Timers
 
 ```bash
 systemctl list-timers --all | grep -E 'nixos-upgrade|nix-gc|nix-optimise'
 systemctl status nixos-upgrade.timer nix-gc.timer nix-optimise.timer
 ```
 
-### Rollback If Needed
+### Rollback
 
-- At boot: select an older generation from the systemd-boot menu.
+- At boot: pick an older generation from systemd-boot.
 - From a running system:
 
 ```bash
@@ -141,4 +118,5 @@ sudo nixos-rebuild switch --rollback
 ```
 
 ---
-*Maintained with ❤️ and purely functional constraints.*
+
+*Maintained inconsistently.*
