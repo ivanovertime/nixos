@@ -19,4 +19,7 @@
 
   # ── Containers ─────────────────────────────────────────────────────────
   virtualisation.docker.enable = true;
+
+  # ── Livebook ───────────────────────────────────────────────────────────
+  services.livebook.enableUserService = true;
 }

@@ -38,6 +38,9 @@
     nil
     nixfmt
 
+    # Development
+    livebook
+
     # Language tools
     python3Packages.subliminal
     (aspellWithDicts (
