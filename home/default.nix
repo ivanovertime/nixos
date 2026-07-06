@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, pkgs-unstable, ... }:
 
 {
   imports = [
@@ -28,11 +28,14 @@
     shellcheck
     git
     gh
-    opencode
+    pkgs-unstable.opencode
+    pkgs-unstable.vscode
+    pkgs-unstable.antigravity
     curl
     wget
     unzip
     btop
+    starship
 
     # Nix tooling
     nil
@@ -50,10 +53,6 @@
       ]
     ))
   ];
-
-  programs.starship.enable = true;
-
-  programs.antigravity.enable = true;
 
   programs.home-manager.enable = true;
 }

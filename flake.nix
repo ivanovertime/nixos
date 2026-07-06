@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
     home-manager = {
       url = "github:nix-community/home-manager/release-26.05";
@@ -15,11 +16,25 @@
     };
   };
 
-  outputs = { nixpkgs, home-manager, cursor-clip, ... }:
+  outputs =
+    {
+      nixpkgs,
+      nixpkgs-unstable,
+      home-manager,
+      cursor-clip,
+      ...
+    }:
+    let
+      system = "x86_64-linux";
+      pkgs-unstable = import nixpkgs-unstable {
+        inherit system;
+        config.allowUnfree = true;
+      };
+    in
     {
       nixosConfigurations.spica = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = { inherit cursor-clip; };
+        inherit system;
+        specialArgs = { inherit cursor-clip pkgs-unstable; };
         modules = [
           home-manager.nixosModules.home-manager
           ./hosts/spica
