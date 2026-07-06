@@ -26,14 +26,13 @@
     fd
     ripgrep
     shellcheck
-    git
     gh
     curl
     wget
     unzip
     btop
     pkgs-unstable.opencode
-    
+
     # GUI tools
     pkgs-unstable.vscode
     pkgs-unstable.antigravity
@@ -54,6 +53,13 @@
       ]
     ))
   ];
+
+  programs.git = {
+    enable = true;
+    config = {
+      init.defaultBranch = "trunk";
+    };
+  };
 
   programs.starship.enable = true;
 
