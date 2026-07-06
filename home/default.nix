@@ -56,7 +56,7 @@
 
   programs.git = {
     enable = true;
-    config = {
+    settings = {
       init.defaultBranch = "trunk";
     };
   };
