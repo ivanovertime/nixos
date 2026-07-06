@@ -17,9 +17,6 @@
     celluloid
     transmission_4-gtk
 
-    # Clipboard
-    copyq
-
     # Theming
     (tela-circle-icon-theme.override { colorVariants = [ "green" ]; })
   ];

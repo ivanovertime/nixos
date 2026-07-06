@@ -1,4 +1,4 @@
-{ ... }:
+{ cursor-clip, ... }:
 
 {
   users.users.ivan = {
@@ -22,6 +22,7 @@
     useGlobalPkgs = true;
     useUserPackages = true;
     backupFileExtension = "hm-backup";
+    extraSpecialArgs = { inherit cursor-clip; };
     users.ivan = import ../home;
   };
 }

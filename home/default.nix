@@ -7,7 +7,7 @@
     ./editors/helix.nix
     ./desktop/gtk.nix
     ./desktop/icons.nix
-    ./desktop/copyq.nix
+    ./desktop/clipboard.nix
     ./desktop/mime.nix
     ./programs/celluloid.nix
   ];
