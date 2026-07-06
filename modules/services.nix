@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
   # ── Printing ───────────────────────────────────────────────────────────
@@ -21,5 +21,16 @@
   virtualisation.docker.enable = true;
 
   # ── Livebook ───────────────────────────────────────────────────────────
-  services.livebook.enableUserService = true;
+  services.livebook = {
+    enableUserService = true;
+    extraPackages = with pkgs; [
+      git
+      gnutar
+      gzip
+      curl
+      gcc
+      gnumake
+      patch
+    ];
+  };
 }
