@@ -11,6 +11,10 @@
     cosmic-player
   ];
 
+  environment.systemPackages = with pkgs; [
+    cutecosmic
+  ];
+
   services.gvfs.enable = true;
   services.accounts-daemon.enable = true;
   programs.dconf.enable = true;
@@ -31,6 +35,7 @@
   };
 
   environment.sessionVariables = {
+    QT_QPA_PLATFORMTHEME = "cosmic";
     NIXOS_OZONE_WL = "1";
     COSMIC_DATA_CONTROL_ENABLED = "1";
     # Disabling direct/overlay scanout stops cosmic-comp from promoting windows
