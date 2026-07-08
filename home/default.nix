@@ -44,6 +44,10 @@
     # Development
     livebook
 
+    # Media
+    vlc
+    qbittorrent
+
     # Language tools
     python3Packages.subliminal
     (aspellWithDicts (
