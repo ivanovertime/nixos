@@ -10,7 +10,12 @@
       epkgs: with epkgs; [
         vterm
         treesit-grammars.with-all-grammars
+        dashboard
         doom-themes
+        projectile
+        vertico
+        marginalia
+        which-key
       ];
 
     # This is injected directly into your Emacs init file (early-init.el / init.el)
@@ -28,6 +33,22 @@
 
       ;; Load the doom-zenburn theme (ensure it's in extraPackages above)
       (load-theme 'doom-zenburn t)
+
+      ;; Enhanced minibuffer completion (better M-x)
+      (savehist-mode 1)
+      (vertico-mode 1)
+      (marginalia-mode 1)
+
+      ;; Show available keybindings after a short delay
+      (which-key-mode 1)
+
+      ;; Maximize frame on startup
+      (add-to-list 'initial-frame-alist '(fullscreen . maximized))
+
+      ;; Doom-style landing screen
+      (require 'dashboard)
+      (dashboard-setup-startup-hook)
+      (setq dashboard-startup-banner 'logo)
     '';
   };
 
