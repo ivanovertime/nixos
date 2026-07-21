@@ -10,12 +10,12 @@
     dbeaver-bin
 
     # Media & Graphics
+    gthumb
     gimp
     loupe
     inkscape
     obs-studio
     celluloid
-    transmission_4-gtk
 
     # Theming
     (tela-circle-icon-theme.override { colorVariants = [ "green" ]; })

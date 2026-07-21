@@ -46,7 +46,6 @@
     livebook
 
     # Media
-    vlc
     qbittorrent
 
     # Language tools
