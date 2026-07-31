@@ -15,8 +15,6 @@
     cutecosmic
   ];
 
-  services.gvfs.enable = true;
-  services.accounts-daemon.enable = true;
   programs.dconf.enable = true;
 
   services.system76-scheduler.enable = true;
