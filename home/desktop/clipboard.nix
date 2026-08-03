@@ -1,7 +1,7 @@
-{ cursor-clip, pkgs, ... }:
+{ lib, pkgs, ... }:
 
 let
-  cursor-clip-pkg = cursor-clip.packages.${pkgs.system}.default;
+  cursor-clip-pkg = if pkgs ? cursor-clip then pkgs.cursor-clip else null;
 in
 {
   # Cursor Clip — GTK4/Libadwaita Wayland clipboard manager.
@@ -9,9 +9,9 @@ in
   # and zwlr_layer_shell_v1 for overlay positioning.
   # Being Libadwaita, it automatically follows the system dark/light theme.
 
-  home.packages = [ cursor-clip-pkg ];
+  home.packages = lib.optional (cursor-clip-pkg != null) cursor-clip-pkg;
 
-  systemd.user.services.cursor-clip = {
+  systemd.user.services.cursor-clip = lib.mkIf (cursor-clip-pkg != null) {
     Unit = {
       Description = "Cursor Clip clipboard daemon";
       PartOf = [ "graphical-session.target" ];

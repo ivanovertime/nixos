@@ -35,9 +35,9 @@
     btop
 
     # GUI tools
-    pkgs-unstable.antigravity
+    pkgs-unstable."antigravity-ide"
     pkgs-unstable.vscode
-    # Copilot deps 
+    # Copilot deps
     bubblewrap
     socat
 
