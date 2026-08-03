@@ -1,12 +1,14 @@
 { pkgs, ... }:
 
+let
+  icons = import ../lib/icons.nix { inherit pkgs; };
+in
 {
   environment.systemPackages = with pkgs; [
     # Browsers
     google-chrome
 
     # Development
-    vscode
     dbeaver-bin
 
     # Media & Graphics
@@ -18,6 +20,6 @@
     celluloid
 
     # Theming
-    (tela-circle-icon-theme.override { colorVariants = [ "green" ]; })
+    icons.tela-circle-green
   ];
 }

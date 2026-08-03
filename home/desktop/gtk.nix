@@ -1,5 +1,8 @@
 { pkgs, ... }:
 
+let
+  icons = import ../../lib/icons.nix { inherit pkgs; };
+in
 {
   gtk = {
     enable = true;
@@ -12,7 +15,7 @@
       name = "adw-gtk3-dark";
     };
     iconTheme = {
-      package = pkgs.tela-circle-icon-theme.override { colorVariants = [ "green" ]; };
+      package = icons.tela-circle-green;
       name = "Tela-circle-green-dark";
     };
   };
