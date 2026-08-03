@@ -8,7 +8,6 @@
     # Development
     vscode
     dbeaver-bin
-    pgadmin4-desktopmode
 
     # Media & Graphics
     gthumb
