@@ -35,8 +35,11 @@
     btop
 
     # GUI tools
-    pkgs-unstable.vscode
     pkgs-unstable.antigravity
+    pkgs-unstable.vscode
+    # Copilot deps 
+    bubblewrap
+    socat
 
     # Nix tooling
     nil
