@@ -43,6 +43,7 @@
     nixfmt
 
     # Development
+    bruno
     livebook
 
     # Media
