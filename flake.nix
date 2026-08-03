@@ -9,11 +9,6 @@
       url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    cursor-clip = {
-      url = "github:Sirulex/cursor-clip";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs =
@@ -21,24 +16,56 @@
       nixpkgs,
       nixpkgs-unstable,
       home-manager,
-      cursor-clip,
       ...
     }:
     let
       system = "x86_64-linux";
+      pkgs = nixpkgs.legacyPackages.${system};
       pkgs-unstable = import nixpkgs-unstable {
         inherit system;
         config.allowUnfree = true;
       };
+
+      hosts = [ "spica" ];
+
+      homeConfig = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        extraSpecialArgs = { inherit pkgs-unstable; };
+        modules = [ ./home ];
+      };
+
+      mkSystem =
+        host:
+        nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = { inherit pkgs-unstable; };
+          modules = [
+            home-manager.nixosModules.home-manager
+            ./hosts/${host}
+          ];
+        };
     in
     {
-      nixosConfigurations.spica = nixpkgs.lib.nixosSystem {
-        inherit system;
-        specialArgs = { inherit cursor-clip pkgs-unstable; };
-        modules = [
-          home-manager.nixosModules.home-manager
-          ./hosts/spica
+      formatter.${system} = pkgs.writeShellScriptBin "nixfmt-flake" ''
+        set -euo pipefail
+        cd "''${PRJ_ROOT:-$(pwd)}"
+        exec ${pkgs.nixfmt}/bin/nixfmt "$@" $(${pkgs.git}/bin/git ls-files '*.nix')
+      '';
+
+      devShells.${system}.default = pkgs.mkShell {
+        packages = [
+          pkgs.nixfmt
+          pkgs.statix
+          pkgs.alejandra
+          pkgs.nixos-rebuild
         ];
       };
+
+      checks.${system} = {
+        spica-system = (mkSystem "spica").config.system.build.toplevel;
+        spica-home = homeConfig.activationPackage;
+      };
+
+      nixosConfigurations = nixpkgs.lib.genAttrs hosts mkSystem;
     };
 }
