@@ -15,7 +15,11 @@
         };
         github = {
           type = "local";
-          command = [ "npx" "-y" "@modelcontextprotocol/server-github" ];
+          command = [
+            "npx"
+            "-y"
+            "@modelcontextprotocol/server-github"
+          ];
           enabled = true;
         };
         context7 = {

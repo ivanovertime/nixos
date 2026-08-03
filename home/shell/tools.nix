@@ -30,7 +30,11 @@
 
     settings = {
       mgr = {
-        ratio = [ 1 4 3 ];
+        ratio = [
+          1
+          4
+          3
+        ];
         sort_dir_first = true;
         show_hidden = false;
         show_symlink = true;
