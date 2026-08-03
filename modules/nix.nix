@@ -19,7 +19,7 @@
   system.autoUpgrade = {
     enable = true;
     dates = "weekly";
-    flake = "/home/ivan/Source/nixos";
+    flake = "github:ivanovertime/nixos";
     allowReboot = false;
   };
 }
