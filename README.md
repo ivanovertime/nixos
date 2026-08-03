@@ -3,6 +3,7 @@
 [![NixOS](https://img.shields.io/badge/NixOS-system-blue.svg?style=for-the-badge&logo=NixOS&logoColor=white)](https://nixos.org/)
 [![Reproducible Code](https://img.shields.io/badge/Reproducible-Yes-success.svg?style=for-the-badge)](#)
 [![Declarative](https://img.shields.io/badge/Infrastructure_as_Code-Yes-orange.svg?style=for-the-badge)](#)
+[![CI](https://github.com/ivanovertime/nixos/actions/workflows/ci.yml/badge.svg)](https://github.com/ivanovertime/nixos/actions/workflows/ci.yml)
 
 This is my NixOS system configuration. It defines everything about my computer — packages, services, desktop environment, boot settings — in code. I use it so I can rebuild my setup from scratch, or recover from a bad update, without losing a whole weekend.
 
@@ -23,16 +24,23 @@ The setup runs COSMIC desktop on AMD hardware, with home-manager handling user-l
 
 ```
 .
-├── flake.nix                       # Entry point — inputs & outputs
-├── flake.lock                      # Pinned dependency versions
+├── .github/
+│   └── workflows/
+│       └── ci.yml                 # Format + build checks on push/PR
+├── .editorconfig                  # Editor style rules
+├── .envrc                         # `use flake` — auto-loads devShell via direnv
+├── flake.nix                      # Entry point — inputs, outputs, checks
+├── flake.lock                     # Pinned dependency versions
+├── lib/
+│   └── icons.nix                  # Shared icon-theme override (system + home)
 ├── hosts/
 │   └── spica/
-│       ├── default.nix             # Host identity, locale, module imports
-│       └── hardware.nix            # Machine-specific hardware (auto-generated)
+│       ├── default.nix            # Host identity, locale, module imports
+│       └── hardware.nix           # Machine-specific hardware (auto-generated)
 ├── modules/
-│   ├── boot.nix                    # Boot loader, kernel params, zram swap
+│   ├── boot.nix                   # Boot loader, kernel params, zram swap
 │   ├── desktop/
-│   │   ├── cosmic.nix              # COSMIC DE, greeter, portals, env vars
+│   │   ├── cosmic.nix             # COSMIC DE, greeter, portals, env vars
 │   │   └── fonts.nix              # Font packages & fontconfig
 │   ├── hardware/
 │   │   └── amd.nix                # AMD GPU, firmware, microcode
@@ -48,17 +56,24 @@ The setup runs COSMIC desktop on AMD hardware, with home-manager handling user-l
 │   │   └── tools.nix              # eza, yazi, tmux, zellij
 │   ├── editors/
 │   │   ├── helix.nix              # Helix editor & language servers
-│   │   └── emacs.nix              # Emacs with custom packages & init
+│   │   ├── emacs.nix              # Emacs package config
+│   │   └── emacs/
+│   │       └── init.el            # Emacs init (extraConfig source)
 │   ├── desktop/
+│   │   ├── clipboard.nix          # Cursor Clip clipboard daemon
 │   │   ├── gtk.nix                # GTK theme, cursor, dconf
 │   │   ├── icons.nix              # COSMIC icon aliases for Tela theme
 │   │   └── mime.nix               # MIME default applications
 │   └── programs/
-│       └── celluloid.nix          # Celluloid/mpv scripts & keybinds
-├── config/                        # Static dotfiles
-│   └── celluloid/
-│       ├── autosub.lua
-│       └── input.conf
+│       ├── celluloid/
+│       │   ├── default.nix        # Celluloid/mpv scripts & keybinds
+│       │   ├── autosub.lua
+│       │   └── input.conf
+│       └── opencode/
+│           ├── default.nix        # opencode config, MCP servers
+│           └── skills/
+│               └── lazy-senior-dev/
+│                   └── SKILL.md
 └── README.md
 ```
 
@@ -95,7 +110,7 @@ sudo nixos-rebuild switch --flake .#spica
 
 The system handles its own upkeep:
 
-- Weekly system upgrades via the flake
+- Weekly system upgrades via the flake (from the GitHub remote, so they work no matter where the checkout lives)
 - Weekly garbage collection (removes store paths older than 30 days)
 - Automatic store optimisation (deduplication)
 - Boot menu limited to the latest 10 generations
@@ -117,6 +132,59 @@ systemctl status nixos-upgrade.timer nix-gc.timer nix-optimise.timer
 ```bash
 sudo nixos-rebuild switch --rollback
 ```
+
+---
+
+## Development
+
+The flake ships a devShell with the repo's tools. Enter it with `nix develop` (or just `cd` here if you use direnv — there's a `.envrc`):
+
+```bash
+nix develop
+```
+
+From the devShell you can check your work before committing:
+
+```bash
+nix fmt -- --check   # formatting is enforced in CI
+nix flake check   # evaluates + builds the system and home-manager configs
+```
+
+The same two checks run automatically on every push/PR in CI (see `.github/workflows/ci.yml`).
+
+### Adding a package
+
+- **System-wide** (GUI apps, greeter, anything a user might not have): add it to `environment.systemPackages` in `modules/packages.nix`.
+- **User-level** (CLI tools, dev tools): add it to `home.packages` in `home/default.nix`.
+- Prefer the stable channel (`pkgs`). Only use `pkgs-unstable.<pkg>` when you need a newer version than 26.05 ships.
+
+### Adding a module
+
+Drop a `.nix` file under `modules/` (or `home/` for user config) and `import` it from the host's `default.nix` (or `home/default.nix`). Keep modules focused: one concern per file.
+
+### Adding a host
+
+1. Create `hosts/<name>/hardware.nix`:
+   ```bash
+   sudo nixos-generate-config --show-hardware-config > hosts/<name>/hardware.nix
+   ```
+2. Copy `hosts/spica/default.nix` to `hosts/<name>/default.nix` and tweak identity/locale.
+3. Add the host name to the `hosts` list in `flake.nix` — the `nixosConfigurations` output is generated from it.
+4. Build it with `sudo nixos-rebuild switch --flake .#<name>`.
+
+### Shared expressions
+
+Anything referenced from both system modules and home-manager (like the icon theme) lives in `lib/` and is imported where needed — keep it that way instead of duplicating overrides.
+
+---
+
+## Troubleshooting
+
+**`nix fmt -- --check` fails in CI but everything looks fine locally.** Run `nix fmt` from the devShell to reformat, then commit.
+
+**The build works locally but CI fails.** Make sure the flake.lock is committed (`nix flake lock`), and that you've pushed the lockfile alongside your `.nix` changes.
+
+**Auto-upgrade doesn't seem to do anything.** Check the timer (`systemctl list-timers`) and the remote ref in `modules/nix.nix` — upgrades pull from `github:ivanovertime/nixos`, so uncommitted local changes won't be applied until you push.
 
 ---
 
