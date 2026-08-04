@@ -6,6 +6,7 @@
     ./shell/tools.nix
     ./editors/helix.nix
     ./editors/emacs.nix
+    ./editors/vscodium.nix
     ./desktop/gtk.nix
     ./desktop/icons.nix
     ./desktop/clipboard.nix
