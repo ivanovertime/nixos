@@ -8,11 +8,6 @@
     settings = {
       lsp = true;
       mcp = {
-        daisyui-gitmcp = {
-          type = "remote";
-          enabled = true;
-          url = "https://gitmcp.io/saadeghi/daisyui";
-        };
         github = {
           type = "local";
           command = [
@@ -26,11 +21,39 @@
           type = "remote";
           url = "https://mcp.context7.com/mcp";
         };
+        postgres = {
+          type = "local";
+          command = [
+            "docker"
+            "run"
+            "-i"
+            "--rm"
+            "--network"
+            "host"
+            "-e"
+            "DATABASE_URI=postgresql://postgres:postgres@localhost:5432/postgres"
+            "crystaldba/postgres-mcp"
+            "--access-mode=unrestricted"
+          ];
+        };
+        laravel = {
+          type = "local";
+          command = [
+            "php"
+            "artisan"
+            "mcp:run"
+          ];
+        };
       };
     };
 
     skills = {
       lazy-senior-dev = ./skills/lazy-senior-dev;
+      laravel = ./skills/laravel;
+      nuxt = ./skills/nuxt;
+      sveltekit = ./skills/sveltekit;
+      vue = ./skills/vue;
+      postgres = ./skills/postgres;
     };
   };
 }
