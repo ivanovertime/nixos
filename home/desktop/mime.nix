@@ -4,6 +4,17 @@
   xdg.mimeApps = {
     enable = true;
     defaultApplications = {
+      # Browser
+      "text/html" = [ "google-chrome.desktop" ];
+      "application/xhtml+xml" = [ "google-chrome.desktop" ];
+      "application/x-www-form-urlencoded" = [ "google-chrome.desktop" ];
+      "x-scheme-handler/about" = [ "google-chrome.desktop" ];
+      "x-scheme-handler/ftp" = [ "google-chrome.desktop" ];
+      "x-scheme-handler/http" = [ "google-chrome.desktop" ];
+      "x-scheme-handler/https" = [ "google-chrome.desktop" ];
+      "x-scheme-handler/unknown" = [ "google-chrome.desktop" ];
+
+      # Images
       "image/apng" = [ "org.gnome.Loupe.desktop" ];
       "image/avif" = [ "org.gnome.Loupe.desktop" ];
       "image/bmp" = [ "org.gnome.Loupe.desktop" ];
