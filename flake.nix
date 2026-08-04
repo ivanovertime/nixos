@@ -28,6 +28,13 @@
 
       hosts = [ "spica" ];
 
+      # All COSMIC packages from unstable — stable (26.05) pins older releases
+      # (e.g. cosmic-comp 1.2.0 vs 1.5.0). Kept self-maintaining so new cosmic
+      # packages are picked up automatically.
+      cosmicNames = builtins.filter (
+        n: builtins.match "^(cosmic|xdg-desktop-portal-cosmic).*" n != null
+      ) (builtins.attrNames pkgs-unstable);
+
       homeConfig = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         extraSpecialArgs = { inherit pkgs-unstable; };
@@ -40,6 +47,11 @@
           inherit system;
           specialArgs = { inherit pkgs-unstable; };
           modules = [
+            {
+              nixpkgs.overlays = [
+                (final: prev: nixpkgs.lib.genAttrs cosmicNames (n: pkgs-unstable.${n}))
+              ];
+            }
             home-manager.nixosModules.home-manager
             ./hosts/${host}
           ];
