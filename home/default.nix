@@ -12,6 +12,7 @@
     ./desktop/clipboard.nix
     ./desktop/mime.nix
     ./programs/celluloid
+    ./programs/discord.nix
     ./programs/opencode
   ];
 
@@ -33,7 +34,7 @@
     curl
     wget
     unzip
-    btop
+    htop
 
     # GUI tools
     pkgs-unstable."antigravity-ide"
