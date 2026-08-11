@@ -7,6 +7,7 @@
 
     settings = {
       lsp = true;
+      plugin = [ "@sveltejs/opencode" ];
       mcp = {
         github = {
           type = "local";
@@ -20,21 +21,6 @@
         context7 = {
           type = "remote";
           url = "https://mcp.context7.com/mcp";
-        };
-        postgres = {
-          type = "local";
-          command = [
-            "docker"
-            "run"
-            "-i"
-            "--rm"
-            "--network"
-            "host"
-            "-e"
-            "DATABASE_URI=postgresql://postgres:postgres@localhost:5432/postgres"
-            "crystaldba/postgres-mcp"
-            "--access-mode=unrestricted"
-          ];
         };
         laravel = {
           type = "local";

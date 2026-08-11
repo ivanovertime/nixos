@@ -1,6 +1,6 @@
 ---
 name: postgres
-description: Use when writing or reviewing SQL, migrations, Eloquent/Drizzle queries, indexes, EXPLAIN plans, or when querying databases via the postgres MCP server. Covers the user's Postgres setups (Laravel Sail, docker-compose) and connection strings.
+description: Use when writing or reviewing SQL, migrations, Eloquent/Drizzle queries, indexes, EXPLAIN plans, or when querying the user's Postgres databases. Covers the user's Postgres setups (Laravel Sail, docker-compose) and connection strings.
 ---
 
 # PostgreSQL Conventions
@@ -14,29 +14,38 @@ exposed on localhost:5432. NixOS does not host a system Postgres.
 - danse-macabre: `postgresql://postgres:postgres@localhost:5432/danse_macabre`
 - JEL: `postgresql://jel:jel@127.0.0.1:5432/laravel`
 
-## Querying via the postgres MCP
+## Querying databases
 
-A global `postgres` MCP server (crystaldba/postgres-mcp, Docker,
-`--access-mode=unrestricted`) is configured in opencode. It reads the
-`DATABASE_URI` env var — the global default is the placeholder
-`postgresql://postgres:postgres@localhost:5432/postgres`. When a project
-needs its real database, add an `opencode.json` in that project:
+No global postgres MCP is configured in opencode. Use `psql` directly for
+schema inspection, EXPLAIN plans, and index tuning:
+
+```sh
+psql "$DATABASE_URI"
+```
+
+The instance currently on localhost:5432 — the
+`postgres`/`postgres` placeholder role does not exist on it.
+
+If a project needs MCP-based DB access, add a project-scoped `opencode.json`
+pointing at the real database instead of the removed global default:
 
 ```json
 {
   "mcp": {
     "postgres": {
-      "environment": {
-        "DATABASE_URI": "postgresql://postgres:postgres@localhost:5432/<db>"
-      }
+      "type": "local",
+      "command": [
+        "docker", "run", "-i", "--rm", "--network", "host",
+        "-e", "DATABASE_URI=postgresql://<user>@localhost:5432/<db>",
+        "crystaldba/postgres-mcp",
+        "--access-mode=restricted"
+      ]
     }
   }
 }
 ```
 
-Use the MCP tools for schema inspection, EXPLAIN plans, and index tuning
-rather than raw `psql` when inside opencode. `--access-mode=restricted`
-(read-only) should be used for production connections.
+Use `--access-mode=restricted` (read-only) for anything beyond local dev.
 
 ## SQL conventions
 
