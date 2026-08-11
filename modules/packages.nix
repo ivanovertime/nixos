@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, pkgs-unstable, ... }:
 
 let
   icons = import ../lib/icons.nix { inherit pkgs; };
@@ -6,7 +6,7 @@ in
 {
   environment.systemPackages = with pkgs; [
     # Browsers
-    google-chrome
+    pkgs-unstable.google-chrome
 
     # Development
     dbeaver-bin
