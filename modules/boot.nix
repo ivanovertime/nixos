@@ -11,5 +11,9 @@
   # split and made the dcn21 secondary-pipe path (the one that warns/resets) worse.
   boot.kernelParams = [ "amdgpu.sg_display=0" ];
 
+  boot.kernel.sysctl = {
+    "vm.swappiness" = 10;
+  };
+
   zramSwap.enable = true;
 }
