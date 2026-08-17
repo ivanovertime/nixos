@@ -1,12 +1,18 @@
-{ pkgs, pkgs-unstable, ... }:
+{ ... }:
 
 {
   imports = [
     ./shell/bash.nix
     ./shell/tools.nix
+    ./shell/tmux.nix
     ./editors/helix.nix
     ./editors/emacs.nix
     ./editors/vscodium.nix
+    ./dev/tools.nix
+    ./dev/nix.nix
+    ./dev/languages.nix
+    ./gui/ides.nix
+    ./gui/media.nix
     ./desktop/gtk.nix
     ./desktop/icons.nix
     ./desktop/clipboard.nix
@@ -24,45 +30,6 @@
     EDITOR = "hx";
     VISUAL = "hx";
   };
-
-  home.packages = with pkgs; [
-    # CLI tools
-    fd
-    ripgrep
-    shellcheck
-    gh
-    curl
-    wget
-    unzip
-    htop
-
-    # GUI tools
-    pkgs-unstable."antigravity-ide"
-    pkgs-unstable.vscode
-    # Copilot deps
-    bubblewrap
-    socat
-
-    # Nix tooling
-    nil
-    nixfmt
-
-    # Development
-    bruno
-    livebook
-
-    # Media
-    qbittorrent
-
-    # Language tools
-    python3Packages.subliminal
-    (aspellWithDicts (
-      dicts: with dicts; [
-        en
-        es
-      ]
-    ))
-  ];
 
   programs.git = {
     enable = true;

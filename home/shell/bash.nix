@@ -5,8 +5,6 @@
     enable = true;
     enableCompletion = true;
     shellAliases = {
-      yazi = "yazi";
-      yy = "yazi";
       ls = "eza --icons=always --group-directories-first";
       ll = "eza --long --git --icons=always --group-directories-first --header";
       la = "eza --all --icons=always --group-directories-first";

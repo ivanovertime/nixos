@@ -50,15 +50,24 @@ The setup runs COSMIC desktop on AMD hardware, with home-manager handling user-l
 │   ├── services.nix               # PipeWire, printing, fwupd, Docker
 │   └── users.nix                  # User accounts, groups, home-manager bridge
 ├── home/
-│   ├── default.nix                # Home-manager entry, CLI packages, starship
+│   ├── default.nix                # Home-manager entry, imports, git, starship
 │   ├── shell/
 │   │   ├── bash.nix               # Bash config & aliases
-│   │   └── tools.nix              # eza, yazi, tmux, zellij
+│   │   ├── tmux.nix               # tmux config
+│   │   └── tools.nix              # eza, yazi
 │   ├── editors/
 │   │   ├── helix.nix              # Helix editor & language servers
 │   │   ├── emacs.nix              # Emacs package config
-│   │   └── emacs/
-│   │       └── init.el            # Emacs init (extraConfig source)
+│   │   ├── emacs/
+│   │   │   └── init.el            # Emacs init (extraConfig source)
+│   │   └── vscodium.nix           # VSCodium & extensions
+│   ├── dev/
+│   │   ├── tools.nix              # CLI dev tools (fd, ripgrep, gh, curl, ...)
+│   │   ├── nix.nix                # Nix tooling (nil, nixfmt)
+│   │   └── languages.nix          # Language/dev apps (bruno, aspell)
+│   ├── gui/
+│   │   ├── ides.nix               # GUI IDEs (Antigravity, VS Code, Copilot deps)
+│   │   └── media.nix              # GUI media (qbittorrent, subliminal)
 │   ├── desktop/
 │   │   ├── clipboard.nix          # Cursor Clip clipboard daemon
 │   │   ├── gtk.nix                # GTK theme, cursor, dconf
@@ -155,7 +164,7 @@ The same two checks run automatically on every push/PR in CI (see `.github/workf
 ### Adding a package
 
 - **System-wide** (GUI apps, greeter, anything a user might not have): add it to `environment.systemPackages` in `modules/packages.nix`.
-- **User-level** (CLI tools, dev tools): add it to `home.packages` in `home/default.nix`.
+- **User-level** CLI/dev tools: add it to the matching category file under `home/` — `dev/tools.nix`, `dev/nix.nix`, `dev/languages.nix`, `gui/ides.nix`, or `gui/media.nix` — whichever fits the tool's purpose.
 - Prefer the stable channel (`pkgs`). Only use `pkgs-unstable.<pkg>` when you need a newer version than 26.05 ships.
 
 ### Adding a module
