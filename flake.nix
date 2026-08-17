@@ -9,6 +9,11 @@
       url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    git-hooks = {
+      url = "github:cachix/git-hooks.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -16,6 +21,7 @@
       nixpkgs,
       nixpkgs-unstable,
       home-manager,
+      git-hooks,
       ...
     }:
     let
@@ -56,6 +62,17 @@
             ./hosts/${host}
           ];
         };
+
+      hooks = git-hooks.lib.${system}.run {
+        src = ./.;
+        hooks = {
+          nixfmt = {
+            enable = true;
+            entry = "${pkgs.nixfmt}/bin/nixfmt";
+            files = "\\.nix$";
+          };
+        };
+      };
     in
     {
       formatter.${system} = pkgs.writeShellScriptBin "nixfmt-flake" ''
@@ -64,6 +81,8 @@
         exec ${pkgs.nixfmt}/bin/nixfmt "$@" $(${pkgs.git}/bin/git ls-files '*.nix')
       '';
 
+      gitHooks = hooks;
+
       devShells.${system}.default = pkgs.mkShell {
         packages = [
           pkgs.nixfmt
@@ -71,6 +90,7 @@
           pkgs.alejandra
           pkgs.nixos-rebuild
         ];
+        shellHook = hooks.shellHook;
       };
 
       checks.${system} = {
