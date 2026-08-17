@@ -9,13 +9,13 @@ in
     pkgs-unstable.google-chrome
 
     # Development
-    dbeaver-bin
+     pkgs-unstable.dbeaver-bin
 
     # Media & Graphics
     gthumb
     gimp
     loupe
-    inkscape
+    pkgs-unstable.inkscape
     obs-studio
     celluloid
 
