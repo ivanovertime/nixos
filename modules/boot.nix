@@ -12,8 +12,11 @@
   boot.kernelParams = [ "amdgpu.sg_display=0" ];
 
   boot.kernel.sysctl = {
-    "vm.swappiness" = 10;
+    "vm.swappiness" = 160;
   };
 
-  zramSwap.enable = true;
+  zramSwap = {
+    enable = true;
+    algorithm = "zstd";
+  };
 }
