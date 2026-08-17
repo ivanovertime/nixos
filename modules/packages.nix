@@ -9,7 +9,7 @@ in
     pkgs-unstable.google-chrome
 
     # Development
-     pkgs-unstable.dbeaver-bin
+    pkgs-unstable.dbeaver-bin
 
     # Media & Graphics
     gthumb
