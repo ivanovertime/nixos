@@ -11,6 +11,7 @@
     ../../modules/desktop/fonts.nix
     ../../modules/hardware/amd.nix
     ../../modules/services.nix
+    ../../modules/postgres.nix
     ../../modules/nix.nix
     ../../modules/packages.nix
     ../../modules/users.nix

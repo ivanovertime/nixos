@@ -9,6 +9,7 @@ in
     pkgs-unstable.google-chrome
 
     # Development
+    postgresql
     pkgs-unstable.dbeaver-bin
 
     # Media & Graphics
