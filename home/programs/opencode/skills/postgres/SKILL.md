@@ -1,33 +1,30 @@
 ---
 name: postgres
-description: Use when writing or reviewing SQL, migrations, Eloquent/Drizzle queries, indexes, EXPLAIN plans, or when querying the user's Postgres databases. Covers the user's Postgres setups (Laravel Sail, docker-compose) and connection strings.
+description: Use when writing or reviewing SQL, migrations, Eloquent/Drizzle queries, indexes, EXPLAIN plans, or when querying the user's Postgres databases. Covers the user's NixOS-hosted Postgres service and connection strings.
 ---
 
 # PostgreSQL Conventions
 
-The user's Postgres instances run in Docker (Laravel Sail / docker-compose),
-exposed on localhost:5432. NixOS does not host a system Postgres.
+A system-level PostgreSQL 16 instance runs on NixOS (always on, starts on
+boot). Configured in `modules/postgres.nix`.
 
 ## Connections (dev defaults)
 
-- agenda_salud: `postgresql://postgres:postgres@localhost:5432/agenda_salud`
-- danse-macabre: `postgresql://postgres:postgres@localhost:5432/danse_macabre`
-- JEL: `postgresql://jel:jel@127.0.0.1:5432/laravel`
+- Default DB: `postgresql://dev:dev@localhost:5432/development`
+- Create project DBs: `psql -U dev -c "CREATE DATABASE myproject;"`
+- Connect to project DB: `psql "postgresql://dev:dev@localhost:5432/myproject"`
+
+Existing project databases (create as needed):
+
+- agenda_salud: `postgresql://dev:dev@localhost:5432/agenda_salud`
+- danse-macabre: `postgresql://dev:dev@localhost:5432/danse_macabre`
+- JEL: `postgresql://dev:dev@localhost:5432/jel`
 
 ## Querying databases
 
-No global postgres MCP is configured in opencode. Use `psql` directly for
-schema inspection, EXPLAIN plans, and index tuning:
-
-```sh
-psql "$DATABASE_URI"
-```
-
-The instance currently on localhost:5432 — the
-`postgres`/`postgres` placeholder role does not exist on it.
-
-If a project needs MCP-based DB access, add a project-scoped `opencode.json`
-pointing at the real database instead of the removed global default:
+A global `postgres` MCP server is configured in opencode (read-only,
+connects to `development` by default). For project-specific databases,
+override via a project-scoped `opencode.json`:
 
 ```json
 {
@@ -35,17 +32,19 @@ pointing at the real database instead of the removed global default:
     "postgres": {
       "type": "local",
       "command": [
-        "docker", "run", "-i", "--rm", "--network", "host",
-        "-e", "DATABASE_URI=postgresql://<user>@localhost:5432/<db>",
-        "crystaldba/postgres-mcp",
-        "--access-mode=restricted"
+        "npx", "-y", "@modelcontextprotocol/server-postgres",
+        "postgresql://dev:dev@localhost:5432/<db>"
       ]
     }
   }
 }
 ```
 
-Use `--access-mode=restricted` (read-only) for anything beyond local dev.
+Use `psql` directly for ad-hoc checks, EXPLAIN plans, and index tuning:
+
+```sh
+psql "postgresql://dev:dev@localhost:5432/<database>"
+```
 
 ## SQL conventions
 
@@ -62,5 +61,5 @@ Use `--access-mode=restricted` (read-only) for anything beyond local dev.
 
 ## Tooling
 
-- `psql "$DATABASE_URI"` for ad-hoc checks.
-- `pg_isready` to confirm a container is up; Sail service name is `pgsql`.
+- `psql "postgresql://dev:dev@localhost:5432/<db>"` for ad-hoc checks.
+- `pg_isready` to confirm the service is up.

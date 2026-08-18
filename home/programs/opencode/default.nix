@@ -30,6 +30,15 @@
             "mcp:run"
           ];
         };
+        postgres = {
+          type = "local";
+          command = [
+            "npx"
+            "-y"
+            "@modelcontextprotocol/server-postgres"
+            "postgresql://dev:dev@localhost:5432/development"
+          ];
+        };
       };
     };
 
