@@ -18,7 +18,10 @@
       }
     ];
 
-    ensureDatabases = [ "development" ];
+    ensureDatabases = [
+      "dev"
+      "development"
+    ];
 
     authentication = pkgs.lib.mkOverride 10 ''
       #type database  DBuser  origin-address  auth-method
