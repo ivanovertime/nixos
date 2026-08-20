@@ -7,7 +7,15 @@
 
     settings = {
       lsp = true;
-      plugin = [ "@sveltejs/opencode" ];
+      small_model = "opencode/deepseek-v4-flash-free";
+      compaction = {
+        auto = true;
+        prune = true;
+      };
+      plugin = [
+        "@sveltejs/opencode"
+        "@tarquinen/opencode-dcp@3.1.15"
+      ];
       mcp = {
         github = {
           type = "local";
@@ -22,23 +30,6 @@
           type = "remote";
           url = "https://mcp.context7.com/mcp";
         };
-        laravel = {
-          type = "local";
-          command = [
-            "php"
-            "artisan"
-            "mcp:run"
-          ];
-        };
-        postgres = {
-          type = "local";
-          command = [
-            "npx"
-            "-y"
-            "@modelcontextprotocol/server-postgres"
-            "postgresql://dev:dev@localhost:5432/development"
-          ];
-        };
       };
     };
 
@@ -51,4 +42,11 @@
       postgres = ./skills/postgres;
     };
   };
+
+  xdg.configFile."opencode/dcp.jsonc".text = ''
+    {
+      "$schema": "https://raw.githubusercontent.com/Opencode-DCP/opencode-dynamic-context-pruning/master/dcp.schema.json",
+      "enabled": true
+    }
+  '';
 }

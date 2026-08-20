@@ -20,6 +20,7 @@
     ./programs/celluloid
     ./programs/discord.nix
     ./programs/opencode
+    ./programs/pi
   ];
 
   home.username = "ivan";
