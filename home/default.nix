@@ -15,7 +15,6 @@
     ./gui/media.nix
     ./desktop/gtk.nix
     ./desktop/icons.nix
-    ./desktop/clipboard.nix
     ./desktop/mime.nix
     ./programs/celluloid
     ./programs/discord.nix
