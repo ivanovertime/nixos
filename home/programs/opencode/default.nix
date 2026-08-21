@@ -17,15 +17,6 @@
         "@tarquinen/opencode-dcp@3.1.15"
       ];
       mcp = {
-        github = {
-          type = "local";
-          command = [
-            "npx"
-            "-y"
-            "@modelcontextprotocol/server-github"
-          ];
-          enabled = true;
-        };
         context7 = {
           type = "remote";
           url = "https://mcp.context7.com/mcp";
