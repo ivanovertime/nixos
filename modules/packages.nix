@@ -7,6 +7,8 @@ in
   environment.systemPackages = with pkgs; [
     # Browsers
     pkgs-unstable.google-chrome
+    pkgs-unstable.firefox
+    pkgs-unstable.thunderbird
 
     # Development
     postgresql
