@@ -5,7 +5,7 @@
     enable = true;
     package = pkgs.postgresql_16;
     enableTCPIP = true;
-    port = 5432;
+    settings.port = 5432;
 
     ensureUsers = [
       {
