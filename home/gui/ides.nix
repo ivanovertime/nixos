@@ -1,11 +1,5 @@
-{ pkgs, pkgs-unstable, ... }:
+{ pkgs-unstable, ... }:
 
 {
-  home.packages = with pkgs; [
-    pkgs-unstable."antigravity-ide"
-    pkgs-unstable.vscode
-    # Copilot deps
-    bubblewrap
-    socat
-  ];
+  home.packages = [ pkgs-unstable."antigravity-ide" ];
 }
