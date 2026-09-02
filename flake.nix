@@ -55,7 +55,17 @@
           modules = [
             {
               nixpkgs.overlays = [
-                (final: prev: nixpkgs.lib.genAttrs cosmicNames (n: pkgs-unstable.${n}))
+                (
+                  final: prev:
+                  (nixpkgs.lib.genAttrs cosmicNames (n: pkgs-unstable.${n}))
+                  // {
+                    # Stable 26.05's COSMIC module still references the pre-rename
+                    # name, which unstable carries as a warn-alias ("has been
+                    # renamed..."). Map it straight to the real package to keep
+                    # eval silent.
+                    cosmic-applibrary = pkgs-unstable.cosmic-app-library;
+                  }
+                )
               ];
             }
             home-manager.nixosModules.home-manager
