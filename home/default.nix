@@ -25,11 +25,6 @@
   home.homeDirectory = "/home/ivan";
   home.stateVersion = "25.05";
 
-  home.sessionVariables = {
-    EDITOR = "hx";
-    VISUAL = "hx";
-  };
-
   programs.git = {
     enable = true;
     settings = {
