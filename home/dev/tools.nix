@@ -7,7 +7,9 @@
     shellcheck
     gh
     curl
+    jq
     wget
+    gemini-cli
     unzip
     htop
   ];
