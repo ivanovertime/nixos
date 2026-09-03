@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, pkgs-unstable, ... }:
 
 {
   home.packages = with pkgs; [
@@ -9,8 +9,8 @@
     curl
     jq
     wget
-    gemini-cli
     unzip
     htop
+    pkgs-unstable.antigravity-cli
   ];
 }
