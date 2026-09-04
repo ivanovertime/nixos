@@ -21,21 +21,6 @@
             path: if pkgs.lib.hasAttrByPath path ext then [ (pkgs.lib.attrByPath path null ext) ] else [ ];
         in
         builtins.concatLists [
-          # OpenChamber (openchamber/openchamber) is not in nixpkgs.vscode-extensions
-          # yet, so package the Open VSX release declaratively.
-          [
-            (pkgs.vscode-utils.buildVscodeExtension {
-              pname = "openchamber";
-              version = "1.18.1";
-              vscodeExtPublisher = "FedaykinDev";
-              vscodeExtName = "openchamber";
-              vscodeExtUniqueId = "FedaykinDev.openchamber";
-              src = pkgs.fetchurl {
-                url = "https://open-vsx.org/api/FedaykinDev/openchamber/1.18.1/file/FedaykinDev.openchamber-1.18.1.vsix";
-                sha256 = "sha256-RL9VNH22Fg7+9gomOu3lpJjyIxgkbUaBb92CT5EBl6M=";
-              };
-            })
-          ]
           (optionalExt [
             "bierner"
             "github-markdown-preview"

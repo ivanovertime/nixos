@@ -6,7 +6,7 @@
     defaultEditor = true;
 
     settings = {
-      theme = "zenburn";
+      theme = "term16_dark";
       editor = {
         line-number = "relative";
         cursorline = true;
