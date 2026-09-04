@@ -19,6 +19,7 @@
     ./programs/celluloid
     ./programs/discord.nix
     ./programs/opencode
+    ./programs/herdr
   ];
 
   home.username = "ivan";

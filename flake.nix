@@ -14,6 +14,16 @@
       url = "github:cachix/git-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    herdr-nix = {
+      url = "github:herdrdev/herdr-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+  };
+
+  nixConfig = {
+    extra-substituters = [ "https://herdr.cachix.org" ];
+    extra-trusted-public-keys = [ "herdr.cachix.org-1:3nH7IStRsS0ASfdonA0DCRR2ZrSCeWitZ7Kwew0cR4I=" ];
   };
 
   outputs =
@@ -22,6 +32,7 @@
       nixpkgs-unstable,
       home-manager,
       git-hooks,
+      herdr-nix,
       ...
     }:
     let
@@ -31,6 +42,7 @@
         inherit system;
         config.allowUnfree = true;
       };
+      herdr = herdr-nix.packages.${system}.default;
 
       hosts = [ "spica" ];
 
@@ -43,7 +55,7 @@
 
       homeConfig = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
-        extraSpecialArgs = { inherit pkgs-unstable; };
+        extraSpecialArgs = { inherit pkgs-unstable herdr; };
         modules = [ ./home ];
       };
 
@@ -51,7 +63,7 @@
         host:
         nixpkgs.lib.nixosSystem {
           inherit system;
-          specialArgs = { inherit pkgs-unstable; };
+          specialArgs = { inherit pkgs-unstable herdr; };
           modules = [
             {
               nixpkgs.overlays = [
