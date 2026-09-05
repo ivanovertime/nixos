@@ -6,7 +6,6 @@
     ./shell/tools.nix
     ./shell/tmux.nix
     ./editors/helix.nix
-    ./editors/emacs.nix
     ./editors/vscodium.nix
     ./dev/tools.nix
     ./dev/nix.nix

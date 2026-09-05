@@ -57,9 +57,6 @@ The setup runs COSMIC desktop on AMD hardware, with home-manager handling user-l
 │   │   └── tools.nix              # eza, yazi
 │   ├── editors/
 │   │   ├── helix.nix              # Helix editor & language servers
-│   │   ├── emacs.nix              # Emacs package config
-│   │   ├── emacs/
-│   │   │   └── init.el            # Emacs init (extraConfig source)
 │   │   └── vscodium.nix           # VSCodium & extensions
 │   ├── dev/
 │   │   ├── tools.nix              # CLI dev tools (fd, ripgrep, gh, curl, ...)
