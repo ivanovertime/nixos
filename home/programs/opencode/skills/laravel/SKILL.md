@@ -1,6 +1,6 @@
 ---
 name: laravel
-description: Use when working on Laravel projects (backend API, Eloquent models, controllers, routes, migrations, tests, Livewire/Flux, Sail). Covers project conventions for the user's Laravel apps (agenda_salud, danse-macabre backend, JEL backend), including how to use the laravel MCP server and Artisan/Sail workflows.
+description: Use when working on Laravel projects (backend API, Eloquent models, controllers, routes, migrations, tests, Livewire/Flux, Sail). Covers project conventions for the user's Laravel apps (agenda_salud, JEL backend), including how to use the laravel MCP server and Artisan/Sail workflows.
 ---
 
 # Laravel Conventions
@@ -13,10 +13,8 @@ guidelines) for version pinning before assuming.
 
 - PHP 8.2–8.4, Laravel 12–13, Eloquent, Pest (agenda_salud) or PHPUnit.
 - Postgres via Docker / Laravel Sail (`pgsql` service on localhost:5432).
-- agenda_salud: Livewire 4 + Flux, Fortify, Tailwind 4. API is JSON-only in
-  danse-macabre (no views).
+- agenda_salud: Livewire 4 + Flux, Fortify, Tailwind 4. API is JSON-only.
 - Dev DB defaults: agenda_salud `postgres:postgres@localhost:5432/agenda_salud`,
-  danse-macabre `postgres:postgres@localhost:5432/danse_macabre`,
   JEL `jel:jel@127.0.0.1:5432/laravel`.
 
 ## Commands

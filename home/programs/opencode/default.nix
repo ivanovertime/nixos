@@ -1,4 +1,4 @@
-{ pkgs-unstable, ... }:
+{ pkgs, pkgs-unstable, ... }:
 
 {
   programs.opencode = {
@@ -21,6 +21,18 @@
           type = "remote";
           url = "https://mcp.context7.com/mcp";
         };
+        mcp-nixos = {
+          type = "local";
+          command = [ "mcp-nixos" ];
+        };
+      };
+      permission = {
+        bash = {
+          "sudo *" = "deny";
+          "rm *" = "ask";
+          "git push*" = "ask";
+          "git reset --hard*" = "ask";
+        };
       };
     };
 
@@ -31,8 +43,20 @@
       sveltekit = ./skills/sveltekit;
       vue = ./skills/vue;
       postgres = ./skills/postgres;
+      frontend-design = ./skills/frontend-design;
     };
   };
+
+  home.packages = [ pkgs.mcp-nixos ];
+
+  xdg.configFile."opencode/AGENTS.md".text = ''
+    This system is managed by Nix (NixOS + home-manager).
+    Never hand-edit files under ~/.config that are symlinked into /nix/store
+    (home-manager owns them). Instead, edit the Nix sources in ~/Source/nixos
+    and rebuild with `sudo nixos-rebuild switch --flake .#spica`.
+    If a config file is not nix-managed (plain file in ~/.config), it is free
+    to edit directly.
+  '';
 
   xdg.configFile."opencode/dcp.jsonc".text = ''
     {

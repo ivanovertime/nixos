@@ -1,6 +1,6 @@
 ---
 name: nuxt
-description: Use when working on Nuxt projects (pages, components, composables, layouts, API routes, Nuxt config, SSR/SPA, drizzle, pnpm workspaces). Covers the user's Nuxt apps: alvarezivan.net (Nuxt Content), semantichelp (Nuxt + drizzle + shadcn-vue), yamaha-boy (Nuxt + pnpm workspace), danse-macabre frontend (Nuxt 4 SPA + PrimeVue).
+description: Use when working on Nuxt projects (pages, components, composables, layouts, API routes, Nuxt config, SSR/SPA, drizzle, pnpm workspaces). Covers the user's Nuxt apps: alvarezivan.net (Nuxt Content), semantichelp (Nuxt + drizzle + shadcn-vue), yamaha-boy (Nuxt + pnpm workspace).
 ---
 
 # Nuxt Conventions
@@ -11,7 +11,6 @@ project's `package.json` / `nuxt.config.ts` before assuming APIs.
 ## Stack notes
 
 - Nuxt 3–4, Vue 3 (`<script setup>`), Vite.
-- danse-macabre frontend: Nuxt 4 SPA (`ssr: false`) + PrimeVue (Aura).
 - semantichelp: Nuxt + drizzle + shadcn-vue components.
 - alvarezivan.net: Nuxt Content (Markdown-driven).
 - yamaha-boy: pnpm workspace monorepo.

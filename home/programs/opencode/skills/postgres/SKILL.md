@@ -17,7 +17,6 @@ boot). Configured in `modules/postgres.nix`.
 Existing project databases (create as needed):
 
 - agenda_salud: `postgresql://dev:dev@localhost:5432/agenda_salud`
-- danse-macabre: `postgresql://dev:dev@localhost:5432/danse_macabre`
 - JEL: `postgresql://dev:dev@localhost:5432/jel`
 
 ## Querying databases
