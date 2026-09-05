@@ -11,6 +11,8 @@
       lla = "eza --long --all --git --icons=always --group-directories-first --header";
       lt = "eza --tree --icons=always";
       livetoken = "journalctl --user -u livebook --no-pager 2>/dev/null | grep -oP 'token=\\K[a-z0-9]+' | tail -1";
+      oc = "opencode";
+      hd = "herdr";
     };
   };
 }
