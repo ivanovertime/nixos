@@ -13,6 +13,7 @@
       livetoken = "journalctl --user -u livebook --no-pager 2>/dev/null | grep -oP 'token=\\K[a-z0-9]+' | tail -1";
       oc = "opencode";
       hd = "herdr";
+      crp = "pkill cosmic-panel";
     };
   };
 }
