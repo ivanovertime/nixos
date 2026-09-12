@@ -1,4 +1,4 @@
-{ pkgs, pkgs-unstable, ... }:
+{ pkgs, ... }:
 
 {
   home.packages = with pkgs; [
@@ -11,6 +11,5 @@
     wget
     unzip
     htop
-    pkgs-unstable.antigravity-cli
   ];
 }

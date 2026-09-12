@@ -10,8 +10,8 @@
     ./dev/tools.nix
     ./dev/nix.nix
     ./dev/languages.nix
-    ./gui/ides.nix
     ./gui/media.nix
+    ./gui/tools.nix
     ./desktop/gtk.nix
     ./desktop/icons.nix
     ./desktop/mime.nix

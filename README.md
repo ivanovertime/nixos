@@ -63,7 +63,6 @@ The setup runs COSMIC desktop on AMD hardware, with home-manager handling user-l
 │   │   ├── nix.nix                # Nix tooling (nil, nixfmt)
 │   │   └── languages.nix          # Language/dev apps (bruno, aspell)
 │   ├── gui/
-│   │   ├── ides.nix               # GUI IDEs (Antigravity, VS Code, Copilot deps)
 │   │   └── media.nix              # GUI media (qbittorrent, subliminal)
 │   ├── desktop/
 │   │   ├── clipboard.nix          # Cursor Clip clipboard daemon
