@@ -34,6 +34,11 @@
           "git reset --hard*" = "ask";
         };
       };
+      agent = {
+        explore = {
+          model = "opencode/mimo-v2.5-free";
+        };
+      };
     };
 
     skills = {
@@ -65,21 +70,24 @@
     }
   '';
 
-  programs.opencode.agents.quick = ''
+  programs.opencode.agents.ask = ''
     ---
-    description: Cheap free model for simple chores - explain code, small edits, quick questions
+    description: Read-only Q&A agent - answers questions about the codebase without touching anything
     mode: primary
-    model: opencode/nemotron-3.5-lightning-free
+    model: opencode/mimo-v2.5-free
+    permission:
+      edit: deny
+      bash: deny
     ---
-    You are a fast, efficient coding assistant. Keep responses short and to the point.
-    For simple tasks, do exactly what is asked without extra exploration.
-    If a task turns out to be complex or multi-file, say so and suggest switching back to the main agent.
+    You are a read-only assistant. Answer questions by reading and searching
+    the codebase only. Never modify files or run state-changing commands.
+    Keep answers concise and cite file:line references.
   '';
 
   programs.opencode.commands.explain = ''
     ---
     description: Explain a file or concept using a free model
-    model: opencode/nemotron-3.5-lightning-free
+    model: opencode/mimo-v2.5-free
     ---
     Explain $ARGUMENTS clearly and concisely. Focus on what it does, how it works,
     and anything non-obvious. Use short code references instead of long quotes.
@@ -87,11 +95,26 @@
 
   programs.opencode.commands.commit = ''
     ---
-    description: Generate a commit message from staged changes
-    model: opencode/nemotron-3.5-lightning-free
+    description: Commit all working-tree changes, grouped as one or more conventional commits
+    model: opencode/mimo-v2.5-free
     ---
-    Run `git diff --cached` to see staged changes, then write a concise commit message.
-    Match the repo's existing commit style (check `git log --oneline -10`).
-    Reply with only the commit message, no explanations.
+    Commit the user's changes for them.
+
+    Use the bash tool to run the commands yourself - do not just describe them.
+    1. Inspect the repo state: `git status --short`, `git diff` (unstaged),
+       and `git diff --cached` (already staged). Check the repo's commit style
+       with `git log --oneline -10`.
+    2. Group the changes into one or more logical commits by concern. Follow
+       conventional commits: `type(scope): subject`. Derive the scope from the
+       files' area (e.g. home/shell/* -> shell, home/programs/opencode/* ->
+       opencode, flake.lock -> deps). Keep related changes together; split
+       unrelated concerns into separate commits.
+    3. For each group: stage its files with `git add`, then run `git commit -m
+       "<full conventional commit message>"`.
+    4. Never push. Never stage files unrelated to the commit you are about to make.
+
+    Reply to the user in the language they are using (English or Spanish).
+    Write commit messages in English to match the repo's history.
+    Summarize what was committed (or what you skipped) in a few lines.
   '';
 }
