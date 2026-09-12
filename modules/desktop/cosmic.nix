@@ -1,10 +1,9 @@
 { pkgs, ... }:
 
 {
-  services.xserver.enable = true;
-
   services.displayManager.cosmic-greeter.enable = true;
   services.desktopManager.cosmic.enable = true;
+  services.desktopManager.cosmic.xwayland.enable = false;
 
   environment.cosmic.excludePackages = with pkgs; [
     cosmic-store
@@ -18,19 +17,6 @@
   programs.dconf.enable = true;
 
   services.system76-scheduler.enable = true;
-
-  xdg.portal = {
-    enable = true;
-    xdgOpenUsePortal = true;
-    extraPortals = with pkgs; [
-      xdg-desktop-portal-cosmic
-    ];
-  };
-
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "";
-  };
 
   environment.sessionVariables = {
     QT_QPA_PLATFORMTHEME = "cosmic";
