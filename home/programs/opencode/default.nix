@@ -38,6 +38,12 @@
         explore = {
           model = "opencode/mimo-v2.5-free";
         };
+        plan = {
+          color = "info";
+        };
+        build = {
+          color = "warning";
+        };
       };
     };
 
@@ -75,6 +81,7 @@
     description: Read-only Q&A agent - answers questions about the codebase without touching anything
     mode: primary
     model: opencode/mimo-v2.5-free
+    color: success
     permission:
       edit: deny
       bash: deny
