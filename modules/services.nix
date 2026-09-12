@@ -17,6 +17,9 @@
     pulse.enable = true;
   };
 
+  # ── Journal size cap ───────────────────────────────────────────────────
+  services.journald.extraConfig = "SystemMaxUse=500M";
+
   # ── Containers ─────────────────────────────────────────────────────────
   virtualisation.docker.enable = true;
 
