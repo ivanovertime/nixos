@@ -53,7 +53,8 @@
     options = "--delete-older-than 14d";
   };
 
-  nix.optimise.automatic = true;
+  # Store paths are optimised on write (auto-optimise-store), so no periodic
+  # optimise timer is needed on top.
 
   system.autoUpgrade = {
     enable = true;

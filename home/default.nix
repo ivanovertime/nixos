@@ -28,6 +28,14 @@
     enable = true;
     settings = {
       init.defaultBranch = "trunk";
+      user = {
+        name = "Ivan Alvarez";
+        email = "20419834+ivanovertime@users.noreply.github.com";
+      };
+      credential = {
+        "https://github.com".helper = "!/etc/profiles/per-user/ivan/bin/gh auth git-credential";
+        "https://gist.github.com".helper = "!/etc/profiles/per-user/ivan/bin/gh auth git-credential";
+      };
     };
   };
 

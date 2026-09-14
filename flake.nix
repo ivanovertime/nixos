@@ -109,8 +109,6 @@
         packages = [
           pkgs.nixfmt
           pkgs.statix
-          pkgs.alejandra
-          pkgs.nixos-rebuild
         ];
         shellHook = hooks.shellHook;
       };

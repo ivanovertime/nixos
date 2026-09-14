@@ -31,6 +31,9 @@ The setup runs COSMIC desktop on AMD hardware, with home-manager handling user-l
 ├── .envrc                         # `use flake` — auto-loads devShell via direnv
 ├── flake.nix                      # Entry point — inputs, outputs, checks
 ├── flake.lock                     # Pinned dependency versions
+├── .agents/
+│   └── skills/
+│       └── nixos/SKILL.md         # Repo skill for AI agents (pi et al.)
 ├── lib/
 │   └── icons.nix                  # Shared icon-theme override (system + home)
 ├── hosts/
@@ -63,9 +66,9 @@ The setup runs COSMIC desktop on AMD hardware, with home-manager handling user-l
 │   │   ├── nix.nix                # Nix tooling (nil, nixfmt)
 │   │   └── languages.nix          # Language/dev apps (bruno, aspell)
 │   ├── gui/
-│   │   └── media.nix              # GUI media (qbittorrent, subliminal)
+│   │   ├── media.nix              # GUI media (qbittorrent, subliminal)
+│   │   └── tools.nix              # GUI tools (GNOME disk, system monitor)
 │   ├── desktop/
-│   │   ├── clipboard.nix          # Cursor Clip clipboard daemon
 │   │   ├── gtk.nix                # GTK theme, cursor, dconf
 │   │   ├── icons.nix              # COSMIC icon aliases for Tela theme
 │   │   └── mime.nix               # MIME default applications
@@ -74,11 +77,8 @@ The setup runs COSMIC desktop on AMD hardware, with home-manager handling user-l
 │       │   ├── default.nix        # Celluloid/mpv scripts & keybinds
 │       │   ├── autosub.lua
 │       │   └── input.conf
-│       └── opencode/
-│           ├── default.nix        # opencode config, MCP servers
-│           └── skills/
-│               └── lazy-senior-dev/
-│                   └── SKILL.md
+│       ├── herdr/default.nix      # herdr + user systemd server service
+│       └── pi/default.nix         # pi coding agent (skip its update check)
 └── README.md
 ```
 
@@ -116,8 +116,8 @@ sudo nixos-rebuild switch --flake .#spica
 The system handles its own upkeep:
 
 - Weekly system upgrades via the flake (from the GitHub remote, so they work no matter where the checkout lives)
-- Weekly garbage collection (removes store paths older than 30 days)
-- Automatic store optimisation (deduplication)
+- Weekly garbage collection (removes store paths older than 14 days)
+- Store optimisation (deduplication) happens automatically on every write
 - Boot menu limited to the latest 10 generations
 
 Reboot is not automatic — new generations apply on next reboot, or you can rebuild manually.
@@ -125,8 +125,8 @@ Reboot is not automatic — new generations apply on next reboot, or you can reb
 ### Check Timers
 
 ```bash
-systemctl list-timers --all | grep -E 'nixos-upgrade|nix-gc|nix-optimise'
-systemctl status nixos-upgrade.timer nix-gc.timer nix-optimise.timer
+systemctl list-timers --all | grep -E 'nixos-upgrade|nix-gc'
+systemctl status nixos-upgrade.timer nix-gc.timer
 ```
 
 ### Rollback
@@ -160,7 +160,7 @@ The same two checks run automatically on every push/PR in CI (see `.github/workf
 ### Adding a package
 
 - **System-wide** (GUI apps, greeter, anything a user might not have): add it to `environment.systemPackages` in `modules/packages.nix`.
-- **User-level** CLI/dev tools: add it to the matching category file under `home/` — `dev/tools.nix`, `dev/nix.nix`, `dev/languages.nix`, `gui/ides.nix`, or `gui/media.nix` — whichever fits the tool's purpose.
+- **User-level** CLI/dev tools: add it to the matching category file under `home/` — `dev/tools.nix`, `dev/nix.nix`, `dev/languages.nix`, `gui/tools.nix`, or `gui/media.nix` — whichever fits the tool's purpose.
 - Prefer the stable channel (`pkgs`). Only use `pkgs-unstable.<pkg>` when you need a newer version than 26.05 ships.
 
 ### Adding a module
