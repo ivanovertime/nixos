@@ -1,6 +1,6 @@
 ---
 name: nixos
-description: Use when working on this NixOS configuration (~/Source/nixos): editing flakes, NixOS/home-manager modules, packages, or doing a rebuild. Covers the flake layout, verification workflow (nix fmt, nix flake check), and rebuild command. Trigger on any change to *.nix in this repo.
+description: "Use when working on this NixOS configuration (~/Source/nixos): editing flakes, NixOS/home-manager modules, packages, or doing a rebuild. Covers the flake layout, verification workflow (nix fmt, nix flake check), and rebuild command. Trigger on any change to *.nix in this repo."
 ---
 
 # NixOS Configuration Workflow
