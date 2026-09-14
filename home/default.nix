@@ -16,7 +16,7 @@
     ./desktop/icons.nix
     ./desktop/mime.nix
     ./programs/celluloid
-    ./programs/opencode
+    ./programs/pi
     ./programs/herdr
   ];
 
