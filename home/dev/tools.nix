@@ -12,6 +12,9 @@
     unzip
     htop
 
+    # Clipboard access for pi image paste (Ctrl+V) on Wayland (COSMIC)
+    wl-clipboard
+
     # Google Antigravity CLI (free-tier Gemini via Google account OAuth,
     # login state already cached in ~/.gemini)
     pkgs-unstable.antigravity-cli
