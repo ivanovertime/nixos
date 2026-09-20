@@ -4,6 +4,12 @@
   programs.bash = {
     enable = true;
     enableCompletion = true;
+    # herdr panes run non-login interactive shells, so this is set here
+    # (rather than via login profile) so $EDITOR is hx inside herdr too.
+    initExtra = ''
+      export EDITOR="hx"
+      export VISUAL="hx"
+    '';
     shellAliases = {
       ls = "eza --icons=always --group-directories-first";
       ll = "eza --long --git --icons=always --group-directories-first --header";
