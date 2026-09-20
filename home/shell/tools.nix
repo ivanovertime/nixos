@@ -12,22 +12,6 @@
     ];
   };
 
-  programs.lf = {
-    enable = true;
-    settings = {
-      preview = true;
-      hidden = false;
-      ignorecase = true;
-      dirfirst = true;
-      scrolloff = 4;
-      drawbox = true;
-    };
-    keybindings = {
-      "." = "set hidden!";
-      "~" = "set hidden!";
-    };
-  };
-
   programs.yazi = {
     enable = true;
     shellWrapperName = "yy";

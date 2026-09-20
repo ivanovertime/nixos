@@ -18,6 +18,7 @@
     ./programs/celluloid
     ./programs/pi
     ./programs/herdr
+    ./programs/lf
   ];
 
   home.username = "ivan";
