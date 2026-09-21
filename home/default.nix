@@ -18,6 +18,7 @@
     ./programs/pi
     ./programs/herdr
     ./programs/lf
+    ./programs/opencode
   ];
 
   home.username = "ivan";

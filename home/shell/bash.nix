@@ -16,6 +16,18 @@ in
       export EDITOR="hx"
       export VISUAL="hx"
       source ${herdrCompletions}
+
+      # Leave the shell in the directory lf was last browsing.
+      lf() {
+        local tmp dir
+        tmp="$(mktemp)"
+        command lf -last-dir-path="$tmp" "$@"
+        if [ -s "$tmp" ]; then
+          dir="$(cat "$tmp")"
+          [ -d "$dir" ] && cd "$dir"
+        fi
+        rm -f "$tmp"
+      }
     '';
     shellAliases = {
       ls = "eza --icons=always --group-directories-first";

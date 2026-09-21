@@ -82,6 +82,9 @@
       "~" = "set hidden!";
       D = "trash";
       "<delete>" = "trash";
+      # open the selection in $EDITOR (hx) from bash.nix
+      e = "$$EDITOR \"$f\"";
+      E = "$$EDITOR \"$fs\"";
     };
 
     extraConfig = "on-cd";

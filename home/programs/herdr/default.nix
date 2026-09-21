@@ -15,6 +15,7 @@ let
   # when the installed hook already matches this herdr version.
   integrations = [
     "pi"
+    "opencode"
     "antigravity-cli"
   ];
 in
