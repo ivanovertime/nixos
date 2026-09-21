@@ -4,7 +4,6 @@
   imports = [
     ./shell/bash.nix
     ./shell/tools.nix
-    ./shell/tmux.nix
     ./editors/helix.nix
     ./editors/vscodium.nix
     ./dev/tools.nix
