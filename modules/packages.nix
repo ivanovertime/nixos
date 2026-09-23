@@ -20,5 +20,8 @@ in
 
     # Theming
     icons.tela-circle-green
+
+    # VPN
+    protonvpn-gui
   ];
 }
