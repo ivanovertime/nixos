@@ -18,5 +18,8 @@
     # Google Antigravity CLI (free-tier Gemini via Google account OAuth,
     # login state already cached in ~/.gemini)
     pkgs-unstable.antigravity-cli
+
+    # Anthropic Claude Code CLI (unfree; pkgs-unstable has allowUnfree set)
+    pkgs-unstable.claude-code
   ];
 }
