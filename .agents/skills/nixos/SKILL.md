@@ -10,7 +10,7 @@ system or `/etc` files — change a `.nix` source and rebuild.
 
 ## Layout
 
-- `modules/` — system-level NixOS modules (boot, desktop, hardware, services, users, nix)
+- `modules/` — system-level NixOS modules (boot, networking, desktop, hardware, services, nix, packages, postgres, users)
 - `home/` — home-manager config, imported as a NixOS module via `modules/users.nix`
 - `hosts/spica/` — host identity/machine config; the only host is `spica`
 - `pkgs/`, `lib/` — package expressions and shared helpers

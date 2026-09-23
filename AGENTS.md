@@ -6,7 +6,7 @@ flake; nothing is hand-edited directly on the live system.
 ## Structure
 
 - `hosts/spica/` — host identity, locale, module imports, hardware
-- `modules/` — system-level NixOS modules (boot, desktop, hardware, services, users, nix)
+- `modules/` — system-level NixOS modules (boot, networking, desktop, hardware, services, nix, packages, postgres, users)
 - `home/` — home-manager config (shell, editors, dev, gui, programs)
 - `pkgs/` — custom package expressions
 - `lib/` — shared helpers

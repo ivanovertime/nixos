@@ -50,14 +50,14 @@ The setup runs COSMIC desktop on AMD hardware, with home-manager handling user-l
 │   ├── networking.nix             # NetworkManager, Bluetooth
 │   ├── nix.nix                    # Flakes, GC, optimise, auto-upgrade
 │   ├── packages.nix               # System-wide GUI packages
-│   ├── services.nix               # PipeWire, printing, fwupd, Docker
+│   ├── postgres.nix               # PostgreSQL 16 with a local dev role/db
+│   ├── services.nix               # PipeWire, printing, fwupd, Docker, Livebook
 │   └── users.nix                  # User accounts, groups, home-manager bridge
 ├── home/
 │   ├── default.nix                # Home-manager entry, imports, git, starship
 │   ├── shell/
 │   │   ├── bash.nix               # Bash config & aliases
-│   │   ├── tmux.nix               # tmux config
-│   │   └── tools.nix              # eza, yazi
+│   │   └── tools.nix              # eza (ls replacement)
 │   ├── editors/
 │   │   ├── helix.nix              # Helix editor & language servers
 │   │   └── vscodium.nix           # VSCodium & extensions
@@ -78,6 +78,11 @@ The setup runs COSMIC desktop on AMD hardware, with home-manager handling user-l
 │       │   ├── autosub.lua
 │       │   └── input.conf
 │       ├── herdr/default.nix      # herdr + user systemd server service
+│       ├── lf/
+│       │   ├── default.nix        # lf file manager (git status, trash, previews)
+│       │   ├── icons
+│       │   └── previewer.sh
+│       ├── opencode/default.nix   # pinned opencode (fixed DB, no self-update)
 │       └── pi/default.nix         # pi coding agent (skip its update check)
 └── README.md
 ```
@@ -161,6 +166,7 @@ The same two checks run automatically on every push/PR in CI (see `.github/workf
 
 - **System-wide** (GUI apps, greeter, anything a user might not have): add it to `environment.systemPackages` in `modules/packages.nix`.
 - **User-level** CLI/dev tools: add it to the matching category file under `home/` — `dev/tools.nix`, `dev/nix.nix`, `dev/languages.nix`, `gui/tools.nix`, or `gui/media.nix` — whichever fits the tool's purpose.
+- **Pinned programs with config** (a tool that needs its own modules, scripts, or settings, like `lf` or `opencode`): give it a directory under `home/programs/` and import it from `home/default.nix`.
 - Prefer the stable channel (`pkgs`). Only use `pkgs-unstable.<pkg>` when you need a newer version than 26.05 ships.
 
 ### Adding a module
