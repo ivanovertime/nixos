@@ -39,6 +39,7 @@ in
       hd = "herdr";
       cpr = "pkill cosmic-panel";
       oc = "opencode";
+      cc = "claude";
     };
   };
 }
