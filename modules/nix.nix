@@ -15,36 +15,15 @@
   };
 
   programs.nix-ld.enable = true;
+  # Minimal CLI-class core for foreign binaries. No installed program uses
+  # nix-ld today — this is a safety net for ad-hoc downloads. Add libraries
+  # here when a binary complains about a missing .so; `ldd` on it names them.
   programs.nix-ld.libraries = with pkgs; [
     stdenv.cc.cc.lib
     openssl
-    zlib
     curl
-    glib
-    nss
-    nspr
+    zlib
     expat
-    xorg.libX11
-    xorg.libXcomposite
-    xorg.libXdamage
-    xorg.libXext
-    xorg.libXfixes
-    xorg.libXrandr
-    libdrm
-    mesa
-    gtk3
-    pango
-    cairo
-    alsa-lib
-    libGL
-    libpulseaudio
-    dbus
-    atk
-    at-spi2-core
-    cups
-    fontconfig
-    freetype
-    pixman
   ];
 
   nix.gc = {
