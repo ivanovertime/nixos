@@ -1,4 +1,4 @@
-{ pkgs-unstable, herdr, ... }:
+{ pkgs-unstable, ... }:
 
 {
   users.users.ivan = {
@@ -22,7 +22,7 @@
     useGlobalPkgs = true;
     useUserPackages = true;
     backupFileExtension = "hm-backup";
-    extraSpecialArgs = { inherit pkgs-unstable herdr; };
+    extraSpecialArgs = { inherit pkgs-unstable; };
     users.ivan = import ../home;
   };
 }

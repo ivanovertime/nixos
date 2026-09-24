@@ -1,7 +1,6 @@
 {
   lib,
   pkgs,
-  herdr,
   ...
 }:
 
@@ -21,14 +20,14 @@ let
 in
 {
   home.packages = [
-    herdr
+    pkgs.herdr
     libnotify
   ];
 
   home.activation.herdrIntegrations = lib.hm.dag.entryAfter [ "writeBoundary" ] (
     lib.concatMapStringsSep "\n" (
       target:
-      "run ${herdr}/bin/herdr integration install ${target} "
+      "run ${pkgs.herdr}/bin/herdr integration install ${target} "
       + ''|| echo "herdr: could not install the ${target} integration (continuing)" >&2''
     ) integrations
   );
@@ -39,7 +38,7 @@ in
       After = [ "graphical-session.target" ];
     };
     Service = {
-      ExecStart = "${herdr}/bin/herdr server";
+      ExecStart = "${pkgs.herdr}/bin/herdr server";
       Restart = "on-failure";
       RestartSec = 5;
       Environment = "PATH=/etc/profiles/per-user/ivan/bin:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin:/usr/bin:/bin";

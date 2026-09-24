@@ -1,9 +1,9 @@
-{ pkgs, herdr, ... }:
+{ pkgs, ... }:
 
 let
   # Generated once at build time rather than spawning herdr on every shell start.
   herdrCompletions = pkgs.runCommand "herdr-bash-completions" { } ''
-    ${herdr}/bin/herdr completion bash > $out
+    ${pkgs.herdr}/bin/herdr completion bash > $out
   '';
 in
 {

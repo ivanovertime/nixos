@@ -61,7 +61,7 @@
         host:
         nixpkgs.lib.nixosSystem {
           inherit system;
-          specialArgs = { inherit pkgs-unstable herdr; };
+          specialArgs = { inherit pkgs-unstable; };
           modules = [
             {
               nixpkgs.overlays = [
@@ -77,6 +77,9 @@
 
                     # Same icon theme everywhere (greeter + user session).
                     tela-circle-green = tela-circle-green;
+
+                    # herdr from the official packaging flake.
+                    herdr = herdr;
                   }
                 )
               ];
