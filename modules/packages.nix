@@ -1,8 +1,5 @@
 { pkgs, pkgs-unstable, ... }:
 
-let
-  icons = import ../lib/icons.nix { inherit pkgs; };
-in
 {
   environment.systemPackages = with pkgs; [
     # Browsers
@@ -19,7 +16,7 @@ in
     celluloid
 
     # Theming
-    icons.tela-circle-green
+    tela-circle-green
 
     # VPN
     protonvpn-gui

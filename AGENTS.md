@@ -6,11 +6,14 @@ flake; nothing is hand-edited directly on the live system.
 ## Structure
 
 - `hosts/spica/` — host identity, locale, module imports, hardware
-- `modules/` — system-level NixOS modules (boot, networking, desktop, hardware, services, nix, packages, postgres, users)
+- `modules/` — system-level NixOS modules; one concern per file. Top level holds
+  non-service concerns (boot, networking, nix, packages, users) plus `desktop/`
+  and `hardware/`; services live in `modules/services/` (audio, printing,
+  docker, livebook, postgres, journald)
 - `home/` — home-manager config (shell, editors, dev, gui, programs)
-- `pkgs/` — custom package expressions
-- `lib/` — shared helpers
-- `flake.nix` — inputs, outputs, formatter, checks
+- `flake.nix` — inputs, outputs, overlays, formatter, checks. Shared package
+  overrides (e.g. the `tela-circle-green` icon theme, COSMIC aliases) are
+  defined once in the overlay here.
 
 home-manager is bridged in as a NixOS module (`modules/users.nix`), so a single
 rebuild applies both system and user config.

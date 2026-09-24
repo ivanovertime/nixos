@@ -116,7 +116,7 @@
 
       checks.${system} = {
         spica-system = (mkSystem "spica").config.system.build.toplevel;
-        spica-home = (mkSystem "spica").config.home-manager.users.ivan.activationPackage;
+        spica-home = (mkSystem "spica").config.home-manager.users.ivan.home.activationPackage;
       };
 
       nixosConfigurations = nixpkgs.lib.genAttrs hosts mkSystem;

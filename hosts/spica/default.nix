@@ -10,8 +10,12 @@
     ../../modules/desktop/cosmic.nix
     ../../modules/desktop/fonts.nix
     ../../modules/hardware/amd.nix
-    ../../modules/services.nix
-    ../../modules/postgres.nix
+    ../../modules/services/audio.nix
+    ../../modules/services/printing.nix
+    ../../modules/services/docker.nix
+    ../../modules/services/livebook.nix
+    ../../modules/services/postgres.nix
+    ../../modules/services/journald.nix
     ../../modules/nix.nix
     ../../modules/packages.nix
     ../../modules/users.nix

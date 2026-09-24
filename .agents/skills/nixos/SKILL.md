@@ -10,11 +10,15 @@ system or `/etc` files — change a `.nix` source and rebuild.
 
 ## Layout
 
-- `modules/` — system-level NixOS modules (boot, networking, desktop, hardware, services, nix, packages, postgres, users)
+- `modules/` — system-level NixOS modules; one concern per file. Non-service
+  concerns at the top level (boot, networking, nix, packages, users) and in
+  `desktop/`, `hardware/`; services in `services/` (audio, printing, docker,
+  livebook, postgres, journald)
 - `home/` — home-manager config, imported as a NixOS module via `modules/users.nix`
 - `hosts/spica/` — host identity/machine config; the only host is `spica`
-- `pkgs/`, `lib/` — package expressions and shared helpers
-- `flake.nix` — inputs, outputs, formatter, checks
+- `flake.nix` — inputs, outputs, overlays, formatter, checks. Shared package
+  overrides (e.g. `tela-circle-green` icon theme, COSMIC aliases) live in the
+  overlay here, not in per-file imports.
 
 A single rebuild applies both system and user (home-manager) config.
 

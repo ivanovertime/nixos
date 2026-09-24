@@ -1,8 +1,7 @@
 { pkgs, ... }:
 
 let
-  icons = import ../../lib/icons.nix { inherit pkgs; };
-  telaIcons = icons.tela-circle-green;
+  telaIcons = pkgs.tela-circle-green;
   iconPath = name: "${telaIcons}/share/icons/Tela-circle-green-dark/scalable/apps/${name}.svg";
 in
 {

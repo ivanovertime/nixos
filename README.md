@@ -29,13 +29,11 @@ The setup runs COSMIC desktop on AMD hardware, with home-manager handling user-l
 │       └── ci.yml                 # Format + build checks on push/PR
 ├── .editorconfig                  # Editor style rules
 ├── .envrc                         # `use flake` — auto-loads devShell via direnv
-├── flake.nix                      # Entry point — inputs, outputs, checks
+├── flake.nix                      # Entry point — inputs, outputs, overlays, checks
 ├── flake.lock                     # Pinned dependency versions
 ├── .agents/
 │   └── skills/
 │       └── nixos/SKILL.md         # Repo skill for AI agents (pi et al.)
-├── lib/
-│   └── icons.nix                  # Shared icon-theme override (system + home)
 ├── hosts/
 │   └── spica/
 │       ├── default.nix            # Host identity, locale, module imports
@@ -50,8 +48,13 @@ The setup runs COSMIC desktop on AMD hardware, with home-manager handling user-l
 │   ├── networking.nix             # NetworkManager, Bluetooth
 │   ├── nix.nix                    # Flakes, GC, optimise, auto-upgrade
 │   ├── packages.nix               # System-wide GUI packages
-│   ├── postgres.nix               # PostgreSQL 16 with a local dev role/db
-│   ├── services.nix               # PipeWire, printing, fwupd, Docker, Livebook
+│   ├── services/
+│   │   ├── audio.nix              # PipeWire audio stack
+│   │   ├── printing.nix           # Printing & firmware updates
+│   │   ├── docker.nix             # Docker containers
+│   │   ├── livebook.nix           # Livebook user service
+│   │   ├── postgres.nix           # PostgreSQL 16 with a local dev role/db
+│   │   └── journald.nix           # Journal size cap
 │   └── users.nix                  # User accounts, groups, home-manager bridge
 ├── home/
 │   ├── default.nix                # Home-manager entry, imports, git, starship
@@ -64,10 +67,9 @@ The setup runs COSMIC desktop on AMD hardware, with home-manager handling user-l
 │   ├── dev/
 │   │   ├── tools.nix              # CLI dev tools (fd, ripgrep, gh, curl, ...)
 │   │   ├── nix.nix                # Nix tooling (nil, nixfmt)
-│   │   └── languages.nix          # Language/dev apps (bruno, aspell)
+│   │   └── languages.nix          # Language/dev apps (aspell)
 │   ├── gui/
-│   │   ├── media.nix              # GUI media (qbittorrent, subliminal)
-│   │   └── tools.nix              # GUI tools (GNOME disk, system monitor)
+│   │   └── default.nix            # GUI media & tools (qbittorrent, GNOME utils)
 │   ├── desktop/
 │   │   ├── gtk.nix                # GTK theme, cursor, dconf
 │   │   ├── icons.nix              # COSMIC icon aliases for Tela theme
@@ -165,7 +167,7 @@ The same two checks run automatically on every push/PR in CI (see `.github/workf
 ### Adding a package
 
 - **System-wide** (GUI apps, greeter, anything a user might not have): add it to `environment.systemPackages` in `modules/packages.nix`.
-- **User-level** CLI/dev tools: add it to the matching category file under `home/` — `dev/tools.nix`, `dev/nix.nix`, `dev/languages.nix`, `gui/tools.nix`, or `gui/media.nix` — whichever fits the tool's purpose.
+- **User-level** CLI/dev tools: add it to the matching category file under `home/` — `dev/tools.nix`, `dev/nix.nix`, `dev/languages.nix`, or `gui/default.nix` — whichever fits the tool's purpose.
 - **Pinned programs with config** (a tool that needs its own modules, scripts, or settings, like `lf` or `opencode`): give it a directory under `home/programs/` and import it from `home/default.nix`.
 - Prefer the stable channel (`pkgs`). Only use `pkgs-unstable.<pkg>` when you need a newer version than 26.05 ships.
 
@@ -185,7 +187,7 @@ Drop a `.nix` file under `modules/` (or `home/` for user config) and `import` it
 
 ### Shared expressions
 
-Anything referenced from both system modules and home-manager (like the icon theme) lives in `lib/` and is imported where needed — keep it that way instead of duplicating overrides.
+Anything needed by both system modules and home-manager (like the `tela-circle-green` icon theme) is defined once as an overlay in `flake.nix`, not imported per file — keep it that way instead of duplicating overrides.
 
 ---
 
