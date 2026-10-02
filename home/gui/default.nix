@@ -20,6 +20,6 @@
     # Tools
     gnome-disk-utility
     gnome-system-monitor
-    protonvpn-gui
+    proton-vpn
   ];
 }
