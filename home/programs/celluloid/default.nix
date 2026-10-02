@@ -1,10 +1,12 @@
-{ ... }:
+{ pkgs, ... }:
 
 let
   celluloidAutosub = ./autosub.lua;
   celluloidInput = ./input.conf;
 in
 {
+  home.packages = [ pkgs.celluloid ];
+
   # Keep autosub available for both plain mpv config and Celluloid's plugin dir.
   xdg.configFile."mpv/scripts/autosub.lua".source = celluloidAutosub;
   xdg.configFile."celluloid/scripts/autosub.lua".source = celluloidAutosub;
