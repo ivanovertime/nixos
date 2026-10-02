@@ -9,13 +9,14 @@ let
   libnotify = pkgs.libnotify;
 
   # Integration hooks have to live inside each agent's own config directory
-  # (~/.pi, ~/.gemini), so they cannot be symlinked from the store. Re-run the
+  # (~/.pi, ~/.claude, ~/.gemini), so they cannot be symlinked from the store. Re-run the
   # installer on activation instead; it is idempotent and reports "current"
   # when the installed hook already matches this herdr version.
   integrations = [
     "pi"
     "opencode"
     "antigravity-cli"
+    "claude"
   ];
 in
 {
