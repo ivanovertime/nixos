@@ -10,6 +10,13 @@
     ];
     trusted-users = [ "ivan" ];
     auto-optimise-store = true;
+
+    # On 16 GB / 8 cores the defaults (`max-jobs = auto`, `cores = 0`) run eight
+    # builds of all 16 threads each — the machine swaps itself to death and oomd
+    # kills Chrome. Four jobs of eight threads is faster in wall-clock terms and
+    # leaves the desktop usable.
+    max-jobs = 4;
+    cores = 8;
     extra-substituters = [ "https://herdr.cachix.org" ];
     extra-trusted-public-keys = [ "herdr.cachix.org-1:3nH7IStRsS0ASfdonA0DCRR2ZrSCeWitZ7Kwew0cR4I=" ];
   };

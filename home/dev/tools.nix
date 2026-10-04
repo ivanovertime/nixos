@@ -12,6 +12,10 @@
     unzip
     htop
 
+    # CPU/GPU temperature (k10temp, amdgpu) and VA-API verification (`vainfo`)
+    lm_sensors
+    libva-utils
+
     # Clipboard access for pi image paste (Ctrl+V) on Wayland (COSMIC)
     wl-clipboard
 
