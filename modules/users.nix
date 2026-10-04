@@ -8,6 +8,7 @@
       "networkmanager"
       "wheel"
       "docker"
+      "video" # brightnessctl on the internal panel (see modules/hardware/amd.nix)
     ];
   };
 

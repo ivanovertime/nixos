@@ -16,6 +16,12 @@
     lm_sensors
     libva-utils
 
+    # Brightness: internal panel from the CLI (`brightnessctl set 40%`) and the
+    # external monitor over DDC/CI (`ddcutil setvcp 10 30`). Both need device
+    # access set up in modules/hardware/amd.nix.
+    brightnessctl
+    ddcutil
+
     # Clipboard access for pi image paste (Ctrl+V) on Wayland (COSMIC)
     wl-clipboard
 
