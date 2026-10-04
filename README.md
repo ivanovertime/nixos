@@ -20,6 +20,55 @@ The setup runs COSMIC desktop on AMD hardware, with home-manager handling user-l
 
 ---
 
+## Hardware
+
+The config targets a single machine, `spica`. Everything below is what the current
+`hosts/spica/hardware.nix` and kernel are actually running on (read from DMI, `lscpu`,
+`lsblk` and `/sys`, NixOS 26.05 / kernel 6.18):
+
+| | |
+|---|---|
+| Model | Lenovo V15 G4 ABP (machine type `83CR`) |
+| Board | `LNVNB161216` (NO DPK) · BIOS `MSCN20WW` (2025-01-09) |
+| CPU | AMD Ryzen 7 7730U — 8C/16T, Zen 3, up to 4.55 GHz |
+| GPU | AMD Barcelo/Radeon Vega iGPU (`1002:15e7`), `amdgpu` driver |
+| RAM | 16 GB (14.9 GiB usable; SMBIOS reports 2 memory devices) |
+| Storage | WD PC SN740 256 GB NVMe (`nvme0n1`) |
+| Display | 15.3" 1920×1080 eDP panel (34×19 cm, per EDID) + HDMI-A-1 / DP-1 outputs |
+| Wi-Fi / BT | MediaTek MT7921 (`mt7921e`) + Bluetooth |
+| Ethernet | Realtek RTL8168/8111 (`r8169`) |
+| Webcam | SunplusIT Integrated Camera |
+| Audio | AMD HDA controllers (`snd_hda_intel`, `1002:1637` + `1022:15e3`) over PipeWire |
+| Battery | SMP `L20M2PF0`, 38 Wh design (Li-poly) |
+| Security | fTPM 2.0 (`tpm0`), AMD-V virtualisation |
+
+### Disk layout
+
+| Partition | Size | Mount | Filesystem |
+|---|---|---|---|
+| `nvme0n1p1` | 1 GB | `/boot` | vfat, partlabel `EFI` (systemd-boot) |
+| `nvme0n1p2` | 228.7 GB | `/` | ext4, label `root` |
+| `nvme0n1p3` | 8.8 GB | swap | swap, label `swap` |
+
+Swap is 7.5 GiB of zram (`zramSwap`, zstd — compresses in RAM, so it costs far less
+than 7.5 GiB of physical memory) plus the 8.8 GB `nvme0n1p3` partition, with
+`vm.swappiness = 160`.
+
+Note: `swapDevices` is empty in `hosts/spica/hardware.nix`, so the swap partition is not
+declared by the flake — systemd picks it up at boot through its discoverable-partition
+mechanism (`/dev/disk/by-designator/swap` → `nvme0n1p3`). It works, but it is implicit;
+declaring it would make the setup honest.
+
+### Hardware-specific settings
+
+These are the bits of the config that exist because of this exact machine:
+
+- `boot.kernelParams = [ "amdgpu.sg_display=0" ]` — avoids scatter-gather display buffers that glitch on APUs using system RAM as VRAM.
+- `hardware.cpu.amd.updateMicrocode = true` and `hardware.enableRedistributableFirmware = true` in `modules/hardware/amd.nix`.
+- `boot.kernelModules = [ "kvm-amd" ]` for AMD-V virtualisation (Docker/KVM workloads).
+
+---
+
 ## Repository Structure
 
 ```
