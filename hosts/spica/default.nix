@@ -10,6 +10,7 @@
     ../../modules/desktop/cosmic.nix
     ../../modules/desktop/fonts.nix
     ../../modules/hardware/amd.nix
+    ../../modules/hardware/battery.nix
     ../../modules/services/audio.nix
     ../../modules/services/printing.nix
     ../../modules/services/docker.nix
