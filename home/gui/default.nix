@@ -26,9 +26,16 @@ in
     pkgs-unstable.inkscape
     obs-studio
 
+    # System monitoring. `cosmic-monitor` is System76's monitor (CPU temperature,
+    # processes, GPU); the applet puts CPU and GPU temperature straight in the
+    # panel. Both resolve to nixpkgs-unstable through the flake overlay, which is
+    # where the COSMIC packages come from. Replaces gnome-system-monitor, which
+    # shows no temperatures.
+    cosmic-monitor
+    cosmic-ext-applet-sysinfo
+
     # Tools
     gnome-disk-utility
-    gnome-system-monitor
     proton-vpn
   ];
 }
