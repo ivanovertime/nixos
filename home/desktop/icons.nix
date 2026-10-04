@@ -19,7 +19,7 @@ in
       iconPath "totem";
     "icons/Tela-circle-green-dark/scalable/apps/com.system76.CosmicReader.svg".source =
       iconPath "accessories-document-viewer";
-    "icons/Tela-circle-green-dark/scalable/apps/org.gnome.Loupe.svg".source =
+    "icons/Tela-circle-green-dark/scalable/apps/com.system76.CosmicViewer.svg".source =
       iconPath "accessories-image-viewer";
   };
 }

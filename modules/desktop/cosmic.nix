@@ -12,6 +12,8 @@
 
   environment.systemPackages = with pkgs; [
     cutecosmic
+    # Not in the NixOS module's default COSMIC package list yet.
+    cosmic-viewer
   ];
 
   programs.dconf.enable = true;

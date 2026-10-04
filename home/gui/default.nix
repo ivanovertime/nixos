@@ -23,7 +23,6 @@ in
     qbittorrent
     python3Packages.subliminal
     gthumb
-    loupe
     pkgs-unstable.inkscape
     obs-studio
 
