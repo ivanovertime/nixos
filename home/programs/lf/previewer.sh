@@ -18,6 +18,14 @@ case "$f" in
     unzip -l "$f" 2>/dev/null | head -n 80
     exit 0
     ;;
+  *.7z)
+    7zz l -- "$f" 2>/dev/null | head -n 80
+    exit 0
+    ;;
+  *.rar)
+    unrar lb -- "$f" 2>/dev/null | head -n 80
+    exit 0
+    ;;
 esac
 
 case "$mime" in

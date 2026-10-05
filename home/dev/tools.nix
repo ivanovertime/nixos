@@ -9,8 +9,21 @@
     curl
     jq
     wget
-    unzip
     htop
+
+    # Archives. `_7zz` is the official 7-Zip Linux port (reads and writes 7z and
+    # zip, including AES-encrypted zips; Info-ZIP `unzip` only handles legacy
+    # ZipCrypto). Passwords: `7zz x -pPW f.7z`, `unzip -P PW f.zip`,
+    # `unrar x -pPW f.rar`. Note _7zz installs only the `7zz` binary, not `7z`.
+    #
+    # Viewing an archive needs none of these: Celluloid opens a .7z/.zip as a
+    # playlist and plays the media inside it (its libmpv is built with
+    # libarchive). Only encrypted archives have to be extracted first — every
+    # libarchive consumer refuses those.
+    _7zz
+    zip
+    unzip
+    unrar
 
     # CPU/GPU temperature (k10temp, amdgpu) and VA-API verification (`vainfo`)
     lm_sensors
