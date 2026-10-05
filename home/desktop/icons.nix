@@ -15,8 +15,6 @@ in
       iconPath "preferences-system";
     "icons/Tela-circle-green-dark/scalable/apps/com.system76.CosmicEdit.svg".source =
       iconPath "text-editor";
-    "icons/Tela-circle-green-dark/scalable/apps/com.system76.CosmicPlayer.svg".source =
-      iconPath "totem";
     "icons/Tela-circle-green-dark/scalable/apps/com.system76.CosmicReader.svg".source =
       iconPath "accessories-document-viewer";
     "icons/Tela-circle-green-dark/scalable/apps/com.system76.CosmicViewer.svg".source =
