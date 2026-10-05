@@ -54,10 +54,9 @@ Swap is 7.5 GiB of zram (`zramSwap`, zstd — compresses in RAM, so it costs far
 than 7.5 GiB of physical memory) plus the 8.8 GB `nvme0n1p3` partition, with
 `vm.swappiness = 160`.
 
-Note: `swapDevices` is empty in `hosts/spica/hardware.nix`, so the swap partition is not
-declared by the flake — systemd picks it up at boot through its discoverable-partition
-mechanism (`/dev/disk/by-designator/swap` → `nvme0n1p3`). It works, but it is implicit;
-declaring it would make the setup honest.
+`hardware.nix` leaves `swapDevices` empty (it is auto-generated), so the partition is
+declared explicitly in `hosts/spica/default.nix` by UUID — the entry lives there rather
+than in the generated file.
 
 ### Hardware-specific settings
 
@@ -93,7 +92,8 @@ These are the bits of the config that exist because of this exact machine:
 │   │   ├── cosmic.nix             # COSMIC DE, greeter, portals, env vars
 │   │   └── fonts.nix              # Font packages & fontconfig
 │   ├── hardware/
-│   │   └── amd.nix                # AMD GPU, firmware, microcode
+│   │   ├── amd.nix                # AMD GPU, firmware, microcode, backlight
+│   │   └── battery.nix            # EC charge cap (Long Life)
 │   ├── networking.nix             # NetworkManager, Bluetooth
 │   ├── nix.nix                    # Flakes, GC, optimise, auto-upgrade
 │   ├── packages.nix               # System-wide GUI packages
