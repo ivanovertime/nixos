@@ -92,8 +92,7 @@ These are the bits of the config that exist because of this exact machine:
 │   │   ├── cosmic.nix             # COSMIC DE, greeter, portals, env vars
 │   │   └── fonts.nix              # Font packages & fontconfig
 │   ├── hardware/
-│   │   ├── amd.nix                # AMD GPU, firmware, microcode, backlight
-│   │   └── battery.nix            # EC charge cap (Long Life)
+│   │   └── amd.nix                # AMD GPU, firmware, microcode, backlight
 │   ├── networking.nix             # NetworkManager, Bluetooth
 │   ├── nix.nix                    # Flakes, GC, optimise, auto-upgrade
 │   ├── packages.nix               # System-wide GUI packages
