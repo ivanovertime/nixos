@@ -8,7 +8,7 @@
       "networkmanager"
       "wheel"
       "docker"
-      "video" # brightnessctl on the internal panel (see modules/hardware/amd.nix)
+      "video"
     ];
   };
 
@@ -18,7 +18,6 @@
     nix-direnv.enable = true;
   };
 
-  # Home Manager is loaded as a NixOS module via the flake.
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;

@@ -2,7 +2,6 @@
 
 {
   home.packages = [
-    # previewer deps
     pkgs.bat
     pkgs.chafa
   ];
@@ -32,10 +31,8 @@
     };
 
     commands = {
-      # trash via gio instead of permanent delete
       trash = "%set -f; gio trash -- $fx";
 
-      # git branch in the prompt
       on-cd = ''
         &{{
             branch=$(git symbolic-ref --short HEAD 2>/dev/null) || branch='''
@@ -48,7 +45,6 @@
         }}
       '';
 
-      # git status per file in the info column
       on-load = ''
         &{{
             cd "$(dirname "$1")" || exit 1
@@ -82,7 +78,6 @@
       "~" = "set hidden!";
       D = "trash";
       "<delete>" = "trash";
-      # open the selection in $EDITOR (hx) from bash.nix
       e = "$$EDITOR \"$f\"";
       E = "$$EDITOR \"$fs\"";
     };

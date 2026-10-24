@@ -46,9 +46,7 @@
 
       hosts = [ "spica" ];
 
-      # All COSMIC packages from unstable — stable (26.05) pins older releases
-      # (e.g. cosmic-comp 1.2.0 vs 1.5.0). Kept self-maintaining so new cosmic
-      # packages are picked up automatically.
+      # COSMIC packages from unstable; stable pins older releases.
       cosmicNames = builtins.filter (
         n: builtins.match "^(cosmic|xdg-desktop-portal-cosmic).*" n != null
       ) (builtins.attrNames pkgs-unstable);
@@ -65,22 +63,14 @@
                   final: prev:
                   (nixpkgs.lib.genAttrs cosmicNames (n: pkgs-unstable.${n}))
                   // {
-                    # Stable 26.05's COSMIC module still references the pre-rename
-                    # name, which unstable carries as a warn-alias ("has been
-                    # renamed..."). Map it straight to the real package to keep
-                    # eval silent.
+                    # stable's COSMIC module still uses the pre-rename name.
                     cosmic-applibrary = pkgs-unstable.cosmic-app-library;
 
-                    # Same icon theme everywhere (greeter + user session). The
-                    # 2026-07-07 release ships a few dangling symlinks; upstream's
-                    # installPhase already prunes them (`find -xtype l -delete`)
-                    # before the noBrokenSymlinks fixup check runs, so no local
-                    # patch is needed.
+                    # no local patch — upstream prunes its dangling symlinks.
                     tela-circle-green = prev.tela-circle-icon-theme.override {
                       colorVariants = [ "green" ];
                     };
 
-                    # herdr from the official packaging flake.
                     herdr = herdr;
                   }
                 )

@@ -5,7 +5,6 @@ let
   iconPath = name: "${telaIcons}/share/icons/Tela-circle-green-dark/scalable/apps/${name}.svg";
 in
 {
-  # Add COSMIC icon aliases in the active Tela theme to avoid duplicate launchers.
   xdg.dataFile = {
     "icons/Tela-circle-green-dark/scalable/apps/com.system76.CosmicFiles.svg".source =
       iconPath "file-manager";
@@ -19,7 +18,6 @@ in
       iconPath "accessories-document-viewer";
     "icons/Tela-circle-green-dark/scalable/apps/com.system76.CosmicViewer.svg".source =
       iconPath "accessories-image-viewer";
-    # Tela has no icon under the app id, so the monitor picks up the generic one.
     "icons/Tela-circle-green-dark/scalable/apps/com.system76.CosmicMonitor.svg".source =
       iconPath "utilities-system-monitor";
   };

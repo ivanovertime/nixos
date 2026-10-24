@@ -4,7 +4,6 @@
   imports = [
     ./hardware.nix
 
-    # System modules
     ../../modules/boot.nix
     ../../modules/networking.nix
     ../../modules/desktop/cosmic.nix
@@ -21,16 +20,12 @@
     ../../modules/users.nix
   ];
 
-  # ── Host identity ──────────────────────────────────────────────────────
   networking.hostName = "spica";
   system.nixos.label = "Spica";
 
-  # nvme0n1p3 holds the swap partition (label `swap`). It was coming up only
-  # because systemd discovers it on its own; declaring it makes the setup
-  # explicit. `hardware.nix` is auto-generated, so the entry lives here.
+  # explicit; systemd would discover it on its own (hardware.nix is auto-generated)
   swapDevices = [ { device = "/dev/disk/by-uuid/eab1711b-915f-4d96-b405-4c7d27423d2d"; } ];
 
-  # ── Locale & timezone ─────────────────────────────────────────────────
   time.timeZone = "America/Caracas";
 
   i18n.defaultLocale = "en_US.UTF-8";

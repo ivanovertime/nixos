@@ -5,13 +5,9 @@
 }:
 
 let
-  # herdr's `system` toast delivery shells out to `notify-send` from PATH.
   libnotify = pkgs.libnotify;
 
-  # Integration hooks have to live inside each agent's own config directory
-  # (~/.pi, ~/.claude, ~/.gemini), so they cannot be symlinked from the store. Re-run the
-  # installer on activation instead; it is idempotent and reports "current"
-  # when the installed hook already matches this herdr version.
+  # hooks must live inside each agent's own config dir; reinstall on activation
   integrations = [
     "pi"
     "opencode"

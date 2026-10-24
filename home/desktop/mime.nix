@@ -4,7 +4,6 @@
   xdg.mimeApps = {
     enable = true;
     defaultApplications = {
-      # Browser
       "text/html" = [ "google-chrome.desktop" ];
       "application/xhtml+xml" = [ "google-chrome.desktop" ];
       "application/x-www-form-urlencoded" = [ "google-chrome.desktop" ];
@@ -14,7 +13,6 @@
       "x-scheme-handler/https" = [ "google-chrome.desktop" ];
       "x-scheme-handler/unknown" = [ "google-chrome.desktop" ];
 
-      # Images
       "image/apng" = [ "com.system76.CosmicViewer.desktop" ];
       "image/avif" = [ "com.system76.CosmicViewer.desktop" ];
       "image/bmp" = [ "com.system76.CosmicViewer.desktop" ];
@@ -28,21 +26,17 @@
       "image/tiff" = [ "com.system76.CosmicViewer.desktop" ];
       "image/webp" = [ "com.system76.CosmicViewer.desktop" ];
 
-      # Video — Celluloid (libmpv). cosmic-player is excluded in
-      # modules/desktop/cosmic.nix, so these are the only video handler on the
-      # system; the list mirrors ffmpegthumbnailer's, so a file that gets a
-      # thumbnail also opens where the thumbnail says it will.
       "video/mp4" = [ "io.github.celluloid_player.Celluloid.desktop" ];
       "application/mp4" = [ "io.github.celluloid_player.Celluloid.desktop" ];
       "video/x-m4v" = [ "io.github.celluloid_player.Celluloid.desktop" ];
       "video/x-matroska" = [ "io.github.celluloid_player.Celluloid.desktop" ];
       "application/x-matroska" = [ "io.github.celluloid_player.Celluloid.desktop" ];
       "video/webm" = [ "io.github.celluloid_player.Celluloid.desktop" ];
-      "video/x-msvideo" = [ "io.github.celluloid_player.Celluloid.desktop" ]; # avi
+      "video/x-msvideo" = [ "io.github.celluloid_player.Celluloid.desktop" ];
       "video/vnd.avi" = [ "io.github.celluloid_player.Celluloid.desktop" ];
       "video/mpeg" = [ "io.github.celluloid_player.Celluloid.desktop" ];
       "video/mp2t" = [ "io.github.celluloid_player.Celluloid.desktop" ];
-      "video/quicktime" = [ "io.github.celluloid_player.Celluloid.desktop" ]; # mov
+      "video/quicktime" = [ "io.github.celluloid_player.Celluloid.desktop" ];
       "video/ogg" = [ "io.github.celluloid_player.Celluloid.desktop" ];
       "application/ogg" = [ "io.github.celluloid_player.Celluloid.desktop" ];
       "video/x-flv" = [ "io.github.celluloid_player.Celluloid.desktop" ];

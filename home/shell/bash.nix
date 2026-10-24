@@ -1,7 +1,6 @@
 { pkgs, ... }:
 
 let
-  # Generated once at build time rather than spawning herdr on every shell start.
   herdrCompletions = pkgs.runCommand "herdr-bash-completions" { } ''
     ${pkgs.herdr}/bin/herdr completion bash > $out
   '';
@@ -10,14 +9,12 @@ in
   programs.bash = {
     enable = true;
     enableCompletion = true;
-    # herdr panes run non-login interactive shells, so this is set here
-    # (rather than via login profile) so $EDITOR is hx inside herdr too.
+    # also for herdr's non-login panes
     initExtra = ''
       export EDITOR="hx"
       export VISUAL="hx"
       source ${herdrCompletions}
 
-      # Leave the shell in the directory lf was last browsing.
       lf() {
         local tmp dir
         tmp="$(mktemp)"

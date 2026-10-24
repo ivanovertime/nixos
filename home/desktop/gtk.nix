@@ -19,7 +19,6 @@
 
   xdg.configFile."gtk-4.0/gtk.css".force = true;
 
-  # Keep cursor/theme defaults declarative so old state is overwritten on rebuild.
   home.pointerCursor = {
     gtk.enable = true;
     x11.enable = true;

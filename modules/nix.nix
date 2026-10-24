@@ -11,10 +11,7 @@
     trusted-users = [ "ivan" ];
     auto-optimise-store = true;
 
-    # On 16 GB / 8 cores the defaults (`max-jobs = auto`, `cores = 0`) run eight
-    # builds of all 16 threads each — the machine swaps itself to death and oomd
-    # kills Chrome. Four jobs of eight threads is faster in wall-clock terms and
-    # leaves the desktop usable.
+    # 16 GB / 8 cores: the defaults swap this box to death.
     max-jobs = 4;
     cores = 8;
     extra-substituters = [ "https://herdr.cachix.org" ];
@@ -22,9 +19,7 @@
   };
 
   programs.nix-ld.enable = true;
-  # Minimal CLI-class core for foreign binaries. No installed program uses
-  # nix-ld today — this is a safety net for ad-hoc downloads. Add libraries
-  # here when a binary complains about a missing .so; `ldd` on it names them.
+  # safety net for ad-hoc binaries; `ldd` names what to add
   programs.nix-ld.libraries = with pkgs; [
     stdenv.cc.cc.lib
     openssl
@@ -39,8 +34,7 @@
     options = "--delete-older-than 14d";
   };
 
-  # Store paths are optimised on write (auto-optimise-store), so no periodic
-  # optimise timer is needed on top.
+  # store is optimised on write; no periodic timer needed
 
   system.autoUpgrade = {
     enable = true;

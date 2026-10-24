@@ -5,15 +5,11 @@
     enable = true;
     package = pkgs-unstable.vscodium.fhs;
 
-    # Keep mutable extension dir so unpackaged extensions can still be installed
-    # from the UI under ~/.vscode-oss.
+    # extensions installed from the UI live under ~/.vscode-oss
     mutableExtensionsDir = true;
 
     profiles.default = {
-      # settings.json is left unmanaged (user-owned file); update checks are
-      # disabled via that file (update.mode = "none", extensions.autoCheckUpdates = false).
-      # Keep these two true so home-manager does not generate settings.json.
-
+      # settings.json stays user-owned; keep both true so no file is generated
       extensions =
         let
           ext = pkgs.vscode-extensions;

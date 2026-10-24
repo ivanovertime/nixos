@@ -1,18 +1,10 @@
-# opencode is used from the terminal inside herdr worktrees, never via the
-# VSCode OpenChamber extension. Pinning it in Nix gives a single version and a
-# single SQLite database, which is what keeps the DB from getting corrupted.
+# terminal-only; Nix pinning keeps one version and one SQLite DB
 { pkgs-unstable, ... }:
 
 {
   home.packages = [ pkgs-unstable.opencode ];
 
-  # opencode keeps every session in one SQLite database under
-  # ~/.local/share/opencode. Pin the file name and disable self-update so a
-  # channel change can no longer silently pick opencode-<channel>.db, and the
-  # binary cannot be swapped out from under a running TUI.
-  #
-  # Set in initExtra (not home.sessionVariables) because herdr panes run
-  # non-login interactive shells, which do not source the login profile.
+  # fixed DB name, no self-update; initExtra covers herdr's non-login panes
   programs.bash.initExtra = ''
     export OPENCODE_DB="opencode.db"
     export OPENCODE_DISABLE_CHANNEL_DB="1"

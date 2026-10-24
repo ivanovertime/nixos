@@ -7,11 +7,11 @@ in
 {
   home.packages = [ pkgs.celluloid ];
 
-  # Keep autosub available for both plain mpv config and Celluloid's plugin dir.
+  # autosub for plain mpv and Celluloid alike
   xdg.configFile."mpv/scripts/autosub.lua".source = celluloidAutosub;
   xdg.configFile."celluloid/scripts/autosub.lua".source = celluloidAutosub;
 
-  # Resolve key conflicts by mapping keys explicitly to autosub script commands.
+  # explicit keymaps resolve autosub conflicts
   xdg.configFile."mpv/input.conf".source = celluloidInput;
   xdg.configFile."celluloid/input.conf".source = celluloidInput;
 }
