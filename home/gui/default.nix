@@ -34,11 +34,6 @@ in
     cosmic-monitor
     cosmic-ext-applet-sysinfo
 
-    # External-monitor brightness over DDC/CI. Needs hardware.i2c (see
-    # modules/hardware/amd.nix); it cannot dim the internal panel — that is the
-    # amdgpu_bl backlight the COSMIC brightness slider already drives.
-    cosmic-ext-applet-external-monitor-brightness
-
     # Tools
     gnome-disk-utility
     proton-vpn
