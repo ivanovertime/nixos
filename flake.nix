@@ -46,10 +46,6 @@
 
       hosts = [ "spica" ];
 
-      # Shared icon-theme override — single source of truth for the system
-      # modules and home-manager alike, exposed through the overlay below.
-      tela-circle-green = pkgs.tela-circle-icon-theme.override { colorVariants = [ "green" ]; };
-
       # All COSMIC packages from unstable — stable (26.05) pins older releases
       # (e.g. cosmic-comp 1.2.0 vs 1.5.0). Kept self-maintaining so new cosmic
       # packages are picked up automatically.
@@ -75,8 +71,14 @@
                     # eval silent.
                     cosmic-applibrary = pkgs-unstable.cosmic-app-library;
 
-                    # Same icon theme everywhere (greeter + user session).
-                    tela-circle-green = tela-circle-green;
+                    # Same icon theme everywhere (greeter + user session). The
+                    # 2026-07-07 release ships a few dangling symlinks; upstream's
+                    # installPhase already prunes them (`find -xtype l -delete`)
+                    # before the noBrokenSymlinks fixup check runs, so no local
+                    # patch is needed.
+                    tela-circle-green = prev.tela-circle-icon-theme.override {
+                      colorVariants = [ "green" ];
+                    };
 
                     # herdr from the official packaging flake.
                     herdr = herdr;
