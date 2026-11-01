@@ -1,22 +1,22 @@
-# NixOS Configuration
+<h1 align="center">NixOS Configuration</h1>
 
-[![NixOS](https://img.shields.io/badge/NixOS-system-blue.svg?style=for-the-badge&logo=NixOS&logoColor=white)](https://nixos.org/)
-[![Reproducible Code](https://img.shields.io/badge/Reproducible-Yes-success.svg?style=for-the-badge)](#)
-[![Declarative](https://img.shields.io/badge/Infrastructure_as_Code-Yes-orange.svg?style=for-the-badge)](#)
-[![CI](https://github.com/ivanovertime/nixos/actions/workflows/ci.yml/badge.svg)](https://github.com/ivanovertime/nixos/actions/workflows/ci.yml)
+<p align="center">
+  <a href="https://github.com/ivanovertime/nixos/actions/workflows/ci.yml"><img src="https://github.com/ivanovertime/nixos/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+</p>
 
 This is my NixOS system configuration. It defines everything about my computer — packages, services, desktop environment, boot settings — in code. I use it so I can rebuild my setup from scratch, or recover from a bad update, without losing a whole weekend.
 
-The setup runs COSMIC desktop on AMD hardware, with home-manager handling user-level config.
+NixOS 26.05, one host (`spica`), fully flake-based. The setup runs COSMIC desktop on AMD hardware, with home-manager handling user-level config.
 
 ---
 
-## Why NixOS?
+## What's in here
 
-- **Declarative configuration:** Every part of the system is described in `.nix` files. No hidden state, no "how did that get installed?" moments.
-- **Reproducibility:** The same config produces the same system on any machine. Setting up a new laptop takes minutes instead of hours.
-- **Rollbacks:** If an update breaks something, boot into the previous generation and carry on. It's saved me more than once.
-- **Isolated dev environments:** Each project gets its own dependencies via `nix develop`, so nothing bleeds into the host system.
+- **COSMIC desktop** on AMD hardware — PipeWire audio, the Tela icon theme, systemd-boot.
+- **Everyday services**: Docker, PostgreSQL 16 with a local dev role, Livebook, printing.
+- **A terminal-first workflow**: herdr for panes and agent sessions, `lf` as the file manager, helix and VSCodium as editors.
+- **Automatic upkeep**: weekly upgrades, weekly garbage collection, the last 10 generations in the boot menu.
+- **Nothing hidden**: every package, service and user setting is a `.nix` file in git — see [What's not in the repo](#whats-not-in-the-repo) for the handful of things that can't be.
 
 ---
 
@@ -109,17 +109,18 @@ Only a few settings exist because of this hardware:
 
 ## Usage
 
-This config is tailored to my machine and workflow. Feel free to use it as a starting point, but you'll need to adapt it to your own hardware.
+The config is tailored to this machine, so adapt the host name and hardware as you go.
+`spica` is the only host today — [Adding a host](#adding-a-host) covers a second one.
 
 **1. Clone the repository:**
 ```bash
-git clone <your-repo-url> ~/Source/nixos
+git clone https://github.com/ivanovertime/nixos.git ~/Source/nixos
 cd ~/Source/nixos
 ```
 
 **2. Generate your hardware configuration:**
 ```bash
-sudo nixos-generate-config --show-hardware-config > hosts/<hostname>/hardware.nix
+sudo nixos-generate-config --show-hardware-config > hosts/spica/hardware.nix
 ```
 
 **3. Build and apply:**
@@ -127,12 +128,45 @@ sudo nixos-generate-config --show-hardware-config > hosts/<hostname>/hardware.ni
 sudo nixos-rebuild switch --flake .#spica
 ```
 
+---
+
+## What's not in the repo
+
+Secrets and machine-local state stay out of git. A rebuild needs these copied over or
+re-created by hand:
+
+- **Credentials**: `~/.local/share/opencode/auth.json` (model provider keys),
+  `~/.config/gh/hosts.yml` (GitHub token), `~/.gnupg/`, and `~/.ssh/` if you add keys.
+- **App state**: browser profiles, `~/.local/share/opencode/opencode.db` (every agent
+  session), and any file under `~/.config` that home-manager does not manage.
+- **Your password**: the flake creates the account, not the password — that is set at
+  install time and only exists on the disk.
+
+---
+
 ## Updating
+
+Bump every input and apply:
 
 ```bash
 nix flake update
 sudo nixos-rebuild switch --flake .#spica
 ```
+
+To move one input instead — nixpkgs, say — pass it by name:
+
+```bash
+nix flake update nixpkgs nixpkgs-unstable
+```
+
+A bump can also move the agent tooling, and a new opencode version migrates its database
+on first start. Snapshot it first:
+
+```bash
+nix shell nixpkgs#sqlite -c sqlite3 ~/.local/share/opencode/opencode.db ".backup $HOME/opencode.db.bak"
+```
+
+---
 
 ## Automatic Maintenance
 
@@ -145,10 +179,10 @@ The system handles its own upkeep:
 
 Reboot is not automatic — new generations apply on next reboot, or you can rebuild manually.
 
-### Check Timers
+### Checking the timers
 
 ```bash
-systemctl list-timers --all | grep -E 'nixos-upgrade|nix-gc'
+systemctl list-timers nixos-upgrade.timer nix-gc.timer
 systemctl status nixos-upgrade.timer nix-gc.timer
 ```
 
@@ -214,6 +248,8 @@ Anything needed by both system modules and home-manager (like the `tela-circle-g
 **The build works locally but CI fails.** Make sure the flake.lock is committed (`nix flake lock`), and that you've pushed the lockfile alongside your `.nix` changes.
 
 **Auto-upgrade doesn't seem to do anything.** Check the timer (`systemctl list-timers`) and the remote ref in `modules/nix.nix` — upgrades pull from `github:ivanovertime/nixos`, so uncommitted local changes won't be applied until you push.
+
+**The build fails with "No space left on device".** `/` runs close to full here. Drop older generations (`sudo nix-collect-garbage --delete-older-than 7d`) and re-run — recent rollback points survive, and a few GB come back. The store deduplicates on write already, so there is no separate optimise timer to chase.
 
 ---
 
