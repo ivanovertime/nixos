@@ -132,7 +132,7 @@ These are the bits of the config that exist because of this exact machine:
 │       │   ├── default.nix        # lf file manager (git status, trash, previews)
 │       │   ├── icons
 │       │   └── previewer.sh
-│       ├── opencode/default.nix   # pinned opencode (fixed DB, no self-update)
+│       ├── opencode/default.nix   # opencode config + global AGENTS.md, no self-update
 │       └── pi/default.nix         # pi coding agent (skip its update check)
 └── README.md
 ```
