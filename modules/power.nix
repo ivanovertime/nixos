@@ -47,13 +47,14 @@ in
   environment.systemPackages = [ batteryCharge ];
 
   # Passwordless toggle for the charge ceiling; the script only writes one
-  # sysfs node, and sudo matches the store path exactly.
+  # sysfs node. sudo compares resolved path strings, so match the PATH symlink
+  # users actually invoke — the store path alone never matches.
   security.sudo.extraRules = [
     {
       users = [ "ivan" ];
       commands = [
         {
-          command = "${batteryCharge}/bin/battery-charge";
+          command = "/run/current-system/sw/bin/battery-charge";
           options = [ "NOPASSWD" ];
         }
       ];
