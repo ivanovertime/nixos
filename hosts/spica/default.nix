@@ -5,6 +5,7 @@
     ./hardware.nix
 
     ../../modules/boot.nix
+    ../../modules/power.nix
     ../../modules/networking.nix
     ../../modules/desktop/cosmic.nix
     ../../modules/desktop/fonts.nix

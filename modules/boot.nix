@@ -21,4 +21,7 @@
     enable = true;
     algorithm = "zstd";
   };
+
+  # hibernate: resume from the swap partition declared in hosts/spica/default.nix
+  boot.resumeDevice = "/dev/disk/by-uuid/eab1711b-915f-4d96-b405-4c7d27423d2d";
 }
