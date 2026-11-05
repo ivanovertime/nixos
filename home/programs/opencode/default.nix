@@ -11,6 +11,46 @@
       model = "opencode-go/deepseek-v4.1-flash";
       lsp = false;
       autoupdate = false;
+
+      # Orchestrator plans read-only and delegates to subagents. The child uses
+      # its own permissions, so the builder can edit even though the parent cannot.
+      agents = {
+        orchestrator = {
+          description = "Plans work and delegates implementation to builder subagents";
+          mode = "primary";
+          model = "opencode-go/deepseek-v4-pro#max";
+          steps = 30;
+          permissions = [
+            {
+              action = "edit";
+              resource = "*";
+              effect = "deny";
+            }
+            {
+              action = "subagent";
+              resource = "*";
+              effect = "deny";
+            }
+            {
+              action = "subagent";
+              resource = "builder";
+              effect = "allow";
+            }
+            {
+              action = "subagent";
+              resource = "explore";
+              effect = "allow";
+            }
+          ];
+        };
+
+        builder = {
+          description = "Implements one scoped task end to end, including tests";
+          mode = "subagent";
+          model = "opencode/deepseek-v4.1-flash-free#high";
+          steps = 40;
+        };
+      };
     };
 
     context = ''
