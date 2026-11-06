@@ -109,8 +109,6 @@
         exec ${pkgs.nixfmt}/bin/nixfmt "$@" $(${pkgs.git}/bin/git ls-files '*.nix')
       '';
 
-      gitHooks = hooks;
-
       devShells.${system}.default = pkgs.mkShell {
         packages = [
           pkgs.nixfmt
