@@ -26,16 +26,31 @@ in
         rm -f "$tmp"
       }
 
-      # Gated rebuild: check the flake first, then activate. /etc/nixos symlinks
-      # to ~/Source/nixos, so the bare switch command works from any cwd
+      # Wrapper: `nix update` bumps inputs, verifies, and auto-reverts the lock on
+      # failure; `nix upgrade` checks the flake, then activates. /etc/nixos
+      # symlinks to ~/Source/nixos, so the bare switch works from any cwd
       # (--flake .#spica only resolves inside the repo).
       nix() {
-        if [ "$1" = "upgrade" ]; then
-          shift
-          command nix flake check /home/ivan/Source/nixos && sudo nixos-rebuild switch "$@"
-        else
-          command nix "$@"
-        fi
+        case "$1" in
+          upgrade)
+            shift
+            command nix flake check /home/ivan/Source/nixos && sudo nixos-rebuild switch "$@"
+            ;;
+          update)
+            shift
+            command nix flake update /home/ivan/Source/nixos "$@" || return 1
+            if command nix flake check /home/ivan/Source/nixos; then
+              echo "flake.lock updated and verified"
+            else
+              git -C /home/ivan/Source/nixos checkout -- flake.lock
+              echo "check failed — flake.lock reverted" >&2
+              return 1
+            fi
+            ;;
+          *)
+            command nix "$@"
+            ;;
+        esac
       }
     '';
     shellAliases = {

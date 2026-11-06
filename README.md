@@ -149,14 +149,16 @@ re-created by hand:
 Bump every input and apply:
 
 ```bash
-nix flake update
-sudo nixos-rebuild switch --flake .#spica
+nix update
+nix upgrade
 ```
+
+`nix update` bumps the inputs and verifies them — if the new revs fail `nix flake check`, the lock is reverted automatically. `nix upgrade` then applies the verified state. Prefer stable inputs (`pkgs`) where the pinned 26.05 version is enough; only a few packages use `nixpkgs-unstable`.
 
 To move one input instead — nixpkgs, say — pass it by name:
 
 ```bash
-nix flake update nixpkgs nixpkgs-unstable
+nix update nixpkgs nixpkgs-unstable
 ```
 
 A bump can also move the agent tooling, and a new opencode version migrates its database
@@ -192,7 +194,7 @@ systemctl status nixos-upgrade.timer nix-gc.timer
 - From a running system:
 
 ```bash
-sudo nixos-rebuild switch --rollback
+nix upgrade --rollback
 ```
 
 ---
