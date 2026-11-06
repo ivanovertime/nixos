@@ -30,9 +30,10 @@ A single rebuild applies both system and user (home-manager) config.
 
 ## Rebuild
 
-- Dry-run/build only: `nixos-rebuild build --flake .#spica`
-- Activate: `sudo nixos-rebuild switch --flake .#spica` (may prompt password)
-- Rollback if a switch breaks the system: `sudo nixos-rebuild switch --rollback`
+- Activate with the gate: `nix upgrade` — runs `nix flake check` first, then `sudo nixos-rebuild switch` (works from any cwd; `/etc/nixos` symlinks to this repo, so the bare command is used — `--flake .#spica` only resolves inside it)
+- Build only: `nixos-rebuild build`
+- Rollback if a switch breaks the system: `nix upgrade --rollback`
+- Never leave `flake.lock` dirty: after any lock change, `nix flake check` must pass before switching. Revert a broken rev instead of working around it.
 
 ## Conventions
 

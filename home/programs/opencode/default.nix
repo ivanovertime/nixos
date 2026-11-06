@@ -47,7 +47,7 @@
         builder = {
           description = "Implements one scoped task end to end, including tests";
           mode = "subagent";
-          model = "opencode/deepseek-v4.1-flash-free#high";
+          model = "opencode-go/deepseek-v4.1-flash#high";
           steps = 40;
         };
       };
@@ -63,8 +63,11 @@
       This machine is managed by Nix (NixOS + home-manager). Never hand-edit files
       under `~/.config` that are symlinked into `/nix/store` — home-manager owns
       them. Change the Nix source in `~/Source/nixos` and rebuild with
-      `sudo nixos-rebuild switch --flake .#spica`. Plain files in `~/.config` are
-      free to edit directly.
+      `nix upgrade` (runs `nix flake check` before `sudo nixos-rebuild switch`;
+      works from any cwd because `/etc/nixos` symlinks to the repo). Never run
+      `nix flake update` casually and never leave `flake.lock` dirty — a broken
+      lock gets reverted, not switched. Plain files in `~/.config` are free to edit
+      directly.
 
       ## Environment (NixOS)
 

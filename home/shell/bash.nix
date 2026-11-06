@@ -25,6 +25,18 @@ in
         fi
         rm -f "$tmp"
       }
+
+      # Gated rebuild: check the flake first, then activate. /etc/nixos symlinks
+      # to ~/Source/nixos, so the bare switch command works from any cwd
+      # (--flake .#spica only resolves inside the repo).
+      nix() {
+        if [ "$1" = "upgrade" ]; then
+          shift
+          command nix flake check /home/ivan/Source/nixos && sudo nixos-rebuild switch "$@"
+        else
+          command nix "$@"
+        fi
+      }
     '';
     shellAliases = {
       ls = "eza --icons=always --group-directories-first";

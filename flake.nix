@@ -89,6 +89,16 @@
             entry = "${pkgs.nixfmt}/bin/nixfmt";
             files = "\\.nix$";
           };
+
+          # Gate: never let a broken flake.lock reach trunk. Runs on pre-push,
+          # only when the lock changed; CI re-runs the same check.
+          flake-lock-gate = {
+            enable = true;
+            entry = "${pkgs.nix}/bin/nix flake check /home/ivan/Source/nixos";
+            pass_filenames = false;
+            files = "flake\\.lock$";
+            stages = [ "pre-push" ];
+          };
         };
       };
     in

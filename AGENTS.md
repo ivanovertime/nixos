@@ -23,7 +23,14 @@ rebuild applies both system and user config.
 - `nix fmt` — format all `*.nix` (runs `nixfmt` on git-tracked files)
 - `nix fmt -- --check` — CI format check
 - `nix flake check` — evaluate + build both `spica-system` and `spica-home`
-- `sudo nixos-rebuild switch --flake .#spica` — build and activate (may prompt password)
+- `nix upgrade` — the gated rebuild: `nix flake check` first, then `sudo nixos-rebuild switch` (works from any cwd — `/etc/nixos` symlinks to this repo; `--flake .#spica` only resolves inside it). Pass-through: `nix upgrade --rollback`
+- `sudo nixos-rebuild switch` — bare build + activate, no check (prefer `nix upgrade`)
+
+## Dependency updates
+
+- Never run `nix flake update` casually, and never leave `flake.lock` dirty.
+- After any `flake.lock` change, `nix flake check` must pass before switching. A broken rev (e.g. a bad npmDepsHash on nixpkgs-unstable) gets reverted, not worked around.
+- The pre-push hook blocks broken locks from reaching `trunk`; CI re-runs the same check on push.
 
 ## Conventions
 
