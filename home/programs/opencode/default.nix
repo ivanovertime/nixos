@@ -70,6 +70,17 @@
           };
         };
       };
+
+      # Compact a touch earlier than default; keep 15k recent tokens verbatim
+      # beside the summary. Summaries use the cheap flash model, not the
+      # session model (pro#max on the orchestrator).
+      compaction = {
+        auto = true;
+        keep = {
+          tokens = 15000;
+        };
+        buffer = "20%";
+      };
       # Orchestrator plans read-only and delegates to subagents. The child uses
       # its own permissions, so the builder can edit even though the parent cannot.
       agents = {
@@ -107,6 +118,11 @@
           mode = "subagent";
           model = "opencode-go/deepseek-v4.1-flash#high";
           steps = 40;
+        };
+
+        # Cheap model for compaction summaries.
+        compaction = {
+          model = "opencode-go/deepseek-v4.1-flash";
         };
       };
     };
