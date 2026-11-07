@@ -36,6 +36,32 @@
               Authorization = "Bearer {env:GITHUB_PERSONAL_ACCESS_TOKEN}";
             };
           };
+
+          # Up-to-date docs for every framework in use (Phoenix, Svelte, Nuxt,
+          # Laravel, Spring, Angular). Remote, sign in via /mcps.
+          context7 = {
+            type = "remote";
+            url = "https://mcp.context7.com/mcp";
+          };
+
+          # Manage Workers, D1, R2, KV from OpenCode. Remote, sign in via /mcps.
+          cloudflare = {
+            type = "remote";
+            url = "https://mcp.cloudflare.com/mcp";
+          };
+
+          # Browser automation for UI checks. Local; the MCP manages its own
+          # browsers under ~/.cache/ms-playwright.
+          playwright = {
+            type = "local";
+            command = [
+              "npx"
+              "-y"
+              "@playwright/mcp@latest"
+              "--browser"
+              "chromium"
+            ];
+          };
         };
       };
       # Orchestrator plans read-only and delegates to subagents. The child uses
