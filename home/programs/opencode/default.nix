@@ -12,6 +12,13 @@
       lsp = false;
       autoupdate = false;
 
+      # TinyFish web search: works without an API key. The Console-hosted
+      # "OpenCode Web Search" workspace default only applies while
+      # websearch.provider is unset, so this also doubles as the fallback.
+      websearch = {
+        provider = "tinyfish";
+      };
+
       # Orchestrator plans read-only and delegates to subagents. The child uses
       # its own permissions, so the builder can edit even though the parent cannot.
       agents = {
