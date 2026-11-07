@@ -19,6 +19,22 @@
         provider = "tinyfish";
       };
 
+      # Official GitHub remote MCP server: issues, PRs, repos. Auth via PAT
+      # stored in the OpenCode service environment.
+      mcp = {
+        servers = {
+          github = {
+            type = "remote";
+            url = "https://api.githubcopilot.com/mcp/";
+            # GitHub's auth server does not support dynamic client registration,
+            # so OAuth cannot complete for OpenCode. Authenticate with a PAT instead.
+            oauth = false;
+            headers = {
+              Authorization = "Bearer {env:GITHUB_PERSONAL_ACCESS_TOKEN}";
+            };
+          };
+        };
+      };
       # Orchestrator plans read-only and delegates to subagents. The child uses
       # its own permissions, so the builder can edit even though the parent cannot.
       agents = {
