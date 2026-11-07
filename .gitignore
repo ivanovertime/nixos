@@ -2,3 +2,4 @@ result
 .direnv/
 .vscode/
 docs/HANDOFF.md
+.playwright-mcp/
