@@ -2,6 +2,9 @@
 { pkgs-unstable, ... }:
 
 {
+
+  # GUI client for the same OpenCode engine (Electron, from nixpkgs-unstable).
+  home.packages = [ pkgs-unstable.opencode-desktop ];
   programs.opencode = {
     enable = true;
     package = pkgs-unstable.opencode;
