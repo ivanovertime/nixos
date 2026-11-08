@@ -18,6 +18,9 @@ in
       iconPath "accessories-document-viewer";
     "icons/Tela-circle-green-dark/scalable/apps/com.system76.CosmicViewer.svg".source =
       iconPath "accessories-image-viewer";
+    # Circular OpenCode mark (white code-window frame + bar on theme green),
+    # generated to match the Tela-circle style; no official themed icon exists.
+    "icons/Tela-circle-green-dark/scalable/apps/opencode-desktop.svg".source = ./opencode-desktop.svg;
     "icons/Tela-circle-green-dark/scalable/apps/com.system76.CosmicMonitor.svg".source =
       iconPath "utilities-system-monitor";
   };
