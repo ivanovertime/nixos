@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 16.933 16.933">
-  <circle cx="8.466" cy="8.466" r="7.144" fill="#66bb6a"/>
+  <circle cx="8.466" cy="8.466" r="7.144" fill="#131010"/>
   <clipPath id="tela-circle">
     <circle cx="8.466" cy="8.466" r="7.144"/>
   </clipPath>
   <g clip-path="url(#tela-circle)">
-    <ellipse cx="8.466" cy="3.1" rx="5.6" ry="3.6" fill="#ffffff" opacity="0.16"/>
     <path fill-rule="evenodd" clip-rule="evenodd" fill="#ffffff" d="M4.626 3.666h7.68v9.6h-7.68zM6.546 5.586v5.76h3.84v-5.76z"/>
-    <rect x="6.546" y="7.506" width="3.84" height="3.84" fill="#ffffff" opacity="0.4"/>
+    <rect x="6.546" y="7.506" width="3.84" height="3.84" fill="#5A5858"/>
   </g>
 </svg>
