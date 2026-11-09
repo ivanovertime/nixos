@@ -14,7 +14,18 @@
     cutecosmic
     # not in the module's defaults
     cosmic-viewer
+    # lspci for debugging + pci.ids for the sysinfo applet's GPU lookup
+    pciutils
   ];
+
+  # pci-id-parser (cosmic_monitor) resolves device names from the first
+  # pci.ids under /usr/share/{hwdata,misc}; neither exists on NixOS, so the
+  # sysinfo applet warns "failed to get name from PCI ID database" on every
+  # refresh. buildEnv cannot link bare files, hence the FHS symlink.
+  system.activationScripts.pci-ids = ''
+    mkdir -p /usr/share/misc
+    ln -sfn ${pkgs.pciutils}/share/pci.ids /usr/share/misc/pci.ids
+  '';
 
   programs.dconf.enable = true;
 
