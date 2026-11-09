@@ -42,4 +42,7 @@
     flake = "github:ivanovertime/nixos";
     allowReboot = false;
   };
+
+  # a flake pull + build can pin all cores for ~30 min; skip while on battery
+  systemd.services.nixos-upgrade.unitConfig.ConditionACPower = true;
 }

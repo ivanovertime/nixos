@@ -22,6 +22,15 @@
     algorithm = "zstd";
   };
 
+  # OOM guard for dev loads: with 14 GiB visible the kernel OOM-killer would
+  # pick the biggest process — usually cosmic-comp, taking the session with it.
+  # earlyoom SIGTERMs the hungriest process before the kernel gets there.
+  services.earlyoom = {
+    enable = true;
+    freeMemThreshold = 5;
+    freeSwapThreshold = 10;
+  };
+
   # hibernate: resume from the swap partition declared in hosts/spica/default.nix
   boot.resumeDevice = "/dev/disk/by-uuid/eab1711b-915f-4d96-b405-4c7d27423d2d";
 }

@@ -44,6 +44,11 @@ in
     criticalPowerAction = "Hibernate";
   };
 
+  # Lid close suspends; after 2 h on the worn pack it hibernates instead of
+  # trickling the battery down to the 5 % critical floor.
+  services.logind.settings.Login.HandleLidSwitch = "suspend-then-hibernate";
+  systemd.sleep.settings.Sleep.HibernateDelaySec = "2h";
+
   environment.systemPackages = [ batteryCharge ];
 
   # Passwordless toggle for the charge ceiling; the script only writes one
