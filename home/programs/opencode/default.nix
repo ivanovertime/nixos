@@ -208,6 +208,8 @@
       };
     };
 
+    themes.kurotake = ./themes/kurotake.json;
+
     context = ''
       # Global agent instructions
 
