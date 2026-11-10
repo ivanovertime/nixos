@@ -18,4 +18,5 @@
 
   # init.el lives in this repo; link it like the vscodium theme.
   home.file.".config/emacs/init.el".source = ./emacs/init.el;
+  home.file.".config/emacs/themes".source = ./emacs/themes;
 }

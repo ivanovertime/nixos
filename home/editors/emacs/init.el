@@ -18,7 +18,8 @@
 (recentf-mode 1)
 (savehist-mode 1)
 
-(load-theme 'modus-vivendi t)
+(add-to-list 'custom-theme-load-path (expand-file-name "themes" user-emacs-directory))
+(load-theme 'kurotake t)
 
 ;;; Completion
 
