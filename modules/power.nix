@@ -32,6 +32,48 @@ let
     [ -r /sys/class/power_supply/BAT0/capacity ] &&
       echo "level: $(cat /sys/class/power_supply/BAT0/capacity)%"
   '';
+
+  # Brightness (%) applied when the machine switches to mains / battery. This
+  # laptop has no ambient light sensor, so battery-aware fixed levels are the
+  # closest to "auto brightness" it can get; adjust here.
+  brightnessAc = 60;
+  brightnessBat = 40;
+
+  # Applied on every AC plug/unplug (udev) and at boot: power profile for the
+  # CPU and brightness for the panel. Manual changes survive until the next
+  # power event, which reapplies these defaults.
+  powerState = pkgs.writeShellScriptBin "power-state" ''
+    set -eu
+
+    online=0
+    for d in /sys/class/power_supply/*/; do
+      [ -r "$d/type" ] || continue
+      case "$(cat "$d/type")" in
+        Mains|USB)
+          if [ "$(cat "$d/online" 2>/dev/null || echo 0)" = 1 ]; then
+            online=1
+            break
+          fi
+          ;;
+      esac
+    done
+
+    if [ "$online" = 1 ]; then
+      profile=performance
+      pct=${toString brightnessAc}
+    else
+      profile=power-saver
+      pct=${toString brightnessBat}
+    fi
+
+    ${pkgs.power-profiles-daemon}/bin/powerprofilesctl set "$profile"
+
+    for bl in /sys/class/backlight/*/; do
+      [ -r "$bl/max_brightness" ] || continue
+      max=$(cat "$bl/max_brightness")
+      echo $((max * pct / 100)) > "$bl/brightness"
+    done
+  '';
 in
 {
   services.upower = {
@@ -48,6 +90,22 @@ in
   # trickling the battery down to the 5 % critical floor.
   services.logind.settings.Login.HandleLidSwitch = "suspend-then-hibernate";
   systemd.sleep.settings.Sleep.HibernateDelaySec = "2h";
+
+  # React to the AC adapter (ADP0) and USB-C PD source going online/offline.
+  # --no-block keeps the udev worker from waiting on the (instant) script.
+  systemd.services.power-state = {
+    description = "Set power profile and brightness for the current power source";
+    after = [ "power-profiles-daemon.service" ];
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${powerState}/bin/power-state";
+    };
+  };
+
+  services.udev.extraRules = ''
+    SUBSYSTEM=="power_supply", ATTR{online}=="[01]", RUN+="${pkgs.systemd}/bin/systemctl start --no-block power-state.service"
+  '';
 
   environment.systemPackages = [ batteryCharge ];
 
