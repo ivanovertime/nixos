@@ -1,0 +1,20 @@
+{
+  "name": "kurotake-theme",
+  "publisher": "kurotake",
+  "displayName": "Kurotake",
+  "description": "Charcoal and bamboo-green theme for VSCodium",
+  "version": "1.0.0",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": ["Themes"],
+  "contributes": {
+    "themes": [
+      {
+        "label": "Kurotake",
+        "uiTheme": "vs-dark",
+        "path": "./themes/kurotake-color-theme.json"
+      }
+    ]
+  }
+}

@@ -100,4 +100,8 @@
         ];
     };
   };
+
+  # Local theme extension, symlinked the same way home-manager links store
+  # extensions. The folder name must stay <publisher>.<name>-<version>.
+  home.file.".vscode-oss/extensions/kurotake.kurotake-theme-1.0.0".source = ./themes/kurotake;
 }
