@@ -6,6 +6,7 @@
     ./shell/tools.nix
     ./editors/helix.nix
     ./editors/vscodium.nix
+    ./editors/emacs.nix
     ./dev/tools.nix
     ./dev/nix.nix
     ./dev/languages.nix
