@@ -19,6 +19,10 @@
       default_agent = "orchestrator";
       lsp = false;
       autoupdate = false;
+      # truncate tool output early; keeps context lean
+      tool_output = {
+        max_bytes = 32000;
+      };
 
       # TinyFish web search: works without an API key. The Console-hosted
       # "OpenCode Web Search" workspace default only applies while
@@ -34,6 +38,8 @@
           github = {
             type = "remote";
             url = "https://api.githubcopilot.com/mcp/";
+            # share one connection across open directories
+            pool = true;
             # GitHub's auth server does not support dynamic client registration,
             # so OAuth cannot complete for OpenCode. Authenticate with a PAT instead.
             oauth = false;
@@ -47,12 +53,14 @@
           context7 = {
             type = "remote";
             url = "https://mcp.context7.com/mcp";
+            pool = true;
           };
 
           # Manage Workers, D1, R2, KV from OpenCode. Remote, sign in via /mcps.
           cloudflare = {
             type = "remote";
             url = "https://mcp.cloudflare.com/mcp";
+            pool = true;
           };
 
           # Browser automation for UI checks. Local; drives the system Google Chrome
@@ -62,7 +70,7 @@
             command = [
               "npx"
               "-y"
-              "@playwright/mcp@latest"
+              "@playwright/mcp@0.0.85"
               "--browser"
               "chrome"
               "--executable-path"
@@ -73,13 +81,11 @@
         };
       };
 
-      # compact early; summaries use flash
       compaction = {
         auto = true;
         keep = {
           tokens = 15000;
         };
-        buffer = "20%";
       };
       # Orchestrator plans read-only and delegates to subagents. The child uses
       # its own permissions, so the builder can edit even though the parent cannot.
@@ -88,6 +94,29 @@
           description = "Plans work and delegates implementation to builder subagents";
           mode = "primary";
           model = "opencode-go/deepseek-v4.1-flash#max";
+          system = ''
+            You plan and delegate; you never edit files.
+
+            Agents:
+            - explore: read-only search. Use it to locate files, symbols, call sites, and current behavior.
+            - builder: implements one commit-sized task end to end, including tests and verification.
+            - reviewer: read-only review of a diff. Use it after any non-trivial builder change.
+
+            Routing, in order:
+            1. The user names an agent: use it.
+            2. Discovery is needed: explore, then builder with the findings.
+            3. The task is clear: builder directly.
+            4. The request is vague or self-contradictory: ask up to three targeted questions before delegating.
+
+            Delegation:
+            - To delegate, call the `subagent` tool with the agent ID, a short description, and a complete prompt.
+            - Subagents start with fresh context and never see this conversation. Every prompt must be self-contained: paths, exact errors, constraints, and what done means.
+            - Chain by pasting explore's concrete output (paths, line numbers, snippets) into the builder prompt.
+            - Independent workstreams: issue several subagent calls in one turn.
+            - Shell is for inspection only (git status, git diff, rg, ls); never modify files with it.
+            - Do not read large files yourself; delegate deep reading to explore.
+            - When a builder reports back, check it against the acceptance criteria. For non-trivial changes, send the diff to reviewer and pass its findings back to builder with the specific gap.
+          '';
           steps = 30;
           permissions = [
             {
@@ -110,19 +139,71 @@
               resource = "explore";
               effect = "allow";
             }
+            {
+              action = "subagent";
+              resource = "reviewer";
+              effect = "allow";
+            }
           ];
         };
 
         builder = {
-          description = "Implements one scoped task end to end, including tests";
+          description = "Implements one commit-sized task end to end, including tests";
           mode = "subagent";
           model = "opencode-go/deepseek-v4.1-flash#high";
           steps = 40;
         };
 
+        reviewer = {
+          description = "Reviews changes for correctness and regressions; never edits";
+          mode = "subagent";
+          model = "opencode-go/deepseek-v4.1-flash#high";
+          steps = 20;
+          system = ''
+            Review the current changes. Do not edit files.
+
+            Read git diff and git status first, then the surrounding code.
+            Report findings in severity order: correctness, regressions, security, then style.
+            Every finding needs a file:line reference and a concrete failure scenario.
+            If you find nothing, say so and name what you checked.
+          '';
+          permissions = [
+            {
+              action = "edit";
+              resource = "*";
+              effect = "deny";
+            }
+            {
+              action = "shell";
+              resource = "*";
+              effect = "deny";
+            }
+            {
+              action = "shell";
+              resource = "git diff *";
+              effect = "allow";
+            }
+            {
+              action = "shell";
+              resource = "git status *";
+              effect = "allow";
+            }
+            {
+              action = "shell";
+              resource = "git log *";
+              effect = "allow";
+            }
+            {
+              action = "shell";
+              resource = "rg *";
+              effect = "allow";
+            }
+          ];
+        };
+
         # Cheap model for compaction summaries.
         compaction = {
-          model = "opencode/deepseek-v4.1-flash-free";
+          model = "opencode-go/deepseek-v4.1-flash";
         };
       };
     };
@@ -213,8 +294,10 @@
       - Commit style is Conventional Commits with a descriptive clause:
         `feat(onboarding): step 3 — the ready card and the flag-gated domain card`
         Lowercase type, scope in parentheses when it helps, em dash before the explanation.
-      - **Do not commit or push unless explicitly asked.** When asked, stage only the files
-        relevant to the change.
+      - **Commit finished work by default.** One logical change per commit; stage files
+        individually and leave unrelated WIP out. Do not push unless asked.
+      - Plan work as commit-sized steps and name the type and scope each step will ship
+        under, so the plan reads as the commit series.
       - Run `git status` and `git diff` before reporting a change as done.
 
       ## Style
