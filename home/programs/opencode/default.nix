@@ -15,6 +15,8 @@
     settings = {
       # Go free tier as the cheap daily driver; Zen models via /models.
       model = "opencode-go/deepseek-v4.1-flash";
+      # read-only orchestrator by default
+      default_agent = "orchestrator";
       lsp = false;
       autoupdate = false;
 
@@ -71,9 +73,7 @@
         };
       };
 
-      # Compact a touch earlier than default; keep 15k recent tokens verbatim
-      # beside the summary. Summaries use the cheap flash model, not the
-      # session model (pro#max on the orchestrator).
+      # compact early; summaries use flash
       compaction = {
         auto = true;
         keep = {
@@ -87,7 +87,7 @@
         orchestrator = {
           description = "Plans work and delegates implementation to builder subagents";
           mode = "primary";
-          model = "opencode-go/deepseek-v4-pro#max";
+          model = "opencode-go/deepseek-v4.1-flash#max";
           steps = 30;
           permissions = [
             {
@@ -122,7 +122,7 @@
 
         # Cheap model for compaction summaries.
         compaction = {
-          model = "opencode-go/deepseek-v4.1-flash";
+          model = "opencode/deepseek-v4.1-flash-free";
         };
       };
     };
